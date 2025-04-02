@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import FirebaseAuth
+import CoreData
+import Foundation
 
 class ProfileViewController: UIViewController {
 
@@ -47,14 +50,40 @@ class ProfileViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func logoutPressed(_ sender: Any) {
+        print("AHAHAH")
+        do {
+            print("REACHED 1")
+            try Auth.auth().signOut()
+            print("REACHED 2")
+            navigateToLogin()
+        } catch {
+            print("REACHED 4")
+            print("Sign out error")
+        }
     }
-    */
+    
+    @IBAction func logoutTestPressed(_ sender: Any) {
+        print("AHAHAH")
+        do {
+            print("REACHED 1")
+            try Auth.auth().signOut()
+            print("REACHED 2")
+            navigateToLogin()
+        } catch {
+            print("REACHED 4")
+            print("Sign out error")
+        }
+    }
+    
+    
+    private func navigateToLogin() {
+        print("REACHED 3")
+        if let loginVC = storyboard?.instantiateViewController(identifier: "LoginVC") as? LoginViewController {
+            loginVC.modalPresentationStyle = .fullScreen
+            present(loginVC, animated: true, completion: nil)
+        }
+    }
+    
 
 }
