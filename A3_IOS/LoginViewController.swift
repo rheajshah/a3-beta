@@ -30,13 +30,20 @@ class LoginViewController: UIViewController {
     
     //Firebase Authentication
     private func authenticateUser(email: String, password: String) {
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
+        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let error = error {
-                self?.showAlert(title: "Login Failed", message: error.localizedDescription)
-            } else {
-                self?.showAlert(title: "Success", message: "Logged in successfully!") {
-                    self?.navigateToHome()
+                self.showAlert(title: "Login Failed", message: error.localizedDescription)
+                return
+            }
+
+            // Ensure Firebase returns a valid user
+            if let user = authResult?.user {
+                print("User logged in: \(user.email ?? "Unknown Email")")
+                self.showAlert(title: "Success", message: "Welcome back, \(user.email ?? "user")!") {
+                    self.navigateToHome()
                 }
+            } else {
+                self.showAlert(title: "Error", message: "Authentication failed. Please try again.")
             }
         }
     }

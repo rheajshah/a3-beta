@@ -16,17 +16,17 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="CompetitionsViewController" customModule="A3_IOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upcoming Competitions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p6f-xV-vPO">
-                                <rect key="frame" x="30" y="104" width="333" height="21"/>
+                                <rect key="frame" x="30" y="116" width="333" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Zr7-4H-WpF">
-                                <rect key="frame" x="30" y="145" width="333" height="32"/>
+                                <rect key="frame" x="30" y="157" width="333" height="32"/>
                                 <segments>
                                     <segment title="All"/>
                                     <segment title="Live"/>
@@ -35,7 +35,7 @@
                                 </segments>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="htD-ro-dN6">
-                                <rect key="frame" x="10" y="196" width="373" height="204"/>
+                                <rect key="frame" x="10" y="208" width="373" height="192"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="upcomingCompCard" rowHeight="124" id="Xci-C3-P7G">
@@ -121,7 +121,7 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BAb-vQ-F3S">
-                                <rect key="frame" x="297" y="97" width="57" height="35"/>
+                                <rect key="frame" x="297" y="109" width="57" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Test"/>
                                 <connections>
@@ -181,11 +181,11 @@
             <objects>
                 <viewController id="uSB-VB-Y1o" customClass="ELOViewController" customModule="A3_IOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lAS-6d-VbK">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="esc-do-rE2">
-                                <rect key="frame" x="25" y="120" width="343" height="704"/>
+                                <rect key="frame" x="25" y="132" width="343" height="692"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RankingCell" rowHeight="65" id="y9p-bO-TBA" customClass="RankingCell" customModule="A3_IOS" customModuleProvider="target">
@@ -235,7 +235,7 @@
                                 </prototypes>
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="v1o-il-twc">
-                                <rect key="frame" x="87" y="67" width="219" height="32"/>
+                                <rect key="frame" x="87" y="79" width="219" height="32"/>
                                 <segments>
                                     <segment title="ELO Standings"/>
                                     <segment title="Simulation"/>
@@ -281,11 +281,11 @@
             <objects>
                 <viewController id="RTG-u8-F9H" customClass="TeamsViewController" customModule="A3_IOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HKs-tE-ICj">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="smX-ek-GKO">
-                                <rect key="frame" x="0.0" y="44" width="393" height="759"/>
+                                <rect key="frame" x="0.0" y="56" width="393" height="747"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" id="xp2-rs-y2x">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
@@ -359,7 +359,7 @@
             <objects>
                 <viewController id="eHw-PA-Nfr" customClass="ProfileViewController" customModule="A3_IOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ITj-xB-xeL">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="twc-hm-fRr">
@@ -687,7 +687,6 @@
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="loginButtonPressed:" destination="P5h-jK-Nb1" eventType="touchUpInside" id="b0U-Fd-iJT"/>
-                                            <segue destination="L6P-31-k8D" kind="presentation" modalPresentationStyle="fullScreen" id="SbN-FT-amv"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -734,6 +733,7 @@
                         <outlet property="emailTextField" destination="a1p-lw-jZs" id="rDp-D0-2yh"/>
                         <outlet property="loginButton" destination="RRy-Za-IR0" id="eI2-t5-qAW"/>
                         <outlet property="passwordTextField" destination="78z-vN-ofd" id="l61-xK-LsK"/>
+                        <segue destination="L6P-31-k8D" kind="show" id="ZNC-MG-vzL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sM1-oV-XvF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1085,11 +1085,11 @@
             <objects>
                 <viewController id="lL9-GJ-Pw2" customClass="CompDescriptionViewController" customModule="A3_IOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nR0-Dj-Z6g">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dUO-Os-SdC">
-                                <rect key="frame" x="0.0" y="80" width="393" height="182"/>
+                                <rect key="frame" x="0.0" y="92" width="393" height="170"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ed-Ku-64i">
                                 <rect key="frame" x="50" y="328" width="66" height="21"/>
@@ -1214,7 +1214,7 @@
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="cRb-cn-5uE">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1236,7 +1236,7 @@
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LZg-ft-P1o">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <navigationBarAppearance key="standardAppearance">
                             <imageReference key="backgroundImage" image="person.crop.circle" catalog="system" symbolScale="large"/>
@@ -1261,7 +1261,7 @@
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Luf-GS-vmp">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1548,7 +1548,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="SbN-FT-amv"/>
+        <segue reference="ZNC-MG-vzL"/>
         <segue reference="PMq-wL-6HX"/>
         <segue reference="VCh-aQ-4cV"/>
     </inferredMetricsTieBreakers>
