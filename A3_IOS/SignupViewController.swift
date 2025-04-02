@@ -13,7 +13,6 @@ class SignupViewController: UIViewController {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var fullNameTextField: UITextField!
-    @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var createAccountButton: UIButton!
     
@@ -24,7 +23,6 @@ class SignupViewController: UIViewController {
     
     @IBAction func createAccountButtonPressed(_ sender: Any) {
         guard let fullName = fullNameTextField.text, !fullName.isEmpty,
-              let username = usernameTextField.text, !username.isEmpty,
               let email = emailTextField.text, !email.isEmpty,
               let password = passwordTextField.text, !password.isEmpty else {
             showAlert(title: "Error", message: "All fields are required.")
@@ -36,7 +34,7 @@ class SignupViewController: UIViewController {
             return
         }
 
-        createAccount(email: email, password: password, fullName: fullName, username: username) { result in
+        createAccount(email: email, password: password, fullName: fullName) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success:
@@ -48,7 +46,7 @@ class SignupViewController: UIViewController {
         }
     }
     
-    private func createAccount(email: String, password: String, fullName: String, username: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    private func createAccount(email: String, password: String, fullName: String, completion: @escaping (Result<Void, Error>) -> Void) {
        Auth.auth().createUser(withEmail: email, password: password) { result, error in
            if let error = error {
                completion(.failure(error))
@@ -60,12 +58,16 @@ class SignupViewController: UIViewController {
                return
            }
            
+           
            let db = Firestore.firestore()
            let userData: [String: Any] = [
+               "uid": userId,         // Store UID
                "fullName": fullName,
-               "username": username,
                "email": email,
-               "role": "viewer" // Default role (change if needed)
+               "admin": false, // Default role (change if needed)
+               "team": "team name",
+               "notifications": false,
+               "darkMode": false,
            ]
            
            db.collection("users").document(userId).setData(userData) { error in
@@ -92,7 +94,6 @@ class SignupViewController: UIViewController {
     
     private func clearFields() {
         fullNameTextField.text = ""
-        usernameTextField.text = ""
         emailTextField.text = ""
         passwordTextField.text = ""
     }
