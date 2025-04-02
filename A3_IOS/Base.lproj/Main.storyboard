@@ -599,10 +599,10 @@
             </objects>
             <point key="canvasLocation" x="5934" y="185"/>
         </scene>
-        <!--View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="H5E-je-5oI">
             <objects>
-                <viewController storyboardIdentifier="LoginVC" id="P5h-jK-Nb1" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginVC" id="P5h-jK-Nb1" customClass="LoginViewController" customModule="A3_IOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2v5-cP-VSk">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -641,9 +641,9 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Jr-sr-B59">
-                                        <rect key="frame" x="50.000000000000014" y="388.33333333333331" width="159.33333333333337" height="20"/>
+                                        <rect key="frame" x="50" y="388.33333333333331" width="47.333333333333343" height="20"/>
                                         <attributedString key="attributedText">
-                                            <fragment content="USERNAME or EMAIL">
+                                            <fragment content="EMAIL">
                                                 <attributes>
                                                     <color key="NSColor" red="0.86666667460000002" green="0.82745099070000006" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <font key="NSFont" size="17" name="TrebuchetMS-Bold"/>
@@ -686,6 +686,7 @@
                                             <color key="baseBackgroundColor" red="0.86666667460000002" green="0.82745099070000006" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </buttonConfiguration>
                                         <connections>
+                                            <action selector="loginButtonPressed:" destination="P5h-jK-Nb1" eventType="touchUpInside" id="b0U-Fd-iJT"/>
                                             <segue destination="L6P-31-k8D" kind="presentation" modalPresentationStyle="fullScreen" id="SbN-FT-amv"/>
                                         </connections>
                                     </button>
@@ -729,6 +730,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="cf3-kl-asd"/>
+                    <connections>
+                        <outlet property="emailTextField" destination="a1p-lw-jZs" id="rDp-D0-2yh"/>
+                        <outlet property="loginButton" destination="RRy-Za-IR0" id="eI2-t5-qAW"/>
+                        <outlet property="passwordTextField" destination="78z-vN-ofd" id="l61-xK-LsK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sM1-oV-XvF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1542,9 +1548,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="EkW-hD-0jz"/>
+        <segue reference="SbN-FT-amv"/>
         <segue reference="PMq-wL-6HX"/>
-        <segue reference="T6k-Ra-2WX"/>
+        <segue reference="VCh-aQ-4cV"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="IMG_0162" width="1123" height="794"/>
