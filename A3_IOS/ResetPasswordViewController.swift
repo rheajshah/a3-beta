@@ -9,9 +9,7 @@ import UIKit
 
 class ResetPasswordViewController: UIViewController {
 
-    @IBOutlet weak var newPassTextField: UITextField!
-    
-    @IBOutlet weak var resetPassTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +18,7 @@ class ResetPasswordViewController: UIViewController {
     }
     
 
-    @IBAction func savePassPressed(_ sender: Any) {
+    @IBAction func sendEmailResetButtonPressed(_ sender: Any) {
     }
     
 }
