@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ResetPasswordViewController: UIViewController {
 
@@ -19,6 +20,35 @@ class ResetPasswordViewController: UIViewController {
     
 
     @IBAction func sendEmailResetButtonPressed(_ sender: Any) {
+        guard let email = emailTextField.text, !email.isEmpty else {
+           showAlert(title: "Error", message: "Please enter your email.")
+           return
+       }
+
+       Auth.auth().sendPasswordReset(withEmail: email) { error in
+           if let error = error {
+               self.showAlert(title: "Error", message: error.localizedDescription)
+           } else {
+               self.showAlert(title: "Success", message: "A password reset email has been sent to \(email). Check your inbox.") {
+                   self.navigateToLogin()
+               }
+           }
+       }
     }
     
+    private func navigateToLogin() {
+        if let loginVC = storyboard?.instantiateViewController(identifier: "LoginViewController") as? LoginViewController {
+            loginVC.modalPresentationStyle = .fullScreen
+            present(loginVC, animated: true, completion: nil)
+        }
+    }
+
+    private func showAlert(title: String, message: String, completion: (() -> Void)? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            completion?()
+        }
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
 }

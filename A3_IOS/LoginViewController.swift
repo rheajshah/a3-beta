@@ -58,8 +58,13 @@ class LoginViewController: UIViewController {
     }
 
     private func navigateToHome() {
-        // Example: Dismiss the login screen and go to the home page
-        dismiss(animated: true, completion: nil)
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+           let storyboard = UIStoryboard(name: "Main", bundle: nil)
+           if let tabBarVC = storyboard.instantiateViewController(withIdentifier: "TabBarController") as? UITabBarController {
+               sceneDelegate.window?.rootViewController = tabBarVC
+               sceneDelegate.window?.makeKeyAndVisible()
+           }
+       }
     }
     
 }
