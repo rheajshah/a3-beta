@@ -13,17 +13,11 @@ class CompDescriptionViewController: UIViewController {
     
     @IBOutlet weak var containerView: UIView!
     
-    // Reference to the child view controller (embedded in the container)
-    var embeddedVC: CompSubviewsViewController?
+    // Keep track of current child VC (embedded in the container)
+    var currentChildVC: UIViewController?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Make sure the embedded view controller is set up
-        if let embeddedVC = children.first(where: { $0 is CompSubviewsViewController }) as? CompSubviewsViewController {
-            self.embeddedVC = embeddedVC
-        }
-        
-        // Default selection to show the first subview
         showSubview(index: compDescSegCtrl.selectedSegmentIndex)
     }
     
@@ -33,19 +27,35 @@ class CompDescriptionViewController: UIViewController {
     
     // Show or hide subviews based on the selected segment index
     func showSubview(index: Int) {
-        // Hide all subviews first
-        embeddedVC?.hideAllSubviews()
-        
-        // Show the corresponding subview based on the index
+        // Remove current child VC if exists
+        if let child = currentChildVC {
+            child.willMove(toParent: nil)
+            child.view.removeFromSuperview()
+            child.removeFromParent()
+        }
+
+        var newVC: UIViewController
+
         switch index {
         case 0:
-            embeddedVC?.showLineupView()
+            // Instantiate LineupSubviewViewController
+            newVC = storyboard?.instantiateViewController(withIdentifier: "LineupSubviewViewController") as! UIViewController
         case 1:
-            embeddedVC?.showJudgingView()
+            // Instantiate JudgingSubviewViewController
+            newVC = storyboard?.instantiateViewController(withIdentifier: "JudgingSubviewViewController") as! UIViewController
         case 2:
-            embeddedVC?.showMediaView()
+            // Instantiate MediaSubviewViewController
+            newVC = storyboard?.instantiateViewController(withIdentifier: "MediaSubviewViewController") as! UIViewController
         default:
-            break
+            return
         }
+
+        // Embed new VC
+        addChild(newVC)
+        newVC.view.frame = containerView.bounds
+        containerView.addSubview(newVC.view)
+        newVC.didMove(toParent: self)
+
+        currentChildVC = newVC
     }
 }
