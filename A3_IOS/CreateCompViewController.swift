@@ -7,14 +7,18 @@
 
 import UIKit
 
-class CreateCompViewController: UIViewController {
+class CreateCompViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var dateField: UITextField!
     
+    @IBOutlet weak var compImage: UIImageView!
+    
+    var imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // setting starting values for the date picker
         let datePicker = UIDatePicker ()
         datePicker.datePickerMode = .date
         datePicker.addTarget(self, action: #selector (dateChange (datePicker:)), for:
@@ -22,7 +26,13 @@ class CreateCompViewController: UIViewController {
         datePicker.frame.size = CGSize(width: 0, height: 300)
         datePicker.preferredDatePickerStyle = .wheels
         dateField.inputView = datePicker
-        dateField.text = formatDate(date: Date()) // todays Date
+        dateField.text = formatDate(date: Date())
+        
+        // setting initial values for the comp image
+        compImage.layer.borderWidth = 2
+        compImage.layer.borderColor = UIColor.gray.cgColor
+        compImage.clipsToBounds = true
+        compImage.contentMode = .scaleAspectFill
     }
    
     @objc func dateChange(datePicker: UIDatePicker) {
@@ -35,5 +45,33 @@ class CreateCompViewController: UIViewController {
         return formatter.string (from: date)
     }
     
-
+    @IBAction func chooseCompImage(_ sender: Any) {
+//        imagePicker.sourceType = .photoLibrary
+//        imagePicker.allowsEditing = true
+//        present(imagePicker, animated: true, completion: nil)
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = self
+        picker.allowsEditing = true
+        present(picker, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.editedImage] as? UIImage {
+            compImage.image = selectedImage
+            // uploadProfileImage(selectedImage)
+            // do stuff above to add to firebase
+        }
+        dismiss(animated: true)
+    }
+    
 }
+
+//extension CreateCompViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+//        if let image = info[.editedImage] as? UIImage {
+//            compImage.image = image
+//        }
+//        dismiss(animated: true, completion: nil)
+//    }
+//}
