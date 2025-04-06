@@ -953,6 +953,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cityTextField" destination="jvQ-Fq-gK6" id="z0l-FC-GRd"/>
+                        <outlet property="instagramTextField" destination="5Mt-eO-YSK" id="K8w-Ns-8Jy"/>
                         <outlet property="statePickerView" destination="FF6-p4-8T1" id="Le9-VP-8ZE"/>
                         <outlet property="teamLogoImageView" destination="Osn-oT-N5N" id="gQ6-uX-DEo"/>
                         <outlet property="teamNameTextField" destination="rct-qn-fdW" id="sA6-2c-wvH"/>

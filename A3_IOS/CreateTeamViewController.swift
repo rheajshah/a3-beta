@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import FirebaseFirestore
+import FirebaseStorage
 
 class CreateTeamViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
 
     @IBOutlet weak var teamPictureImageView: UIImageView!
     @IBOutlet weak var teamLogoImageView: UIImageView!
@@ -16,7 +17,11 @@ class CreateTeamViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet weak var teamUniversityTextField: UITextField!
     @IBOutlet weak var cityTextField: UITextField!
     @IBOutlet weak var statePickerView: UIPickerView!
+    @IBOutlet weak var instagramTextField: UITextField!
     
+    let db = Firestore.firestore()
+    let storage = Storage.storage()
+
     var imagePicker = UIImagePickerController()
     
     let states = [
@@ -33,31 +38,31 @@ class CreateTeamViewController: UIViewController, UIPickerViewDelegate, UIPicker
 
     var selectedState: String?
     var isSelectingTeamPicture = false
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         statePickerView.delegate = self
         statePickerView.dataSource = self
+        imagePicker.delegate = self
         
-        let defaultIndex = states.firstIndex(of: "Texas") ?? 0
+        //set default to Alabama
+        let defaultIndex = states.firstIndex(of: "Alabama") ?? 0
         statePickerView.selectRow(defaultIndex, inComponent: 0, animated: false)
         selectedState = states[defaultIndex]
-
-        // Image view styles
+        
+        //image view styles
         [teamPictureImageView, teamLogoImageView].forEach { imageView in
             imageView?.layer.borderWidth = 2
             imageView?.layer.borderColor = UIColor.gray.cgColor
             imageView?.clipsToBounds = true
             imageView?.contentMode = .scaleAspectFill
         }
-
-        imagePicker.delegate = self
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-            return 1
-        }
+        return 1
+    }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return states.count
@@ -86,31 +91,77 @@ class CreateTeamViewController: UIViewController, UIPickerViewDelegate, UIPicker
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            if let selectedImage = info[.editedImage] as? UIImage {
-                if isSelectingTeamPicture {
-                    teamPictureImageView.image = selectedImage
-                } else {
-                    teamLogoImageView.image = selectedImage
-                }
+        if let selectedImage = info[.editedImage] as? UIImage {
+            if isSelectingTeamPicture {
+                teamPictureImageView.image = selectedImage
+            } else {
+                teamLogoImageView.image = selectedImage
             }
-            dismiss(animated: true)
         }
+        dismiss(animated: true)
+    }
 
     
     @IBAction func onSaveTeamButtonPressed(_ sender: Any) {
-        if let name = teamNameTextField.text,
-           let university = teamUniversityTextField.text,
-           let city = cityTextField.text,
-           let state = selectedState {
-            
-            let team = Team(
-                name: name,
-                university: university,
-                city: city,
-                state: state,
-                teamPicture: teamPictureImageView.image,
-                teamLogo: teamLogoImageView.image
-            )
+        guard let name = teamNameTextField.text, !name.isEmpty,
+              let city = cityTextField.text, !city.isEmpty,
+              let state = selectedState else {
+            showAlert(title: "Missing Info", message: "Please fill in all required fields.")
+            return
         }
+        
+        let teamID = UUID().uuidString
+        let university = teamUniversityTextField.text ?? ""
+        let instagram = instagramTextField.text ?? ""
+        
+        uploadImage(teamPictureImageView.image, path: "teams/team_pictures/\(teamID).jpg") { teamPictureURL in
+            self.uploadImage(self.teamLogoImageView.image, path: "teams/team_logos/\(teamID).jpg") { teamLogoURL in
+                
+                let teamData: [String: Any] = [
+                    "id": teamID, //primary key
+                    "name": name,
+                    "university": university,
+                    "city": city,
+                    "state": state,
+                    "instagram": instagram,
+                    "teamPictureURL": teamPictureURL ?? "",
+                    "teamLogoURL": teamLogoURL ?? ""
+                ]
+                
+                self.db.collection("teams").document(teamID).setData(teamData) { error in
+                    if let error = error {
+                        print("Error saving team: \(error)")
+                        self.showAlert(title: "Error", message: "Failed to save team.")
+                    } else {
+                        self.showAlert(title: "Success", message: "Team created successfully!")
+                    }
+                }
+            }
+        }
+    }
+    
+    func uploadImage(_ image: UIImage?, path: String, completion: @escaping (String?) -> Void) {
+        guard let image = image, let imageData = image.jpegData(compressionQuality: 0.5) else {
+            completion(nil)
+            return
+        }
+        
+        let ref = storage.reference().child(path)
+        ref.putData(imageData, metadata: nil) { _, error in
+            if let error = error {
+                print("Upload error: \(error)")
+                completion(nil)
+                return
+            }
+            ref.downloadURL { url, _ in
+                completion(url?.absoluteString)
+            }
+        }
+    }
+
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 }

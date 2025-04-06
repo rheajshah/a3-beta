@@ -39,7 +39,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         selectTeamButton.changesSelectionAsPrimaryAction = true
         
         loadUserProfile()
-        setupTeamDropdown()
     }
     
     override func viewDidLayoutSubviews() {
@@ -50,7 +49,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     //Load User Data from Firebase
     func loadUserProfile() {
         guard let userID = userID else { return }
-        
+
         db.collection("users").document(userID).getDocument { (document, error) in
             if let document = document, document.exists {
                 let data = document.data()
@@ -59,8 +58,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 self.adminYesNoLabel.text = (data?["isAdmin"] as? Bool ?? false) ? "Admin" : "Not Admin"
                 self.allowNotifsToggle.isOn = data?["allowNotifications"] as? Bool ?? false
                 self.darkModeToggle.isOn = data?["darkMode"] as? Bool ?? false
-                self.selectTeamButton.setTitle(data?["team"] as? String ?? "Select Team", for: .normal)
                 
+                let selectedTeam = data?["team"] as? String ?? "Select Team"
+                self.selectTeamButton.setTitle(selectedTeam, for: .normal)
+                self.setupTeamDropdown(selectedTeam: selectedTeam) // Pass it here!
+
                 if let profileURL = data?["profileImage"] as? String {
                     self.loadProfileImage(from: profileURL)
                 }
@@ -69,13 +71,26 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     //Team Dropdown
-    func setupTeamDropdown() {
-        let menu = UIMenu(title: "Select Team", children: [
-            UIAction(title: "Team A", handler: { action in self.selectTeamButton.setTitle(action.title, for: .normal) }),
-            UIAction(title: "Team B", handler: { action in self.selectTeamButton.setTitle(action.title, for: .normal) }),
-            UIAction(title: "Team C", handler: { action in self.selectTeamButton.setTitle(action.title, for: .normal) })
-        ])
-        selectTeamButton.menu = menu
+    func setupTeamDropdown(selectedTeam: String?) {
+        db.collection("teams").getDocuments { snapshot, error in
+            if let error = error {
+                print("Error fetching teams: \(error)")
+                return
+            }
+            
+            guard let documents = snapshot?.documents else { return }
+            
+            let teamActions = documents.map { doc -> UIAction in
+                let teamName = doc.data()["name"] as? String ?? "Unnamed Team"
+                return UIAction(title: teamName, state: (teamName == selectedTeam ? .on : .off), handler: { action in
+                    self.selectTeamButton.setTitle(action.title, for: .normal)
+                })
+            }
+            
+            DispatchQueue.main.async {
+                self.selectTeamButton.menu = UIMenu(title: "Select Team", children: teamActions)
+            }
+        }
     }
 
     //Edit Profile Photo
