@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		400CB2F12DA0A94C00FF1242 /* SelectTeamsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400CB2F02DA0A94C00FF1242 /* SelectTeamsViewController.swift */; };
 		F632FFE52D9DC60D00B97E38 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F632FFE42D9DC60D00B97E38 /* FirebaseAuth */; };
 		F632FFE72D9DC60D00B97E38 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = F632FFE62D9DC60D00B97E38 /* FirebaseAuthCombine-Community */; };
 		F632FFE92D9DC60D00B97E38 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = F632FFE82D9DC60D00B97E38 /* FirebaseCore */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		400CB2F02DA0A94C00FF1242 /* SelectTeamsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTeamsViewController.swift; sourceTree = "<group>"; };
 		94483BEE2D79207C002B66C9 /* A3_IOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = A3_IOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -68,6 +70,7 @@
 		94483BE52D79207C002B66C9 = {
 			isa = PBXGroup;
 			children = (
+				400CB2F02DA0A94C00FF1242 /* SelectTeamsViewController.swift */,
 				94483BF02D79207C002B66C9 /* A3_IOS */,
 				94483BEF2D79207C002B66C9 /* Products */,
 			);
@@ -168,6 +171,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				400CB2F12DA0A94C00FF1242 /* SelectTeamsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

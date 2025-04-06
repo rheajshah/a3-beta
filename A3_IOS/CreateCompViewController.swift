@@ -65,13 +65,15 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
         dismiss(animated: true)
     }
     
+    @IBAction func backToComps(_ sender: Any) {
+        if let compsVC = storyboard?.instantiateViewController(identifier: "CompsVC") as? CompetitionsViewController {
+            compsVC.modalPresentationStyle = .fullScreen
+            present(compsVC, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func saveCompClicked(_ sender: Any) {
+        // add code to save to FireBase
+    }
 }
 
-//extension CreateCompViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-//        if let image = info[.editedImage] as? UIImage {
-//            compImage.image = image
-//        }
-//        dismiss(animated: true, completion: nil)
-//    }
-//}
