@@ -133,7 +133,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system" title=""/>
                                 <connections>
-                                    <segue destination="JN9-ps-1Td" kind="presentation" modalPresentationStyle="fullScreen" id="3db-Ta-Ubc"/>
+                                    <segue destination="JN9-ps-1Td" kind="show" id="420-GR-of4"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -184,7 +184,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8684.7328244274813" y="945.77464788732402"/>
+            <point key="canvasLocation" x="8558" y="946"/>
         </scene>
         <!--ELO-->
         <scene sceneID="Li4-5F-5sS">
@@ -548,9 +548,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oSC-mL-hWd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9516.7938931297704" y="945.77464788732402"/>
+            <point key="canvasLocation" x="9517" y="946"/>
         </scene>
-        <!--Create Comp View Controller-->
+        <!--New Competition-->
         <scene sceneID="ZWn-iW-17O">
             <objects>
                 <viewController id="JN9-ps-1Td" customClass="CreateCompViewController" customModule="A3_IOS" customModuleProvider="target" sceneMemberID="viewController">
@@ -655,21 +655,18 @@
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wAb-xo-BJp">
                                 <rect key="frame" x="-3" y="53" width="393" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="New Competiton" id="zeF-ZJ-gtb">
-                                        <barButtonItem key="leftBarButtonItem" title="Item" image="chevron.left" catalog="system" id="7ac-Bu-RB2">
-                                            <connections>
-                                                <action selector="backToComps:" destination="JN9-ps-1Td" id="CKN-Yt-zsi"/>
-                                            </connections>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Save" id="hTw-Ev-8x2"/>
-                                    </navigationItem>
-                                </items>
                             </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="VwY-pI-WXh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" title="New Competition" id="bCc-D1-LFJ">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="ff0-jX-fzE">
+                            <connections>
+                                <action selector="saveCompClicked:" destination="JN9-ps-1Td" id="jh6-Bo-JWY"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="compImage" destination="mUE-DX-qnK" id="jDy-KO-8Ev"/>
                         <outlet property="dateField" destination="STC-QZ-ZFP" id="flL-4H-LuF"/>
@@ -2007,7 +2004,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="EkW-hD-0jz"/>
         <segue reference="pq1-CE-0CW"/>
-        <segue reference="BEA-Al-Xoh"/>
+        <segue reference="VCh-aQ-4cV"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="IMG_0162" width="1123" height="794"/>
@@ -2015,7 +2012,6 @@
         <image name="calendar" catalog="system" width="128" height="107"/>
         <image name="calendar.badge.plus" catalog="system" width="128" height="109"/>
         <image name="chart.bar" catalog="system" width="128" height="89"/>
-        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="location" catalog="system" width="128" height="119"/>
         <image name="message.fill" catalog="system" width="128" height="114"/>
         <image name="person.3" catalog="system" width="128" height="66"/>

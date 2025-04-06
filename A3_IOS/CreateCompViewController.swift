@@ -52,7 +52,7 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         picker.delegate = self
-        picker.allowsEditing = true
+         picker.allowsEditing = true
         present(picker, animated: true)
     }
     
@@ -65,12 +65,6 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
         dismiss(animated: true)
     }
     
-    @IBAction func backToComps(_ sender: Any) {
-        if let compsVC = storyboard?.instantiateViewController(identifier: "CompsVC") as? CompetitionsViewController {
-            compsVC.modalPresentationStyle = .fullScreen
-            present(compsVC, animated: true, completion: nil)
-        }
-    }
     
     @IBAction func saveCompClicked(_ sender: Any) {
         // add code to save to FireBase
