@@ -6,18 +6,31 @@
 //
 
 import UIKit
+import FirebaseFirestore
+import FirebaseStorage
 
 class CompDescriptionViewController: UIViewController {
 
-    @IBOutlet weak var compDescSegCtrl: UISegmentedControl!
+    @IBOutlet weak var compBannerImage: UIImageView!
+    @IBOutlet weak var compName: UILabel!
+    @IBOutlet weak var locationIcon: UIImageView!
+    @IBOutlet weak var compLocation: UILabel!
+    @IBOutlet weak var dataIcon: UIImageView!
+    @IBOutlet weak var compDate: UILabel!
     
+    @IBOutlet weak var compDescSegCtrl: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
+    
+    //var competitionID: String!
+    
+    var competitionID = "zq9fBxV1fs03TjdI8cp4"
     
     // Keep track of current child VC (embedded in the container)
     var currentChildVC: UIViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadCompDetails()
         showSubview(index: compDescSegCtrl.selectedSegmentIndex)
     }
     
@@ -25,9 +38,56 @@ class CompDescriptionViewController: UIViewController {
         showSubview(index: sender.selectedSegmentIndex)
     }
     
+    func loadCompDetails() {
+        let db = Firestore.firestore()
+        db.collection("comps").document(competitionID).getDocument { snapshot, error in
+            if let error = error {
+                print("Error fetching comp: \(error)")
+                return
+            }
+            
+            guard let data = snapshot?.data() else { return }
+            
+            let name = data["name"] as? String ?? "N/A"
+            let date = data["date"] as? String ?? "TBD"
+            let city = data["city"] as? String ?? ""
+            let state = data["state"] as? String ?? ""
+            let location = (city.isEmpty && state.isEmpty) ? "Location not available" : "\(city), \(state)"
+            let bannerPath = data["compBannerRef"] as? String ?? ""
+            if !bannerPath.isEmpty {
+                let storageRef = Storage.storage().reference(withPath: bannerPath)
+                storageRef.downloadURL { url, error in
+                    if let url = url {
+                        self.loadImage(from: url, into: self.compBannerImage)
+                    } else {
+                        print("Error fetching download URL: \(error?.localizedDescription ?? "Unknown error")")
+                    }
+                }
+            } else {
+                print("No banner path found.")
+            }
+
+
+            DispatchQueue.main.async {
+                self.compName.text = name
+                self.compDate.text = date
+                self.compLocation.text = location
+            }
+        }
+    }
+    
+    func loadImage(from url: URL, into imageView: UIImageView?) {
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            if let data = data, error == nil {
+                DispatchQueue.main.async {
+                    imageView?.image = UIImage(data: data)
+                }
+            }
+        }.resume()
+    }
+
     // Show or hide subviews based on the selected segment index
     func showSubview(index: Int) {
-        // Remove current child VC if exists
         if let child = currentChildVC {
             child.willMove(toParent: nil)
             child.view.removeFromSuperview()
@@ -38,19 +98,21 @@ class CompDescriptionViewController: UIViewController {
 
         switch index {
         case 0:
-            // Instantiate LineupSubviewViewController
-            newVC = storyboard?.instantiateViewController(withIdentifier: "LineupSubviewViewController") as! UIViewController
+            let vc = storyboard?.instantiateViewController(withIdentifier: "LineupSubviewViewController") as! LineupSubviewViewController
+            //vc.competitionID = self.competitionID
+            newVC = vc
         case 1:
-            // Instantiate JudgingSubviewViewController
-            newVC = storyboard?.instantiateViewController(withIdentifier: "JudgingSubviewViewController") as! UIViewController
+            let vc = storyboard?.instantiateViewController(withIdentifier: "JudgingSubviewViewController") as! JudgingSubviewViewController
+            vc.competitionID = self.competitionID
+            newVC = vc
         case 2:
-            // Instantiate MediaSubviewViewController
-            newVC = storyboard?.instantiateViewController(withIdentifier: "MediaSubviewViewController") as! UIViewController
+            let vc = storyboard?.instantiateViewController(withIdentifier: "MediaSubviewViewController") as! MediaSubviewViewController
+            //vc.competitionID = self.competitionID
+            newVC = vc
         default:
             return
         }
 
-        // Embed new VC
         addChild(newVC)
         newVC.view.frame = containerView.bounds
         containerView.addSubview(newVC.view)
