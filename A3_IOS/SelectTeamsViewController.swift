@@ -6,28 +6,46 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class SelectTeamsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
 
     @IBOutlet weak var tableView: UITableView!
-    var teams: [OptionItem] = [
-        OptionItem(title: "Anokha", isSelected: false),
-        OptionItem(title: "Arabhi", isSelected: false),
-        OptionItem(title: "Asli Baat", isSelected: false),
-        OptionItem(title: "Astha A Cappella", isSelected: false),
-        OptionItem(title: "Barsaat", isSelected: false),
-        OptionItem(title: "Basmati Beats", isSelected: false),
-        OptionItem(title: "Brown Sugar", isSelected: false),
-        OptionItem(title: "Chai Town", isSelected: false),
-        OptionItem(title: "Chicago Aag", isSelected: false)
-    ]
     
+    var teams: [OptionItem] = []
+    let db = Firestore.firestore()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.delegate = self
         tableView.dataSource = self
+        
+        //Fetch team names from Firestore
+        fetchTeamsFromFirestore()
+    }
+    
+    // Fetch teams from Firestore
+    func fetchTeamsFromFirestore() {
+        db.collection("teams").getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error fetching teams: \(error)")
+                return
+            }
+            
+            // Update the teams array with the fetched data
+            self.teams = snapshot?.documents.compactMap { doc in
+                let data = doc.data()
+                let teamName = data["name"] as? String ?? ""
+                return OptionItem(title: teamName, isSelected: false)
+            } ?? []
+            
+            // Reload table view with the fetched data
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
