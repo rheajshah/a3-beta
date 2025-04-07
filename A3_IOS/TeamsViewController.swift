@@ -78,9 +78,12 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         
         //make the image circular
-        cell.imageView?.layer.cornerRadius = (cell.imageView?.frame.size.width ?? 0) / 2
+        cell.imageView?.layer.borderWidth = 2
+        cell.imageView?.layer.borderColor = UIColor.gray.cgColor
         cell.imageView?.clipsToBounds = true
+        cell.imageView?.contentMode = .scaleAspectFill
        
+        cell.imageView?.layer.cornerRadius = (cell.imageView?.frame.size.width ?? 0) / 2
         return cell
     }
 
@@ -88,7 +91,7 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let selectedTeam = teams[indexPath.row]
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let teamInfoVC = storyboard.instantiateViewController(withIdentifier: "teamInfoViewController") as? TeamInfoViewController {
-            teamInfoVC.team = selectedTeam
+            teamInfoVC.teamId = selectedTeam.id  //pass the team ID to TeamInfoViewController
             self.navigationController?.pushViewController(teamInfoVC, animated: true)
         }
     }
