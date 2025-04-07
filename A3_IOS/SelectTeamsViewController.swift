@@ -77,7 +77,20 @@ class SelectTeamsViewController: UIViewController, UITableViewDelegate, UITableV
     @objc func checkboxTapped(_ sender: UIButton) {
         let index = sender.tag
         teams[index].isSelected.toggle()
+        
+        let teamName = teams[index].title
+        
+        if teams[index].isSelected {
+            if !competingTeams.contains(teamName) {
+                competingTeams.append(teamName)
+            }
+        } else {
+            competingTeams.removeAll { $0 == teamName}
+        }
+        
+        
         tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+        
     }
 
 
