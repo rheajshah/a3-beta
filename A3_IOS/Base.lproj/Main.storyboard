@@ -567,19 +567,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sSX-nB-upa">
-                                <rect key="frame" x="94" y="573" width="215" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="5n7-Jy-tEl"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Select Competing Teams"/>
-                                <connections>
-                                    <segue destination="rgo-ng-6l9" kind="popoverPresentation" popoverAnchorView="sSX-nB-upa" id="UhK-TY-LeW">
-                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                    </segue>
-                                </connections>
-                            </button>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="STC-QZ-ZFP">
                                 <rect key="frame" x="104.33333333333331" y="387" width="254" height="34"/>
                                 <constraints>
@@ -680,7 +667,6 @@
                             <constraint firstItem="KOV-YL-EXF" firstAttribute="top" secondItem="Eyq-er-mKE" secondAttribute="bottom" constant="22" id="AbE-PA-l9M"/>
                             <constraint firstItem="ATm-M3-Zok" firstAttribute="leading" secondItem="VwY-pI-WXh" secondAttribute="leading" constant="25" id="Bbi-K8-tDp"/>
                             <constraint firstItem="mUE-DX-qnK" firstAttribute="top" secondItem="VwY-pI-WXh" secondAttribute="top" constant="27" id="C5b-Wg-ZSS"/>
-                            <constraint firstItem="sSX-nB-upa" firstAttribute="top" secondItem="8hc-h3-IIV" secondAttribute="bottom" constant="14" id="DRB-aM-jQk"/>
                             <constraint firstItem="ATm-M3-Zok" firstAttribute="top" secondItem="Dvd-Xh-BM9" secondAttribute="bottom" constant="128" id="ETv-j8-rgf"/>
                             <constraint firstItem="Dvd-Xh-BM9" firstAttribute="top" secondItem="AWe-gs-ej4" secondAttribute="bottom" constant="8" id="FjJ-Yz-131"/>
                             <constraint firstItem="Eyq-er-mKE" firstAttribute="top" secondItem="mUE-DX-qnK" secondAttribute="bottom" constant="18" id="H9l-Ey-vab"/>
@@ -704,7 +690,6 @@
                             <constraint firstItem="Dvd-Xh-BM9" firstAttribute="trailing" secondItem="Vlf-m4-eRq" secondAttribute="trailing" constant="-42.333333333333343" id="oCD-wX-fpO"/>
                             <constraint firstItem="Mm6-vf-xFy" firstAttribute="centerY" secondItem="KOV-YL-EXF" secondAttribute="centerY" id="pR2-2g-56E"/>
                             <constraint firstItem="Vlf-m4-eRq" firstAttribute="leading" secondItem="ATm-M3-Zok" secondAttribute="leading" id="qKL-Hh-HQ6"/>
-                            <constraint firstItem="sSX-nB-upa" firstAttribute="centerX" secondItem="Xmd-wc-nak" secondAttribute="centerX" constant="5" id="rS0-JQ-4R5"/>
                             <constraint firstItem="VwY-pI-WXh" firstAttribute="bottom" secondItem="Vlf-m4-eRq" secondAttribute="bottom" constant="95" id="skw-iD-Sht"/>
                             <constraint firstItem="Vlf-m4-eRq" firstAttribute="leading" secondItem="VwY-pI-WXh" secondAttribute="leading" constant="25" id="tL8-HF-S00"/>
                             <constraint firstItem="8hc-h3-IIV" firstAttribute="leading" secondItem="Dvd-Xh-BM9" secondAttribute="trailing" constant="8" symbolic="YES" id="xbU-21-aPx"/>
@@ -1722,8 +1707,8 @@
                                     <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DYp-YQ-xyR">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Placings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zaC-XC-iEW">
-                                                <rect key="frame" x="31" y="22" width="64" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lineup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zaC-XC-iEW">
+                                                <rect key="frame" x="31" y="22" width="52" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1769,6 +1754,19 @@
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
+                                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TET-to-tMM">
+                                                <rect key="frame" x="147" y="22" width="215" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="34" id="wut-Xw-y6r"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="gray" title="Select Competing Teams"/>
+                                                <connections>
+                                                    <segue destination="rgo-ng-6l9" kind="popoverPresentation" identifier="showSelectTeamsView" popoverAnchorView="TET-to-tMM" id="vZZ-js-XQZ">
+                                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                                    </segue>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -1779,6 +1777,7 @@
                                             <constraint firstItem="356-Dc-aeh" firstAttribute="leading" secondItem="DYp-YQ-xyR" secondAttribute="leading" constant="31" id="UTf-ya-NSu"/>
                                             <constraint firstAttribute="bottom" secondItem="356-Dc-aeh" secondAttribute="bottom" id="Uqi-Qh-RlV"/>
                                             <constraint firstItem="zaC-XC-iEW" firstAttribute="top" secondItem="DYp-YQ-xyR" secondAttribute="top" constant="22" id="c2V-7W-6Rn"/>
+                                            <constraint firstItem="TET-to-tMM" firstAttribute="leading" secondItem="zaC-XC-iEW" secondAttribute="trailing" constant="64" id="rgU-5k-HRp"/>
                                             <constraint firstItem="356-Dc-aeh" firstAttribute="top" secondItem="DYp-YQ-xyR" secondAttribute="top" constant="51" id="snM-Wn-Urt"/>
                                         </constraints>
                                     </view>
@@ -1798,6 +1797,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="6uc-24-nNU" firstAttribute="top" secondItem="Ezi-G8-Rnr" secondAttribute="top" id="1Qv-2Q-NTl"/>
+                            <constraint firstItem="TET-to-tMM" firstAttribute="top" secondItem="Ezi-G8-Rnr" secondAttribute="top" constant="22" id="7Dg-67-zCe"/>
                             <constraint firstItem="Ezi-G8-Rnr" firstAttribute="bottom" secondItem="6uc-24-nNU" secondAttribute="bottom" id="CEz-re-El2"/>
                             <constraint firstItem="Ezi-G8-Rnr" firstAttribute="trailing" secondItem="6uc-24-nNU" secondAttribute="trailing" id="M3Z-Gu-cmn"/>
                             <constraint firstItem="6uc-24-nNU" firstAttribute="leading" secondItem="Ezi-G8-Rnr" secondAttribute="leading" id="aau-p9-9Jv"/>

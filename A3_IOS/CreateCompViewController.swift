@@ -9,8 +9,6 @@ import UIKit
 import FirebaseStorage
 import FirebaseFirestore
 
-var competingTeams: [String] = []
-
 class CreateCompViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,
                                 UIPickerViewDelegate, UIPickerViewDataSource{
 
@@ -147,6 +145,7 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
         
 
         //default values will be added via edit function NOT at time of creation
+        let competingTeams: [String] = []
         let compJudges: [String] = []
         let placings: [String] = []
         let scoreSheetRef: String = ""
@@ -166,7 +165,7 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
                     "instagram": instagram,
                     "bannerURL": bannerURL ?? "",
                     "logoURL": logoURL ?? "",
-                    "teams": competingTeams, //this is filled from the select competing teams screen
+                    "teams": competingTeams, //this is filled in lineup subscreen
                     "placings": placings,
                     "judges": compJudges,
                     "scoreSheetRef": scoreSheetRef,
@@ -175,7 +174,7 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
                     "photosLink": photosLink,
                 ]
                 
-                Firestore.firestore().collection("competitions").document(compID).setData(compData) { error in
+                Firestore.firestore().collection("comps").document(compID).setData(compData) { error in
                     if let error = error {
                         print("Error saving comp: \(error)")
                         self.showAlert(title: "Error", message: "Failed to save competition.")

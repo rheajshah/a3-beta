@@ -21,9 +21,9 @@ class CompDescriptionViewController: UIViewController {
     @IBOutlet weak var compDescSegCtrl: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
     
-    //var competitionID: String!
+    var competitionID: String!
     
-    var competitionID = "zq9fBxV1fs03TjdI8cp4"
+    //var competitionID = "02910788-5748-43D0-A9E6-68E45CC310EA"
     
     // Keep track of current child VC (embedded in the container)
     var currentChildVC: UIViewController?
@@ -53,7 +53,9 @@ class CompDescriptionViewController: UIViewController {
             let city = data["city"] as? String ?? ""
             let state = data["state"] as? String ?? ""
             let location = (city.isEmpty && state.isEmpty) ? "Location not available" : "\(city), \(state)"
-            let bannerPath = data["compBannerRef"] as? String ?? ""
+            let bannerPath = data["bannerURL"] as? String ?? ""
+            
+            // Only load banner image if the path exists
             if !bannerPath.isEmpty {
                 let storageRef = Storage.storage().reference(withPath: bannerPath)
                 storageRef.downloadURL { url, error in
@@ -67,7 +69,7 @@ class CompDescriptionViewController: UIViewController {
                 print("No banner path found.")
             }
 
-
+            // Update labels with fetched data
             DispatchQueue.main.async {
                 self.compName.text = name
                 self.compDate.text = date
@@ -77,8 +79,8 @@ class CompDescriptionViewController: UIViewController {
     }
     
     func loadImage(from url: URL, into imageView: UIImageView?) {
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            if let data = data, error == nil {
+        URLSession.shared.dataTask(with: url) { data, _, _ in
+            if let data = data {
                 DispatchQueue.main.async {
                     imageView?.image = UIImage(data: data)
                 }
@@ -99,7 +101,7 @@ class CompDescriptionViewController: UIViewController {
         switch index {
         case 0:
             let vc = storyboard?.instantiateViewController(withIdentifier: "LineupSubviewViewController") as! LineupSubviewViewController
-            //vc.competitionID = self.competitionID
+            vc.competitionID = self.competitionID
             newVC = vc
         case 1:
             let vc = storyboard?.instantiateViewController(withIdentifier: "JudgingSubviewViewController") as! JudgingSubviewViewController

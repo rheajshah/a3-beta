@@ -9,21 +9,22 @@ import UIKit
 
 class LineupSubviewViewController: UIViewController {
 
+    var competitionID: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    // Prepare for segue to SelectTeamsViewController
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "showSelectTeamsView" {
+            // Get the destination view controller (SelectTeamsViewController)
+            if let selectTeamsVC = segue.destination as? SelectTeamsViewController {
+                // Pass the competitionID to the SelectTeamsViewController
+                selectTeamsVC.competitionID = self.competitionID
+            }
+        }
     }
-    */
-
 }
