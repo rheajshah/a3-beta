@@ -51,11 +51,17 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
         dateField.inputView = datePicker
         dateField.text = formatDate(date: Date())
         
-        // setting initial values for the comp image
+        // setting initial values for the comp image (banner)
         compImage.layer.borderWidth = 2
         compImage.layer.borderColor = UIColor.gray.cgColor
         compImage.clipsToBounds = true
         compImage.contentMode = .scaleAspectFill
+        
+        // setting initial values for the comp logo
+        compLogo.layer.borderWidth = 2
+        compLogo.layer.borderColor = UIColor.gray.cgColor
+        compLogo.clipsToBounds = true
+        compLogo.contentMode = .scaleAspectFill
         
         // State Picker View
         statePickerView.delegate = self
@@ -93,14 +99,11 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     @IBAction func chooseCompImage(_ sender: Any) {
-//        imagePicker.sourceType = .photoLibrary
-//        imagePicker.allowsEditing = true
-//        present(imagePicker, animated: true, completion: nil)
         isSelectingBanner = true
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         picker.delegate = self
-         picker.allowsEditing = true
+        picker.allowsEditing = true
         present(picker, animated: true)
     }
     
@@ -114,8 +117,6 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
         picker.allowsEditing = true
         present(picker, animated: true)
     }
-    
-    
     
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -132,95 +133,83 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     
-    @IBAction func saveCompClicked(_ sender: Any) {
-        // Firestore Data
-        var id = UUID().uuidString
-        var compName = nameField.text!
-        var city = cityField.text!
-        var state = selectedState!
-        var date = dateField.text!
-        var compJudges: [String] = []
-        var placings: [String] = []
-        var compBannerRef = "comps/\(id)/banner.jpg"
-        var compLogoRef: String = "comps/\(id)/logo.jpg"
-        var scoreSheetRef: String = ""
-        var feedbackSheetRef = ""
-        var videosLink = ""
-        var photosLink = ""
-        var instagram = instagramField.text!
-        
-        
-        // Image Uploading to Firebase storage
-        let storageRef = Storage.storage().reference()
-        guard let logo = compImage.image,
-              let compLogoData = logo.jpegData(compressionQuality: 0.8) else {
-            print("Image conversion failed")
+    @IBAction func onSaveCompPressed(_ sender: Any) {
+        guard let name = nameField.text, !name.isEmpty,
+              let city = cityField.text, !city.isEmpty,
+              let state = selectedState, !state.isEmpty,
+              let date = dateField.text else {
+            showAlert(title: "Missing Info", message: "Please fill in all required fields.")
             return
         }
+
+        let compID = UUID().uuidString
+        let instagram = instagramField.text ?? ""
         
-        var fileRef = storageRef.child("comps/\(id)/logo.jpg")
+
+        //default values will be added via edit function NOT at time of creation
+        let compJudges: [String] = []
+        let placings: [String] = []
+        let scoreSheetRef: String = ""
+        let feedbackSheetRef = ""
+        let videosLink = ""
+        let photosLink = ""
         
-        var uploadTask = fileRef.putData(compLogoData, metadata: nil) {
-            metadata, error in
-            
-            if error == nil && metadata != nil {
-                print("Successfully uploaded to Storage")
-                // TODO Save a reference to the file in Firestore DB
-                compLogoRef = "comps/\(id)/logo.jpg"
-            } else {
-                print("Error while trying to upload to Storage")
+        uploadImage(compImage.image, path: "comps/comp_banners/\(compID).jpg") { bannerURL in
+            self.uploadImage(self.compLogo.image, path: "comps/comp_logos/\(compID).jpg") { logoURL in
+                
+                let compData: [String: Any] = [
+                    "id": compID,
+                    "name": name,
+                    "city": city,
+                    "state": state,
+                    "date": date,
+                    "instagram": instagram,
+                    "bannerURL": bannerURL ?? "",
+                    "logoURL": logoURL ?? "",
+                    "teams": competingTeams, //this is filled from the select competing teams screen
+                    "placings": placings,
+                    "judges": compJudges,
+                    "scoreSheetRef": scoreSheetRef,
+                    "feedbackSheetRef": feedbackSheetRef,
+                    "videosLink": videosLink,
+                    "photosLink": photosLink,
+                ]
+                
+                Firestore.firestore().collection("competitions").document(compID).setData(compData) { error in
+                    if let error = error {
+                        print("Error saving comp: \(error)")
+                        self.showAlert(title: "Error", message: "Failed to save competition.")
+                    } else {
+                        self.showAlert(title: "Success", message: "Competition created successfully!")
+                    }
+                }
             }
         }
-        
-        
-        guard let banner = compImage.image,
-              let compBannerData = banner.jpegData(compressionQuality: 0.8) else {
-            print("Image conversion failed")
+    }
+    
+    func uploadImage(_ image: UIImage?, path: String, completion: @escaping (String?) -> Void) {
+        guard let image = image, let imageData = image.jpegData(compressionQuality: 0.5) else {
+            completion(nil)
             return
         }
-        
-        
-        fileRef = storageRef.child("comps/\(id)/banner.jpg")
-        
-        uploadTask = fileRef.putData(compBannerData, metadata: nil) {
-            metadata, error in
-            
-            if error == nil && metadata != nil {
-                print("Successfully uploaded to Storage")
-                // TODO Save a reference to the file in Firestore DB
-                compBannerRef = "comps/\(id)/banner.jpg"
-            } else {
-                print("Error while trying to upload to Storage")
-            }
-        }
-        
-        let data: [String: Any] = [
-            "id": id,
-            "name": compName,
-            "city": city,
-            "state": state,
-            "date": date,
-            "competingTeams": competingTeams,
-            "placings": placings,
-            "judges": compJudges,
-            "compBannerRef": compBannerRef,
-            "compLogoRef": compLogoRef,
-            "scoreSheetRef": scoreSheetRef,
-            "feedbackSheetRef": feedbackSheetRef,
-            "videosLink": videosLink,
-            "photosLink": photosLink,
-            "instagram": instagram
-        ]
-        
-        let db = Firestore.firestore()
-        db.collection("comps").addDocument(data: data) {
-            error in
+
+        let ref = Storage.storage().reference().child(path)
+        ref.putData(imageData, metadata: nil) { _, error in
             if let error = error {
-                print("Failed to write document: \(error)")
-            } else {
-                print("Succeeded in writing document")
+                print("Upload error: \(error)")
+                completion(nil)
+                return
+            }
+            ref.downloadURL { url, _ in
+                completion(url?.absoluteString)
             }
         }
+    }
+
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 }
 

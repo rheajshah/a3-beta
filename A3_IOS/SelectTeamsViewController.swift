@@ -88,12 +88,8 @@ class SelectTeamsViewController: UIViewController, UITableViewDelegate, UITableV
             competingTeams.removeAll { $0 == teamName}
         }
         
-        
         tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-        
     }
-
-
 }
 
 
