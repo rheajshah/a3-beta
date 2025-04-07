@@ -12,4 +12,9 @@ class PrevCompCell: UITableViewCell {
     @IBOutlet var prevCompImageView: UIImageView!
     @IBOutlet var prevCompDate: UILabel!
     @IBOutlet var prevCompName: UILabel!
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        prevCompImageView.image = nil
+    }
 }
