@@ -33,6 +33,11 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         fetchTeamsFromFirestore()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchTeamsFromFirestore()  // Fetch teams again when the view appears (after adding a new team)
+    }
+    
     func fetchTeamsFromFirestore() {
         db.collection("teams").getDocuments { (snapshot, error) in
             if let error = error {
@@ -60,31 +65,23 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     //TableView Methods
+    // Set the height of the cells (make them bigger)
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 85
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return teams.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let team = teams[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TeamCell", for: indexPath)
+                
+        // Dequeue the custom cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomTeamSummaryCell", for: indexPath) as! CustomTeamSummaryCell
         
-        // Set team name and university in the text labels
-        cell.textLabel?.text = team.name
-        cell.detailTextLabel?.text = team.university
-        
-        // Fetch team logo image from URL
-        if let logoURL = URL(string: team.teamLogoURL) {
-            loadImage(from: logoURL, into: cell.imageView)
-        }
-        
-        // Make the image circular once it is loaded
-        cell.imageView?.layer.borderWidth = 2
-        cell.imageView?.layer.borderColor = UIColor.gray.cgColor
-        cell.imageView?.clipsToBounds = true
-        cell.imageView?.contentMode = .scaleAspectFill
-        
-        // Ensure the corner radius is updated once the image is loaded and frame is set
-        cell.imageView?.layer.cornerRadius = (cell.imageView?.frame.size.width ?? 0) / 2
+        // Configure the custom cell with team data
+        cell.configure(with: team)
         
         return cell
     }
@@ -96,20 +93,5 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             teamInfoVC.teamId = selectedTeam.id  //pass the team ID to TeamInfoViewController
             self.navigationController?.pushViewController(teamInfoVC, animated: true)
         }
-    }
-    
-    func loadImage(from url: URL, into imageView: UIImageView?) {
-        // Load the image asynchronously
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            if let data = data {
-                DispatchQueue.main.async {
-                    // Ensure the image is set before updating the corner radius
-                    imageView?.image = UIImage(data: data)
-                    
-                    // Update the corner radius after the image is loaded
-                    imageView?.layer.cornerRadius = (imageView?.frame.size.width ?? 0) / 2
-                }
-            }
-        }.resume()
     }
 }

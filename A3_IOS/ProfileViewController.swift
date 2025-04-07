@@ -113,7 +113,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     //Upload Profile Image to Firebase Storage
     func uploadProfileImage(_ image: UIImage) {
         guard let userID = userID, let imageData = image.jpegData(compressionQuality: 0.5) else { return }
-        let storageRef = Storage.storage().reference().child("profileImages/\(userID).jpg")
+        let storageRef = Storage.storage().reference().child("users/profile_pictures/\(userID).jpg")
         
         storageRef.putData(imageData, metadata: nil) { _, error in
             if let error = error {
