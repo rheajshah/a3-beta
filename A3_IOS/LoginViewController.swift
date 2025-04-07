@@ -16,6 +16,15 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Add tap gesture recognizer to dismiss keyboard
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    // Dismiss the keyboard
+    @objc private func dismissKeyboard() {
+        print("Tapped background")
+        view.endEditing(true)
     }
     
     @IBAction func loginButtonPressed(_ sender: Any) {
