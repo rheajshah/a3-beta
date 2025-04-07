@@ -32,7 +32,7 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         fetchTeamsFromFirestore()
     }
-
+    
     func fetchTeamsFromFirestore() {
         db.collection("teams").getDocuments { (snapshot, error) in
             if let error = error {
@@ -63,7 +63,7 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return teams.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let team = teams[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "TeamCell", for: indexPath)
@@ -77,16 +77,18 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             loadImage(from: logoURL, into: cell.imageView)
         }
         
-        //make the image circular
+        // Make the image circular once it is loaded
         cell.imageView?.layer.borderWidth = 2
         cell.imageView?.layer.borderColor = UIColor.gray.cgColor
         cell.imageView?.clipsToBounds = true
         cell.imageView?.contentMode = .scaleAspectFill
-       
+        
+        // Ensure the corner radius is updated once the image is loaded and frame is set
         cell.imageView?.layer.cornerRadius = (cell.imageView?.frame.size.width ?? 0) / 2
+        
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedTeam = teams[indexPath.row]
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -97,10 +99,15 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func loadImage(from url: URL, into imageView: UIImageView?) {
+        // Load the image asynchronously
         URLSession.shared.dataTask(with: url) { data, _, _ in
             if let data = data {
                 DispatchQueue.main.async {
+                    // Ensure the image is set before updating the corner radius
                     imageView?.image = UIImage(data: data)
+                    
+                    // Update the corner radius after the image is loaded
+                    imageView?.layer.cornerRadius = (imageView?.frame.size.width ?? 0) / 2
                 }
             }
         }.resume()
