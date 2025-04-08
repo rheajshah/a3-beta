@@ -22,13 +22,7 @@ class TeamInfoViewController: UIViewController, UICollectionViewDataSource, UICo
     
     //a variable to hold the team ID passed from TeamsViewController
     var teamId: String?
-    let list: [singleComp] = [
-        singleComp(title: "Box 1", imageName: "box1"),
-        singleComp(title: "Box 2", imageName: "box2"),
-        singleComp(title: "Box 3", imageName: "box3"),
-        singleComp(title: "Box 4", imageName: "box4")
-    ]
-    
+    var comps: [CompCollectionViewCell] = []
     private let db = Firestore.firestore()
     
     override func viewDidLoad() {
@@ -65,6 +59,7 @@ class TeamInfoViewController: UIViewController, UICollectionViewDataSource, UICo
                 let teamPictureURL = data?["teamPictureURL"] as? String ?? ""
                 let eloRank = data?["eloRank"] as? Int ?? -1
                 let eloScore = data?["eloScore"] as? Double ?? 0.0
+                let compIds = data?["comps"] as? [String] ?? []
                 
                 // Update the UI with the fetched data
                 DispatchQueue.main.async {
@@ -80,12 +75,52 @@ class TeamInfoViewController: UIViewController, UICollectionViewDataSource, UICo
                     if let pictureURL = URL(string: teamPictureURL) {
                         self.loadImage(from: pictureURL, into: self.teamPicture)
                     }
+                    
+                    // Fetch competitions
+                    self.fetchCompetitions(for: compIds)
                 }
             }
         }
     }
     
-    // Function to load an image from a URL asynchronously
+    func fetchCompetitions(for compIds: [String]) {
+        guard !compIds.isEmpty else {
+            self.comps = []
+            self.collectionView.reloadData()
+            return
+        }
+
+        let group = DispatchGroup()
+        var tempComps: [CompCollectionViewCell] = []
+
+        for compId in compIds {
+            group.enter()
+            db.collection("comps").document(compId).getDocument { (doc, err) in
+                defer { group.leave() }
+
+                if let err = err {
+                    print("Error fetching comp \(compId): \(err)")
+                    return
+                }
+
+                if let compData = doc?.data() {
+                    let id = compData["id"] as! String
+                    let name = compData["name"] as? String ?? "N/A"
+                    let date = compData["date"] as? String ?? ""
+                    let logoURL = compData["logoURL"] as? String ?? ""
+                    let newComp = CompCollectionViewCell(id: id, dateOrRank: date, name: name, imageURL: logoURL)
+                    tempComps.append(newComp)
+                }
+            }
+        }
+
+        group.notify(queue: .main) {
+            self.comps = tempComps.sorted { $0.dateOrRank < $1.dateOrRank } // optional: sort by date
+            self.collectionView.reloadData()
+        }
+    }
+
+
     func loadImage(from url: URL, into imageView: UIImageView?) {
         URLSession.shared.dataTask(with: url) { data, _, _ in
             if let data = data {
@@ -95,33 +130,56 @@ class TeamInfoViewController: UIViewController, UICollectionViewDataSource, UICo
             }
         }.resume()
     }
-    
+
+    // MARK: - UICollectionView
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return list.count
+        return comps.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CompCell", for: indexPath) as! CompCell
-        let box = list[indexPath.item]
-        cell.compDate.text = box.title
-       // cell.compImage.image = UIImage(named: box.imageName)
+        let comp = comps[indexPath.item]
+
+        cell.compDate.text = comp.dateOrRank
+        cell.compName.text = comp.name
+
+        if let url = URL(string: comp.imageURL) {
+            loadImage(from: url, into: cell.compImage)
+        } else {
+            cell.compImage.image = nil
+        }
+
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-                            sizeForItemAt indexPath: IndexPath) -> CGSize {
-            return CGSize(width: 100, height: 160)
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 100, height: 160)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // Get the selected competition
+        let selectedComp = comps[indexPath.item]
+        
+        // Perform the segue to the competition description view
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let compInfoVC = storyboard.instantiateViewController(withIdentifier: "CompDescriptionViewController") as? CompDescriptionViewController {
+            compInfoVC.competitionID = selectedComp.id  //pass the comp ID to CompDescriptionViewController
+            self.navigationController?.pushViewController(compInfoVC, animated: true)
+        }
     }
 }
 
 class CompCell: UICollectionViewCell {
-    
     @IBOutlet weak var compImage: UIImageView!
-    
+    @IBOutlet weak var compName: UILabel!
     @IBOutlet weak var compDate: UILabel!
 }
 
-struct singleComp {
-    let title: String
-    let imageName: String
+struct CompCollectionViewCell {
+    let id: String
+    let dateOrRank: String     // date (or rank if comp happened alr)
+    let name: String      // comp name
+    let imageURL: String  // bannerURL
 }

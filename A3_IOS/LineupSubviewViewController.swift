@@ -101,6 +101,18 @@ class LineupSubviewViewController: UIViewController, UITableViewDelegate, UITabl
 
         return cell
     }
+    
+    // Handle tap on a team from the list in LineupSubviewViewController
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedTeam = attendingTeams[indexPath.row]
+        
+        // Perform the segue to the team details view
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let teamInfoVC = storyboard.instantiateViewController(withIdentifier: "teamInfoViewController") as? TeamInfoViewController {
+            teamInfoVC.teamId = selectedTeam.id  //pass the team ID to TeamInfoViewController
+            self.navigationController?.pushViewController(teamInfoVC, animated: true)
+        }
+    }
 
     // Prepare for segue to SelectTeamsViewController
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
