@@ -1853,7 +1853,8 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QuH-aE-aNN">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" systemColor="lightTextColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="selectedImageTintColor" red="0.11372549830000001" green="0.035294115539999997" blue="0.42352938649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </tabBar>
                     <connections>
@@ -2219,81 +2220,102 @@
         <scene sceneID="hdx-Mt-KIS">
             <objects>
                 <viewController storyboardIdentifier="MediaSubviewViewController" id="KtZ-Nm-Tgn" customClass="MediaSubviewViewController" customModule="A3_IOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ZYj-AQ-ObD">
+                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" id="Iwx-jh-Sp0">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kQY-dm-rY2">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
-                                <subviews>
-                                    <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Ll-2T-wZN">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nQ8-Qe-3Ml">
+                                <rect key="frame" x="25" y="298" width="155" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Official Comp Photos">
+                                    <fontDescription key="titleFontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="14"/>
+                                </buttonConfiguration>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bWA-BO-R54">
+                                <rect key="frame" x="110.66666666666669" y="255.00000000000003" width="172" height="30.333333333333343"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Upload Photos &amp; Videos">
+                                    <fontDescription key="titleFontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="14"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="uploadPhotoVideoButtonTapped:" destination="KtZ-Nm-Tgn" eventType="touchUpInside" id="6sz-5W-Ajv"/>
+                                </connections>
+                            </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Wzp-2o-ELz">
+                                <rect key="frame" x="10" y="84" width="373" height="161"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1cU-fh-iBI">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MediaCell" id="6ep-KT-JBP" customClass="MediaCell" customModule="A3_IOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o5I-vY-kAT">
-                                                <rect key="frame" x="207" y="26" width="185.33333333333303" height="35"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="tintColor" red="0.2784313725" green="0.039215686270000001" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="gray" title="Official Comp Photos" titleAlignment="center"/>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DQB-EH-ada">
-                                                <rect key="frame" x="35" y="26" width="161" height="35"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="tintColor" red="0.2784313725" green="0.039215686270000001" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="gray" title="Official Comp Videos" titleAlignment="center"/>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hvm-7t-2be">
-                                                <rect key="frame" x="64" y="285" width="265.66666666666697" height="35"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="tintColor" red="0.2784313725" green="0.039215686270000001" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="gray" title="Upload Photos / Videos / Audio Files" titleAlignment="center"/>
-                                            </button>
-                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Oy2-Cw-ExC">
-                                                <rect key="frame" x="35" y="95" width="323" height="150"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
-                                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="DAa-ks-c16">
-                                                    <size key="itemSize" width="104" height="100"/>
-                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                </collectionViewFlowLayout>
-                                                <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="L9F-sm-Xqm">
-                                                        <rect key="frame" x="0.0" y="0.0" width="104" height="100"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nPq-zY-2sF">
-                                                            <rect key="frame" x="0.0" y="0.0" width="104" height="100"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                        </collectionViewCellContentView>
-                                                        <size key="customSize" width="104" height="100"/>
-                                                    </collectionViewCell>
-                                                </cells>
-                                            </collectionView>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
-                                </subviews>
-                                <viewLayoutGuide key="contentLayoutGuide" id="t3A-qu-ocW"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="0Xa-cn-0Jq"/>
-                            </scrollView>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="iHN-Ev-Op2">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AYd-it-lz4">
+                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="AYd-it-lz4" firstAttribute="leading" secondItem="iHN-Ev-Op2" secondAttribute="leading" id="P7H-Hx-lS9"/>
+                                                <constraint firstAttribute="trailing" secondItem="AYd-it-lz4" secondAttribute="trailing" id="Pql-tp-b00"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="imageView" destination="AYd-it-lz4" id="o1S-5Q-Epd"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kxS-Ta-b6W">
+                                <rect key="frame" x="213" y="298" width="155" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Official Comp Videos">
+                                    <fontDescription key="titleFontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="14"/>
+                                </buttonConfiguration>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="waX-MI-5Sl">
+                                <rect key="frame" x="286" y="53" width="97" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Edit Links"/>
+                            </button>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="wc1-TA-W2o"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <viewLayoutGuide key="safeArea" id="EdL-Dk-G7r"/>
+                        <color key="backgroundColor" red="0.86666667460000002" green="0.82745099070000006" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="kQY-dm-rY2" firstAttribute="leading" secondItem="wc1-TA-W2o" secondAttribute="leading" id="3xh-rm-ijD"/>
-                            <constraint firstItem="kQY-dm-rY2" firstAttribute="top" secondItem="wc1-TA-W2o" secondAttribute="top" id="4fa-Tl-ofs"/>
-                            <constraint firstItem="wc1-TA-W2o" firstAttribute="trailing" secondItem="kQY-dm-rY2" secondAttribute="trailing" id="OSS-fI-g2V"/>
-                            <constraint firstItem="wc1-TA-W2o" firstAttribute="bottom" secondItem="kQY-dm-rY2" secondAttribute="bottom" id="pu6-oL-F3y"/>
+                            <constraint firstItem="bWA-BO-R54" firstAttribute="centerX" secondItem="Iwx-jh-Sp0" secondAttribute="centerX" id="0Ob-nw-m4S"/>
+                            <constraint firstItem="Wzp-2o-ELz" firstAttribute="top" secondItem="EdL-Dk-G7r" secondAttribute="top" constant="25" id="15s-rN-fJX"/>
+                            <constraint firstItem="bWA-BO-R54" firstAttribute="top" secondItem="EdL-Dk-G7r" secondAttribute="top" constant="196" id="9aw-YI-zEQ"/>
+                            <constraint firstItem="Wzp-2o-ELz" firstAttribute="leading" secondItem="EdL-Dk-G7r" secondAttribute="leading" constant="10" id="DA8-Rt-8tv"/>
+                            <constraint firstItem="nQ8-Qe-3Ml" firstAttribute="top" secondItem="bWA-BO-R54" secondAttribute="bottom" constant="12.666666666667481" id="GrE-rn-3wR"/>
+                            <constraint firstItem="EdL-Dk-G7r" firstAttribute="trailing" secondItem="waX-MI-5Sl" secondAttribute="trailing" constant="10" id="Iy7-ld-HAk"/>
+                            <constraint firstItem="EdL-Dk-G7r" firstAttribute="top" secondItem="waX-MI-5Sl" secondAttribute="top" constant="6" id="JrZ-gN-LAR"/>
+                            <constraint firstItem="EdL-Dk-G7r" firstAttribute="trailing" secondItem="Wzp-2o-ELz" secondAttribute="trailing" constant="10" id="QAI-H8-j0e"/>
+                            <constraint firstItem="bWA-BO-R54" firstAttribute="top" secondItem="Wzp-2o-ELz" secondAttribute="bottom" constant="10" id="R8c-o5-lam"/>
+                            <constraint firstItem="kxS-Ta-b6W" firstAttribute="top" secondItem="bWA-BO-R54" secondAttribute="bottom" constant="12.666666666667481" id="jh2-vu-yH1"/>
+                            <constraint firstItem="EdL-Dk-G7r" firstAttribute="trailing" secondItem="kxS-Ta-b6W" secondAttribute="trailing" constant="25" id="qji-Pj-Zxg"/>
+                            <constraint firstItem="nQ8-Qe-3Ml" firstAttribute="leading" secondItem="EdL-Dk-G7r" secondAttribute="leading" constant="25" id="sfu-fm-4lW"/>
                         </constraints>
-                    </view>
+                        <viewLayoutGuide key="contentLayoutGuide" id="epI-hC-8VI"/>
+                        <viewLayoutGuide key="frameLayoutGuide" id="RaB-gK-FQf"/>
+                    </scrollView>
+                    <connections>
+                        <outlet property="editLinkButton" destination="waX-MI-5Sl" id="0aX-p7-qWS"/>
+                        <outlet property="mediaCollectionView" destination="Wzp-2o-ELz" id="1YL-Oz-0kl"/>
+                        <outlet property="officialCompPhotosButton" destination="nQ8-Qe-3Ml" id="83e-Dt-JiR"/>
+                        <outlet property="officialCompVideosButton" destination="kxS-Ta-b6W" id="633-nJ-xkO"/>
+                        <outlet property="uploadPhotoVideoButton" destination="bWA-BO-R54" id="24N-c2-6pZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gS4-Uc-y0Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11660" y="-137"/>
+            <point key="canvasLocation" x="11739.694656488549" y="-137.32394366197184"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
@@ -2316,12 +2338,6 @@
         <namedColor name="AccentColor">
             <color red="1" green="0.79199999570846558" blue="0.15700000524520874" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="lightTextColor">
-            <color white="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
