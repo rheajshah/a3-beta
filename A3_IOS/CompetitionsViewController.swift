@@ -63,6 +63,10 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
         
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    
 
     @IBOutlet var previousCompTableView: UITableView!
     @IBOutlet weak var profileButton: UIBarButtonItem!

@@ -56,7 +56,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="373" height="71"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Comp Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zTN-cq-Nyy">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comp Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zTN-cq-Nyy">
                                                     <rect key="frame" x="82" y="13" width="176" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="D7P-fx-c01"/>
@@ -66,7 +66,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Comp Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7te-M4-14s">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comp Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7te-M4-14s">
                                                     <rect key="frame" x="82" y="36" width="176" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="9PQ-3C-g1d"/>
@@ -76,17 +76,20 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UBz-bm-96N">
-                                                    <rect key="frame" x="10" y="11" width="64" height="49"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UBz-bm-96N">
+                                                    <rect key="frame" x="14" y="5.6666666666666643" width="60" height="59.999999999999993"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="49" id="WIU-Rl-RpR"/>
-                                                        <constraint firstAttribute="width" constant="64" id="lKy-np-5dM"/>
+                                                        <constraint firstAttribute="width" constant="60" id="C9y-qA-Aie"/>
+                                                        <constraint firstAttribute="height" constant="60" id="N40-4G-JRs"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="7te-M4-14s" firstAttribute="leading" secondItem="UBz-bm-96N" secondAttribute="trailing" constant="8" symbolic="YES" id="6ly-hj-jML"/>
                                                 <constraint firstItem="7te-M4-14s" firstAttribute="leading" secondItem="zTN-cq-Nyy" secondAttribute="leading" id="Cjt-sO-hLf"/>
+                                                <constraint firstItem="zTN-cq-Nyy" firstAttribute="top" secondItem="EF4-bh-GrY" secondAttribute="topMargin" constant="2" id="RIl-RO-t3D"/>
+                                                <constraint firstItem="UBz-bm-96N" firstAttribute="centerY" secondItem="EF4-bh-GrY" secondAttribute="centerY" id="Vdc-Ak-XQS"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="zTN-cq-Nyy" secondAttribute="trailing" constant="95" id="etv-Cx-jRr"/>
                                                 <constraint firstItem="7te-M4-14s" firstAttribute="top" secondItem="zTN-cq-Nyy" secondAttribute="bottom" constant="2" id="sZz-4w-Ctl"/>
                                             </constraints>
                                         </tableViewCellContentView>
