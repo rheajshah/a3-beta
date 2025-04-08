@@ -54,21 +54,18 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedComp = previousComps[indexPath.row]
-        performSegue(withIdentifier: "CompDescSegue", sender: selectedComp.id)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "CompDescSegue",
-           let dest = segue.destination as? CompDescriptionViewController,
-           let compId = sender as? String {
-            dest.competitionID = compId
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let compInfoVC = storyboard.instantiateViewController(withIdentifier: "CompDescriptionViewController") as? CompDescriptionViewController {
+            compInfoVC.competitionID = selectedComp.id  //pass the comp ID to CompDescriptionViewController
+            self.navigationController?.pushViewController(compInfoVC, animated: true)
         }
+        
     }
     
 
     @IBOutlet var previousCompTableView: UITableView!
     @IBOutlet weak var profileButton: UIBarButtonItem!
-    
     @IBOutlet weak var collectionView: UICollectionView!
     
     let list: [Comp] = [

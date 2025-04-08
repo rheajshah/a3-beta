@@ -15,6 +15,7 @@ class MediaSubviewViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var officialCompVideosButton: UIButton!
     @IBOutlet weak var uploadPhotoVideoButton: UIButton!
     @IBOutlet weak var mediaCollectionView: UICollectionView!
+    
     var competitionID: String!
     var uploadedMediaURLs: [String] = []
     

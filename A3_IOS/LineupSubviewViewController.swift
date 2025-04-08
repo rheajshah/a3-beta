@@ -45,6 +45,11 @@ class LineupSubviewViewController: UIViewController, UITableViewDelegate, UITabl
 
     // Fetch details of the teams using their IDs
     func fetchTeamDetails(teamIDs: [String]) {
+        guard !teamIDs.isEmpty else {
+            print("Empty teamIDs array. Skipping Firestore query.")
+            return
+        }
+        
         db.collection("teams").whereField(FieldPath.documentID(), in: teamIDs).getDocuments { snapshot, error in
             if let error = error {
                 print("Error fetching team details: \(error)")

@@ -109,7 +109,7 @@ class CompDescriptionViewController: UIViewController {
             newVC = vc
         case 2:
             let vc = storyboard?.instantiateViewController(withIdentifier: "MediaSubviewViewController") as! MediaSubviewViewController
-            //vc.competitionID = self.competitionID
+            vc.competitionID = self.competitionID
             newVC = vc
         default:
             return
