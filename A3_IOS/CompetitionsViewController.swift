@@ -153,7 +153,7 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                             sizeForItemAt indexPath: IndexPath) -> CGSize {
             return CGSize(width: 120, height: 160)
-        }
+    }
 }
 
 class BoxCell: UICollectionViewCell {

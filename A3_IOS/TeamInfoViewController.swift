@@ -9,7 +9,7 @@ import UIKit
 import FirebaseFirestore
 import FirebaseStorage
 
-class TeamInfoViewController: UIViewController {
+class TeamInfoViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate {
     
     @IBOutlet weak var teamPicture: UIImageView!
     @IBOutlet weak var teamName: UILabel!
@@ -18,15 +18,24 @@ class TeamInfoViewController: UIViewController {
     @IBOutlet weak var instagram: UILabel!
     @IBOutlet weak var eloRank: UILabel!
     @IBOutlet weak var eloScore: UILabel!
-    
+    @IBOutlet weak var collectionView: UICollectionView!
     
     //a variable to hold the team ID passed from TeamsViewController
     var teamId: String?
+    let list: [singleComp] = [
+        singleComp(title: "Box 1", imageName: "box1"),
+        singleComp(title: "Box 2", imageName: "box2"),
+        singleComp(title: "Box 3", imageName: "box3"),
+        singleComp(title: "Box 4", imageName: "box4")
+    ]
     
     private let db = Firestore.firestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
         
         // Check if the teamId is available, then fetch the team details
         if let teamId = teamId {
@@ -86,4 +95,33 @@ class TeamInfoViewController: UIViewController {
             }
         }.resume()
     }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return list.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CompCell", for: indexPath) as! CompCell
+        let box = list[indexPath.item]
+        cell.compDate.text = box.title
+       // cell.compImage.image = UIImage(named: box.imageName)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                            sizeForItemAt indexPath: IndexPath) -> CGSize {
+            return CGSize(width: 100, height: 160)
+    }
+}
+
+class CompCell: UICollectionViewCell {
+    
+    @IBOutlet weak var compImage: UIImageView!
+    
+    @IBOutlet weak var compDate: UILabel!
+}
+
+struct singleComp {
+    let title: String
+    let imageName: String
 }
