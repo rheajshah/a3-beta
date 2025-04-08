@@ -113,6 +113,7 @@ class CreateTeamViewController: UIViewController, UIPickerViewDelegate, UIPicker
         let teamID = UUID().uuidString
         let university = teamUniversityTextField.text ?? ""
         let instagram = instagramTextField.text ?? ""
+        let compsAttending: [String] = []
         
         uploadImage(teamPictureImageView.image, path: "teams/team_pictures/\(teamID).jpg") { teamPictureURL in
             self.uploadImage(self.teamLogoImageView.image, path: "teams/team_logos/\(teamID).jpg") { teamLogoURL in
@@ -125,7 +126,8 @@ class CreateTeamViewController: UIViewController, UIPickerViewDelegate, UIPicker
                     "state": state,
                     "instagram": instagram,
                     "teamPictureURL": teamPictureURL ?? "",
-                    "teamLogoURL": teamLogoURL ?? ""
+                    "teamLogoURL": teamLogoURL ?? "",
+                    "comps": compsAttending
                 ]
                 
                 self.db.collection("teams").document(teamID).setData(teamData) { error in

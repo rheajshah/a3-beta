@@ -97,23 +97,22 @@ class SelectTeamsViewController: UIViewController, UITableViewDelegate, UITableV
     
     @objc func checkboxTapped(_ sender: UIButton) {
         let index = sender.tag
-        let teamID = teams[index].id  // Use teamID for reference
+        let teamID = teams[index].id
 
-        // Toggle the selection
         teams[index].isSelected.toggle()
 
         if teams[index].isSelected {
             if !competingTeams.contains(teamID) {
                 competingTeams.append(teamID)
+                updateTeamDocument(teamID: teamID, add: true)  // ⬅️ add comp to team
             }
         } else {
             competingTeams.removeAll { $0 == teamID }
+            updateTeamDocument(teamID: teamID, add: false)  // ⬅️ remove comp from team
         }
-        
-        // Reload the row to update the checkbox UI
+
         tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
         
-        // Save the selected teams to the competition document in Firestore
         saveSelectedTeamsToCompetition(compID: competitionID)
     }
     
@@ -128,6 +127,32 @@ class SelectTeamsViewController: UIViewController, UITableViewDelegate, UITableV
                 print("Error updating competition with selected teams: \(error)")
             } else {
                 print("Competition updated with selected teams!")
+            }
+        }
+    }
+    
+    func updateTeamDocument(teamID: String, add: Bool) {
+        let teamRef = db.collection("teams").document(teamID)
+
+        if add {
+            teamRef.updateData([
+                "comps": FieldValue.arrayUnion([competitionID])
+            ]) { error in
+                if let error = error {
+                    print("Error adding comp to team \(teamID): \(error)")
+                } else {
+                    print("Comp \(self.competitionID!) added to team \(teamID)'s comps array")
+                }
+            }
+        } else {
+            teamRef.updateData([
+                "comps": FieldValue.arrayRemove([competitionID])
+            ]) { error in
+                if let error = error {
+                    print("Error removing comp from team \(teamID): \(error)")
+                } else {
+                    print("Comp \(self.competitionID!) removed from team \(teamID)'s comps array")
+                }
             }
         }
     }
