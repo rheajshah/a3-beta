@@ -15,22 +15,27 @@ class CompDescriptionViewController: UIViewController {
     @IBOutlet weak var compName: UILabel!
     @IBOutlet weak var locationIcon: UIImageView!
     @IBOutlet weak var compLocation: UILabel!
-    @IBOutlet weak var dataIcon: UIImageView!
+    @IBOutlet weak var dateIcon: UIImageView!
     @IBOutlet weak var compDate: UILabel!
+    @IBOutlet weak var instaIcon: UIImageView!
     
     @IBOutlet weak var compDescSegCtrl: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
     
     var competitionID: String!
     
-    //var competitionID = "02910788-5748-43D0-A9E6-68E45CC310EA"
-    
     // Keep track of current child VC (embedded in the container)
     var currentChildVC: UIViewController?
+    
+    var instagramHandle: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCompDetails()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openInstagram))
+        instaIcon.isUserInteractionEnabled = true
+        instaIcon.addGestureRecognizer(tapGesture)
+
         showSubview(index: compDescSegCtrl.selectedSegmentIndex)
     }
     
@@ -53,8 +58,9 @@ class CompDescriptionViewController: UIViewController {
             let city = data["city"] as? String ?? ""
             let state = data["state"] as? String ?? ""
             let location = (city.isEmpty && state.isEmpty) ? "Location not available" : "\(city), \(state)"
+            self.instagramHandle = data["instagram"] as? String
+           
             let bannerPath = data["bannerURL"] as? String ?? ""
-            
             // Only load banner image if the path exists
             if !bannerPath.isEmpty {
                 if let bannerURL = URL(string: bannerPath) {
@@ -81,6 +87,18 @@ class CompDescriptionViewController: UIViewController {
                 }
             }
         }.resume()
+    }
+
+    @objc func openInstagram() {
+        guard let handle = instagramHandle, !handle.isEmpty else {
+            print("No Instagram handle available")
+            return
+        }
+        
+        let urlString = "https://instagram.com/\(handle)"
+        if let url = URL(string: urlString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
 
     // Show or hide subviews based on the selected segment index
