@@ -142,10 +142,13 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QzY-xn-4t2">
-                                                    <rect key="frame" x="11" y="119" width="54" height="35"/>
+                                                    <rect key="frame" x="119" y="0.0" width="51" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.1137254902" green="0.035294117649999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" title="Edit"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="square.and.pencil" catalog="system">
+                                                        <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </buttonConfiguration>
                                                     <connections>
                                                         <action selector="editButtonTapped:" destination="ep0-Wi-rbm" eventType="touchUpInside" id="ePP-4P-nPn"/>
                                                         <action selector="editButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="p2H-Q9-xkQ"/>
@@ -642,36 +645,6 @@
                                     <constraint firstAttribute="height" constant="83" id="bTF-Kr-st4"/>
                                 </constraints>
                             </pickerView>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" verticalCompressionResistancePriority="752" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="@" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vlf-m4-eRq">
-                                <rect key="frame" x="25.000000000000014" y="778" width="222.33333333333337" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="2O2-lB-1lV"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="C3c-h5-LgA">
-                                <rect key="frame" x="317.66666666666669" y="743" width="75" height="75"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="75" id="FJY-49-woT"/>
-                                    <constraint firstAttribute="height" constant="75" id="GdF-UH-zME"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="753" text="Instagram" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATm-M3-Zok">
-                                <rect key="frame" x="25" y="750" width="76" height="20.333333333333371"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="C82-gf-Tu6">
-                                <rect key="frame" x="294.66666666666669" y="826" width="121" height="34.333333333333371"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="tinted" title="Upload Logo" titleAlignment="center"/>
-                                <connections>
-                                    <action selector="chooseCompLogo:" destination="JN9-ps-1Td" eventType="touchUpInside" id="X4h-lo-RbE"/>
-                                    <action selector="onSelectTeamLogoTapped:" destination="a9c-S2-r5k" eventType="touchUpInside" id="zy0-r6-Qco"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="City:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AWe-gs-ej4">
                                 <rect key="frame" x="20" y="559" width="35" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -701,6 +674,48 @@
                                 <buttonConfiguration key="configuration" style="plain" title="Upload Competition Banner"/>
                                 <connections>
                                     <action selector="chooseCompImage:" destination="JN9-ps-1Td" eventType="touchUpInside" id="eMc-vV-b0c"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nNN-VC-NVb">
+                                <rect key="frame" x="197" y="854" width="48" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.1137254902" green="0.035294117649999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="trash.fill" catalog="system">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="deleteCompPressed:" destination="JN9-ps-1Td" eventType="touchUpInside" id="gFx-Yw-5KL"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" verticalCompressionResistancePriority="752" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="@" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vlf-m4-eRq">
+                                <rect key="frame" x="25" y="736" width="222.33333333333337" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="2O2-lB-1lV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C3c-h5-LgA">
+                                <rect key="frame" x="317" y="701" width="75" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="FJY-49-woT"/>
+                                    <constraint firstAttribute="height" constant="75" id="GdF-UH-zME"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="753" misplaced="YES" text="Instagram" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATm-M3-Zok">
+                                <rect key="frame" x="25" y="708" width="76" height="20.333333333333371"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="C82-gf-Tu6">
+                                <rect key="frame" x="294" y="784" width="121" height="34.333333333333371"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Upload Logo" titleAlignment="center"/>
+                                <connections>
+                                    <action selector="chooseCompLogo:" destination="JN9-ps-1Td" eventType="touchUpInside" id="X4h-lo-RbE"/>
+                                    <action selector="onSelectTeamLogoTapped:" destination="a9c-S2-r5k" eventType="touchUpInside" id="zy0-r6-Qco"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -757,6 +772,7 @@
                         <outlet property="compImage" destination="mUE-DX-qnK" id="jDy-KO-8Ev"/>
                         <outlet property="compLogo" destination="C3c-h5-LgA" id="fCw-rk-YI4"/>
                         <outlet property="dateField" destination="STC-QZ-ZFP" id="flL-4H-LuF"/>
+                        <outlet property="deleteCompButton" destination="nNN-VC-NVb" id="lWQ-mm-ClO"/>
                         <outlet property="instagramField" destination="Vlf-m4-eRq" id="IdG-Tg-99w"/>
                         <outlet property="nameField" destination="KOV-YL-EXF" id="3tV-nU-Nz9"/>
                         <outlet property="statePickerView" destination="8hc-h3-IIV" id="n5o-Xa-Ncg"/>
@@ -2458,6 +2474,8 @@
         <image name="person.3" catalog="system" width="128" height="66"/>
         <image name="person.crop.circle" catalog="system" width="128" height="123"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="square.and.pencil" catalog="system" width="128" height="121"/>
+        <image name="trash.fill" catalog="system" width="117" height="128"/>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

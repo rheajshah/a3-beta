@@ -31,6 +31,7 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var cityField: UITextField!
     @IBOutlet weak var instagramField: UITextField!
+    @IBOutlet weak var deleteCompButton: UIButton! //only show up if comp alr exists
     
     let states = [
         "Alabama", "Alaska", "American Samoa", "Arizona", "Arkansas", "California", "Colorado",
@@ -86,6 +87,9 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
         // Check if we're editing an existing comp
         if let compID = compID {
             loadCompData(compID: compID) // Load existing comp data for editing
+            deleteCompButton.isHidden = false // Show delete button
+        } else {
+            deleteCompButton.isHidden = true // Hide delete button for new comp
         }
     }
     
@@ -146,8 +150,6 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
         picker.allowsEditing = true
         present(picker, animated: true)
     }
-    
-    
     
     @IBAction func chooseCompLogo(_ sender: Any) {
         isSelectingBanner = false
@@ -248,7 +250,50 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
         }
     }
     
-    
+    @IBAction func deleteCompPressed(_ sender: Any) {
+        guard let compID = compID else {
+            showAlert(title: "Error", message: "Competition ID is missing.")
+            return
+        }
+
+        // Confirm the delete action with the user
+        let alert = UIAlertController(title: "Delete Competition", message: "Are you sure you want to delete this competition?", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+            // Delete the competition data from Firestore
+            let compRef = Firestore.firestore().collection("comps").document(compID)
+
+            // Delete associated images from Firebase Storage
+            let bannerRef = Storage.storage().reference().child("comps/comp_banners/\(compID).jpg")
+            let logoRef = Storage.storage().reference().child("comps/comp_logos/\(compID).jpg")
+
+            // Delete Firestore document and associated images
+            compRef.delete { error in
+                if let error = error {
+                    self.showAlert(title: "Error", message: "Failed to delete competition data: \(error.localizedDescription)")
+                } else {
+                    // Delete images from Firebase Storage
+                    bannerRef.delete { error in
+                        if let error = error {
+                            print("Error deleting banner image: \(error)")
+                        }
+                    }
+                    logoRef.delete { error in
+                        if let error = error {
+                            print("Error deleting logo image: \(error)")
+                        }
+                    }
+
+                    self.showAlert(title: "Success", message: "Competition deleted successfully!")
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+        }))
+
+        present(alert, animated: true, completion: nil)
+    }
 
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

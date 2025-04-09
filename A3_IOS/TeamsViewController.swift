@@ -134,7 +134,7 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // edit team takes you to a new View Controller
     func editTeam(team: TeamSummary) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let createTeamVC = storyboard.instantiateViewController(withIdentifier: "CreateTeamVC") as? CreateTeamViewController {
+        if let createTeamVC = storyboard.instantiateViewController(withIdentifier: "CreateTeamViewController") as? CreateTeamViewController {
             createTeamVC.teamId = team.id  // Pass the team ID to CreateTeamVC
             self.navigationController?.pushViewController(createTeamVC, animated: true)
         }
