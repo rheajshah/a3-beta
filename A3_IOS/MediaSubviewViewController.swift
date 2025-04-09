@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseFirestore
+import FirebaseStorage
 
 class MediaSubviewViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -16,16 +17,22 @@ class MediaSubviewViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var uploadPhotoVideoButton: UIButton!
     @IBOutlet weak var mediaCollectionView: UICollectionView!
     
+    var currentPhotosLink: String = ""
+    var currentVideosLink: String = ""
     var competitionID: String!
     var uploadedMediaURLs: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadMediaLinks()
+        fetchUploadedMedia()
+        
         mediaCollectionView.delegate = self
         mediaCollectionView.dataSource = self
+        
+        configureCollectionViewLayout()
     }
-    
+
     func loadMediaLinks() {
         let db = Firestore.firestore()
         db.collection("comps").document(competitionID).getDocument { snapshot, error in
@@ -36,15 +43,16 @@ class MediaSubviewViewController: UIViewController, UICollectionViewDelegate, UI
 
             let photosLink = data["photosLink"] as? String ?? ""
             let videosLink = data["videosLink"] as? String ?? ""
+            self.currentPhotosLink = photosLink
+            self.currentVideosLink = videosLink
 
-            self.configureButton(self.officialCompPhotosButton, with: photosLink, title: "Official Comp Photos")
-            self.configureButton(self.officialCompVideosButton, with: videosLink, title: "Official Comp Videos")
+            self.configureButton(self.officialCompPhotosButton, with: photosLink)
+            self.configureButton(self.officialCompVideosButton, with: videosLink)
         }
     }
-    
-    private func configureButton(_ button: UIButton, with link: String?, title: String) {
+
+    private func configureButton(_ button: UIButton, with link: String?) {
         if let link = link, !link.isEmpty {
-            button.setTitle("Open \(title)", for: .normal)
             button.isEnabled = true
             button.addAction(UIAction { _ in
                 if let url = URL(string: link) {
@@ -52,28 +60,65 @@ class MediaSubviewViewController: UIViewController, UICollectionViewDelegate, UI
                 }
             }, for: .touchUpInside)
         } else {
-            button.setTitle(title, for: .normal)
             button.isEnabled = false
         }
     }
     
     func fetchUploadedMedia() {
         let db = Firestore.firestore()
-        db.collection("comps").document(competitionID).collection("media").getDocuments { snapshot, error in
+        db.collection("comps").document(competitionID).collection("media").order(by: "uploadedAt").getDocuments { snapshot, error in
             guard let docs = snapshot?.documents else { return }
 
             self.uploadedMediaURLs = docs.compactMap { $0["url"] as? String }
             self.mediaCollectionView.reloadData()
         }
     }
-    
+
     @IBAction func uploadPhotoVideoButtonTapped(_ sender: Any) {
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         picker.delegate = self
         picker.allowsEditing = true
         present(picker, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true)
+        
+        guard let image = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else { return }
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
 
+        let fileName = UUID().uuidString + ".jpg"
+        let storageRef = Storage.storage().reference().child("comps/\(competitionID!)/media/\(fileName)")
+
+        storageRef.putData(imageData, metadata: nil) { _, error in
+            if let error = error {
+                print("Upload failed: \(error.localizedDescription)")
+                return
+            }
+
+            storageRef.downloadURL { url, error in
+                guard let downloadURL = url else {
+                    print("Failed to get download URL")
+                    return
+                }
+
+                let db = Firestore.firestore()
+                let mediaRef = db.collection("comps").document(self.competitionID).collection("media").document()
+
+                mediaRef.setData([
+                    "url": downloadURL.absoluteString,
+                    "uploadedAt": Timestamp(date: Date())
+                ]) { error in
+                    if let error = error {
+                        print("Failed to save media link: \(error.localizedDescription)")
+                    } else {
+                        print("Successfully uploaded media")
+                        self.fetchUploadedMedia()
+                    }
+                }
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -82,9 +127,59 @@ class MediaSubviewViewController: UIViewController, UICollectionViewDelegate, UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediaCell", for: indexPath) as! MediaCell
-            let url = uploadedMediaURLs[indexPath.row]
-            cell.configure(with: url)
-            return cell
+        let url = uploadedMediaURLs[indexPath.row]
+        cell.configure(with: url)
+        return cell
+    }
+    
+    func configureCollectionViewLayout() {
+        if let layout = mediaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            let spacing: CGFloat = 10
+            let itemsPerRow: CGFloat = 4
+            let totalSpacing = spacing * (itemsPerRow + 1)
+            let width = (mediaCollectionView.bounds.width - totalSpacing) / itemsPerRow
+            layout.itemSize = CGSize(width: width, height: width)
+            layout.minimumInteritemSpacing = spacing
+            layout.minimumLineSpacing = spacing
+            mediaCollectionView.contentInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        }
+    }
 
+    @IBAction func editLinkButtonTapped(_ sender: Any) {
+        let alert = UIAlertController(title: "Edit Links", message: "Update the URLs for official competition photos and videos.", preferredStyle: .alert)
+            
+            alert.addTextField { textField in
+                textField.placeholder = "Official Photos Link"
+                textField.text = self.currentPhotosLink
+            }
+            
+            alert.addTextField { textField in
+                textField.placeholder = "Official Videos Link"
+                textField.text = self.currentVideosLink
+            }
+            
+            let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
+                let newPhotosLink = alert.textFields?[0].text ?? ""
+                let newVideosLink = alert.textFields?[1].text ?? ""
+                
+                // Save to Firestore
+                let db = Firestore.firestore()
+                db.collection("comps").document(self.competitionID).updateData([
+                    "photosLink": newPhotosLink,
+                    "videosLink": newVideosLink
+                ]) { error in
+                    if let error = error {
+                        print("❌ Failed to update links: \(error.localizedDescription)")
+                    } else {
+                        print("✅ Links updated")
+                        self.loadMediaLinks() // Refresh button titles
+                    }
+                }
+            }
+            
+            alert.addAction(saveAction)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            
+            present(alert, animated: true)
     }
 }
