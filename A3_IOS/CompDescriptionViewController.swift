@@ -128,25 +128,25 @@ class CompDescriptionViewController: UIViewController, EKEventEditViewDelegate {
     
     func handleCalendarPermission(granted: Bool, error: Error?, eventStore: EKEventStore) {
         if granted {
-            let event = EKEvent(eventStore: eventStore)
-            event.title = self.compName.text ?? "Competition"
-            event.location = self.compLocation.text ?? ""
-            
-            let formatter = DateFormatter()
-            formatter.dateStyle = .long
-            formatter.timeStyle = .none
-            
-            guard let dateString = self.compDate.text,
-                  let eventDate = formatter.date(from: dateString) else {
-                print("Date formatting failed.")
-                return
-            }
-
-            event.startDate = eventDate
-            event.endDate = Calendar.current.date(byAdding: .hour, value: 3, to: eventDate)
-            event.calendar = eventStore.defaultCalendarForNewEvents
-
             DispatchQueue.main.async {
+                let event = EKEvent(eventStore: eventStore)
+                event.title = self.compName.text ?? "Competition"
+                event.location = self.compLocation.text ?? ""
+
+                let formatter = DateFormatter()
+                formatter.dateStyle = .long
+                formatter.timeStyle = .none
+
+                guard let dateString = self.compDate.text,
+                      let eventDate = formatter.date(from: dateString) else {
+                    print("Date formatting failed.")
+                    return
+                }
+
+                event.startDate = eventDate
+                event.endDate = Calendar.current.date(byAdding: .hour, value: 3, to: eventDate)
+                event.calendar = eventStore.defaultCalendarForNewEvents
+
                 let eventVC = EKEventEditViewController()
                 eventVC.event = event
                 eventVC.eventStore = eventStore
