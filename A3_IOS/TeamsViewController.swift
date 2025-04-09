@@ -94,4 +94,49 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.navigationController?.pushViewController(teamInfoVC, animated: true)
         }
     }
+    
+    // Swipe actions for Delete and Edit for teams
+        func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+            let team = teams[indexPath.row]
+
+            // DELETE action
+            let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completionHandler) in
+                self.deleteTeam(teamId: team.id, indexPath: indexPath)
+                completionHandler(true)
+            }
+            deleteAction.backgroundColor = .systemRed
+
+            // EDIT action
+            let editAction = UIContextualAction(style: .normal, title: "Edit") { (_, _, completionHandler) in
+                self.editTeam(team: team)
+                completionHandler(true)
+            }
+            editAction.backgroundColor = .systemBlue
+
+            return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+        }
+        
+        // delete team from databasse
+        func deleteTeam(teamId: String, indexPath: IndexPath) {
+            db.collection("teams").document(teamId).delete { error in
+                if let error = error {
+                    print("Error deleting team: \(error)")
+                } else {
+                    print("Team deleted successfully.")
+                    self.teams.remove(at: indexPath.row)
+                    DispatchQueue.main.async {
+                        self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                    }
+                }
+            }
+        }
+        
+        // edit team takes you to a new View Controller
+        func editTeam(team: TeamSummary) {
+            let storyboard = UIStoryboard(name: "CompsVC", bundle: nil)
+            if let editVC = storyboard.instantiateViewController(withIdentifier: "CompsVC") as? CompetitionsViewController {
+                //editVC.teamToEdit = team  // CHANGE - PASS IN UUID
+                self.navigationController?.pushViewController(editVC, animated: true)
+            }
+        }
 }
