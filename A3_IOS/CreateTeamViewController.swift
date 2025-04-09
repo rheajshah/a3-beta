@@ -127,7 +127,9 @@ class CreateTeamViewController: UIViewController, UIPickerViewDelegate, UIPicker
                     "instagram": instagram,
                     "teamPictureURL": teamPictureURL ?? "",
                     "teamLogoURL": teamLogoURL ?? "",
-                    "comps": compsAttending
+                    "comps": compsAttending,
+                    "eloScore": 0.0,
+                    "eloRank": 1
                 ]
                 
                 self.db.collection("teams").document(teamID).setData(teamData) { error in
