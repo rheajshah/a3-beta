@@ -9,6 +9,18 @@ import UIKit
 import FirebaseFirestore
 import FirebaseStorage
 
+extension UIImageView {
+    func loadImage(from url: URL) {
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    self.image = image
+                }
+            }
+        }.resume()
+    }
+}
+
 class CreateTeamViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var teamPictureImageView: UIImageView!
@@ -23,6 +35,8 @@ class CreateTeamViewController: UIViewController, UIPickerViewDelegate, UIPicker
     let storage = Storage.storage()
 
     var imagePicker = UIImagePickerController()
+    
+    var teamId: String?
     
     let states = [
         "Alabama", "Alaska", "American Samoa", "Arizona", "Arkansas", "California", "Colorado",
@@ -51,12 +65,50 @@ class CreateTeamViewController: UIViewController, UIPickerViewDelegate, UIPicker
         statePickerView.selectRow(defaultIndex, inComponent: 0, animated: false)
         selectedState = states[defaultIndex]
         
+        // If we're editing a team, fetch and prepopulate data
+        if let teamId = teamId {
+            fetchTeamData(teamId: teamId)
+        }
+        
         //image view styles
         [teamPictureImageView, teamLogoImageView].forEach { imageView in
             imageView?.layer.borderWidth = 2
             imageView?.layer.borderColor = UIColor.gray.cgColor
             imageView?.clipsToBounds = true
             imageView?.contentMode = .scaleAspectFill
+        }
+    }
+    
+    func fetchTeamData(teamId: String) {
+        db.collection("teams").document(teamId).getDocument { document, error in
+            if let error = error {
+                print("Error fetching team data: \(error)")
+                return
+            }
+            
+            if let document = document, document.exists {
+                let data = document.data()
+                self.teamNameTextField.text = data?["name"] as? String
+                self.teamUniversityTextField.text = data?["university"] as? String
+                self.cityTextField.text = data?["city"] as? String
+                self.instagramTextField.text = data?["instagram"] as? String
+                
+                if let state = data?["state"] as? String {
+                    self.selectedState = state
+                    if let stateIndex = self.states.firstIndex(of: state) {
+                        self.statePickerView.selectRow(stateIndex, inComponent: 0, animated: false)
+                    }
+                }
+                
+                // Load images if URLs are available
+                if let teamLogoURL = data?["teamLogoURL"] as? String, let url = URL(string: teamLogoURL) {
+                    self.teamLogoImageView.loadImage(from: url)
+                }
+                
+                if let teamPictureURL = data?["teamPictureURL"] as? String, let url = URL(string: teamPictureURL) {
+                    self.teamPictureImageView.loadImage(from: url)
+                }
+            }
         }
     }
     
@@ -110,7 +162,8 @@ class CreateTeamViewController: UIViewController, UIPickerViewDelegate, UIPicker
             return
         }
         
-        let teamID = UUID().uuidString
+        let teamID = teamId ?? UUID().uuidString // If teamId exists, use it, else generate a new one
+                
         let university = teamUniversityTextField.text ?? ""
         let instagram = instagramTextField.text ?? ""
         let compsAttending: [String] = []

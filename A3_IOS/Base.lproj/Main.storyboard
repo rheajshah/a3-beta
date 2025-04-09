@@ -1020,7 +1020,7 @@
         <!--New Team-->
         <scene sceneID="cjr-SS-iOw">
             <objects>
-                <viewController id="a9c-S2-r5k" customClass="CreateTeamViewController" customModule="A3_IOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateTeamViewController" id="a9c-S2-r5k" customClass="CreateTeamViewController" customModule="A3_IOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Bdc-4e-EQf">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
