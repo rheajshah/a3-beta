@@ -11,8 +11,9 @@ import UIKit
 class RankingCell: UITableViewCell {
     
     @IBOutlet weak var teamRankLabel: UILabel!
-    
     @IBOutlet weak var teamImageView: UIImageView!
     @IBOutlet weak var teamNameLabel: UILabel!
     @IBOutlet weak var teamEloLabel: UILabel!
+    
+    
 }
