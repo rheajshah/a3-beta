@@ -30,6 +30,16 @@ class MediaSubviewViewController: UIViewController, UICollectionViewDelegate, UI
         mediaCollectionView.delegate = self
         mediaCollectionView.dataSource = self
         
+//        configureCollectionViewLayout()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchUploadedMedia()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         configureCollectionViewLayout()
     }
 
@@ -64,13 +74,29 @@ class MediaSubviewViewController: UIViewController, UICollectionViewDelegate, UI
         }
     }
     
+//    func fetchUploadedMedia() {
+//        let db = Firestore.firestore()
+//        db.collection("comps").document(competitionID).collection("media").order(by: "uploadedAt").getDocuments { snapshot, error in
+//            guard let docs = snapshot?.documents else { return }
+//
+//            self.uploadedMediaURLs = docs.compactMap { $0["url"] as? String }
+//            self.mediaCollectionView.reloadData()
+//        }
+//    }
     func fetchUploadedMedia() {
         let db = Firestore.firestore()
         db.collection("comps").document(competitionID).collection("media").order(by: "uploadedAt").getDocuments { snapshot, error in
-            guard let docs = snapshot?.documents else { return }
+            guard let docs = snapshot?.documents else {
+                print("No media found or failed to fetch.")
+                return
+            }
 
             self.uploadedMediaURLs = docs.compactMap { $0["url"] as? String }
             self.mediaCollectionView.reloadData()
+
+            DispatchQueue.main.async {
+                self.configureCollectionViewLayout()
+            }
         }
     }
 
@@ -132,16 +158,39 @@ class MediaSubviewViewController: UIViewController, UICollectionViewDelegate, UI
         return cell
     }
     
+//    func configureCollectionViewLayout() {
+//        if let layout = mediaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+//            let spacing: CGFloat = 10
+//            let itemsPerRow: CGFloat = 4
+//            let totalSpacing = spacing * (itemsPerRow + 1)
+//            let width = (mediaCollectionView.bounds.width - totalSpacing) / itemsPerRow
+//            layout.itemSize = CGSize(width: width, height: width)
+//            layout.minimumInteritemSpacing = spacing
+//            layout.minimumLineSpacing = spacing
+//            mediaCollectionView.contentInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+//        }
+//    }
+    
     func configureCollectionViewLayout() {
-        if let layout = mediaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self,
+                  let layout = self.mediaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+
             let spacing: CGFloat = 10
             let itemsPerRow: CGFloat = 4
+
             let totalSpacing = spacing * (itemsPerRow + 1)
-            let width = (mediaCollectionView.bounds.width - totalSpacing) / itemsPerRow
-            layout.itemSize = CGSize(width: width, height: width)
+            let width = self.mediaCollectionView.bounds.width
+
+            // Only proceed if layout width is ready
+            guard width > 0 else { return }
+
+            let itemWidth = (width - totalSpacing) / itemsPerRow
+            layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
             layout.minimumInteritemSpacing = spacing
             layout.minimumLineSpacing = spacing
-            mediaCollectionView.contentInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+            layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+            self.mediaCollectionView.reloadData()
         }
     }
 

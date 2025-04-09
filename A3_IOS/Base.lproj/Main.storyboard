@@ -2345,23 +2345,23 @@
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Wzp-2o-ELz">
                                 <rect key="frame" x="10" y="84" width="373" height="161"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="darkTextColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1cU-fh-iBI">
-                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="itemSize" width="150" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MediaCell" id="6ep-KT-JBP" customClass="MediaCell" customModule="A3_IOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="iHN-Ev-Op2">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AYd-it-lz4">
-                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="128"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -2383,7 +2383,7 @@
                                 </buttonConfiguration>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="waX-MI-5Sl">
-                                <rect key="frame" x="286" y="53" width="97" height="35"/>
+                                <rect key="frame" x="296" y="53" width="97" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Edit Links"/>
                                 <connections>
@@ -2392,14 +2392,14 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="EdL-Dk-G7r"/>
-                        <color key="backgroundColor" red="0.86666667460000002" green="0.82745099070000006" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="bWA-BO-R54" firstAttribute="centerX" secondItem="Iwx-jh-Sp0" secondAttribute="centerX" id="0Ob-nw-m4S"/>
                             <constraint firstItem="Wzp-2o-ELz" firstAttribute="top" secondItem="EdL-Dk-G7r" secondAttribute="top" constant="25" id="15s-rN-fJX"/>
                             <constraint firstItem="bWA-BO-R54" firstAttribute="top" secondItem="EdL-Dk-G7r" secondAttribute="top" constant="196" id="9aw-YI-zEQ"/>
                             <constraint firstItem="Wzp-2o-ELz" firstAttribute="leading" secondItem="EdL-Dk-G7r" secondAttribute="leading" constant="10" id="DA8-Rt-8tv"/>
                             <constraint firstItem="nQ8-Qe-3Ml" firstAttribute="top" secondItem="bWA-BO-R54" secondAttribute="bottom" constant="12.666666666667481" id="GrE-rn-3wR"/>
-                            <constraint firstItem="EdL-Dk-G7r" firstAttribute="trailing" secondItem="waX-MI-5Sl" secondAttribute="trailing" constant="10" id="Iy7-ld-HAk"/>
+                            <constraint firstItem="EdL-Dk-G7r" firstAttribute="trailing" secondItem="waX-MI-5Sl" secondAttribute="trailing" id="Iy7-ld-HAk"/>
                             <constraint firstItem="EdL-Dk-G7r" firstAttribute="top" secondItem="waX-MI-5Sl" secondAttribute="top" constant="6" id="JrZ-gN-LAR"/>
                             <constraint firstItem="EdL-Dk-G7r" firstAttribute="trailing" secondItem="Wzp-2o-ELz" secondAttribute="trailing" constant="10" id="QAI-H8-j0e"/>
                             <constraint firstItem="bWA-BO-R54" firstAttribute="top" secondItem="Wzp-2o-ELz" secondAttribute="bottom" constant="10" id="R8c-o5-lam"/>
@@ -2440,6 +2440,9 @@
         <image name="person.3" catalog="system" width="128" height="66"/>
         <image name="person.crop.circle" catalog="system" width="128" height="123"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
