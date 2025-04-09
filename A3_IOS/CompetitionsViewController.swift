@@ -32,6 +32,7 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
     @IBOutlet weak var collectionView: UICollectionView!
     
     var upcomingComps: [UpcomingComp] = []
+    var filteredUpcomingComps: [UpcomingComp] = []
     var previousComps: [PreviousComp] = []
     
     override func viewDidLoad() {
@@ -43,6 +44,7 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
         previousCompTableView.delegate = self
         
         populateComps()
+        filteredUpcomingComps = upcomingComps
         previousCompTableView.reloadData()
         collectionView.reloadData()
     }
@@ -105,6 +107,7 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
             }
             self.previousComps = tempPrevComps.sorted(by: { $0.date > $1.date})
             self.upcomingComps = tempUpcomingComps.sorted(by: { $0.date < $1.date})
+            self.filteredUpcomingComps = self.upcomingComps
             print(self.upcomingComps)
             DispatchQueue.main.async {
                 self.previousCompTableView.reloadData()
@@ -112,7 +115,7 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
             }
         }
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 75
     }
@@ -130,7 +133,7 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
     func numberOfSections(in tableView: UITableView) -> Int {
         return previousComps.count
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
     }
@@ -138,8 +141,8 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PrevCompCell", for: indexPath) as? PrevCompCell else {
-                return UITableViewCell()
-            }
+            return UITableViewCell()
+        }
         
         let comp = previousComps[indexPath.section]
         
@@ -181,12 +184,12 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return upcomingComps.count
+        return filteredUpcomingComps.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UpcomingCompCell", for: indexPath) as! UpcomingCompCell
-        let comp = upcomingComps[indexPath.item]
+        let comp = filteredUpcomingComps[indexPath.item]
         cell.compName.text = comp.name
         let location = (comp.city.isEmpty && comp.state.isEmpty) ? "Location not available" : "\(comp.city), \(comp.state)"
         cell.location.text = location
@@ -205,13 +208,19 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
         return cell
     }
     
+    func isWithinDays(_ compDate: Date, days: Int) -> Bool {
+        let today = Date()
+        guard let futureDate = Calendar.current.date(byAdding: .day, value: days, to: today) else { return false }
+        return compDate >= today && compDate <= futureDate
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-                            sizeForItemAt indexPath: IndexPath) -> CGSize {
-            return CGSize(width: 185, height: 170)
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 185, height: 170)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedComp = upcomingComps[indexPath.row]
+        let selectedComp = filteredUpcomingComps[indexPath.row]
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let compInfoVC = storyboard.instantiateViewController(withIdentifier: "CompDescriptionViewController") as? CompDescriptionViewController {
@@ -220,15 +229,30 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
         }
         
     }
+    
+    
+    @IBAction func filterChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            filteredUpcomingComps = upcomingComps
+        case 1:
+            filteredUpcomingComps = upcomingComps.filter{ isWithinDays($0.date, days: 7) }
+        case 2:
+            filteredUpcomingComps = upcomingComps.filter{ isWithinDays($0.date, days: 30) }
+        default:
+            filteredUpcomingComps = upcomingComps
+        }
+        collectionView.reloadData()
+    }
+    
 }
-
 //class BoxCell: UICollectionViewCell {
-//    
+//
 //    @IBOutlet weak var compImage: UIImageView!
-//    
+//
 //    @IBOutlet weak var compName: UILabel!
-//    
-//    
+//
+//
 //}
 //
 //struct Comp {
