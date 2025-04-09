@@ -16,20 +16,23 @@ struct TeamSummary {
     let teamLogoURL: String
 }
 
-class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     @IBOutlet weak var profileButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var teamSearchBar: UISearchBar!
     
     let db = Firestore.firestore()
     var teams: [TeamSummary] = []
-    
+    var filteredTeams: [TeamSummary] = []
+    var isSearching = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
-        
+        teamSearchBar.delegate = self
+
         fetchTeamsFromFirestore()
     }
     
@@ -71,26 +74,21 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return teams.count
+        return isSearching ? filteredTeams.count : teams.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let team = teams[indexPath.row]
-                
-        // Dequeue the custom cell
+        let team = isSearching ? filteredTeams[indexPath.row] : teams[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomTeamSummaryCell", for: indexPath) as! CustomTeamSummaryCell
-        
-        // Configure the custom cell with team data
         cell.configure(with: team)
-        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedTeam = teams[indexPath.row]
+        let selectedTeam = isSearching ? filteredTeams[indexPath.row] : teams[indexPath.row]
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let teamInfoVC = storyboard.instantiateViewController(withIdentifier: "teamInfoViewController") as? TeamInfoViewController {
-            teamInfoVC.teamId = selectedTeam.id  //pass the team ID to TeamInfoViewController
+            teamInfoVC.teamId = selectedTeam.id
             self.navigationController?.pushViewController(teamInfoVC, animated: true)
         }
     }
@@ -138,5 +136,29 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             createTeamVC.teamId = team.id  // Pass the team ID to CreateTeamVC
             self.navigationController?.pushViewController(createTeamVC, animated: true)
         }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let lowercasedSearchText = searchText.lowercased()
+
+        if searchText.isEmpty {
+            isSearching = false
+            filteredTeams = []
+        } else {
+            isSearching = true
+            filteredTeams = teams.filter { team in
+                return team.name.lowercased().contains(lowercasedSearchText) ||
+                       team.university.lowercased().contains(lowercasedSearchText)
+            }
+        }
+
+        tableView.reloadData()
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        isSearching = false
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+        tableView.reloadData()
     }
 }
