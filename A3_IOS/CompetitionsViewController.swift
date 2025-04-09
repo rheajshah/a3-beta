@@ -20,6 +20,8 @@ struct UpcomingComp {
     let id: String
     let name: String
     let date: Date
+    let city: String
+    let state: String
     let imageURL: String
 }
 
@@ -71,7 +73,9 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
                     let logoRef = data["logoURL"] as? String,
                     let dateString = data["date"] as? String,
                     let bannerRef = data["bannerURL"] as? String,
-                    let date = dateFormatter.date(from: dateString)
+                    let date = dateFormatter.date(from: dateString),
+                    let city = data["city"] as? String,
+                    let state = data["state"] as? String
                 else {
                     continue
                 }
@@ -92,6 +96,8 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
                         id: document.documentID,
                         name: name,
                         date: date,
+                        city: city,
+                        state: state,
                         imageURL: bannerRef
                     )
                     tempUpcomingComps.append(comp)
@@ -107,9 +113,26 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
         }
     }
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 75
+    }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
+        return 3 // whatever you want space between two cell
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let spacer = UIView()
+        spacer.backgroundColor = .clear // Transparent gap
+        return spacer
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return previousComps.count
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -118,7 +141,7 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
                 return UITableViewCell()
             }
         
-        let comp = previousComps[indexPath.row]
+        let comp = previousComps[indexPath.section]
         
         cell.prevCompName.text = comp.name
         let dateFormatter = DateFormatter()
@@ -129,6 +152,10 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
         if let logoURL = URL(string: comp.logoRef) {
             loadImage(from: logoURL, into: cell.prevCompImageView)
         }
+        
+        cell.layer.cornerRadius = 5
+        cell.clipsToBounds = true
+        
         return cell
     }
     
@@ -143,7 +170,7 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedComp = previousComps[indexPath.row]
+        let selectedComp = previousComps[indexPath.section]
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let compInfoVC = storyboard.instantiateViewController(withIdentifier: "CompDescriptionViewController") as? CompDescriptionViewController {
@@ -151,10 +178,6 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
             self.navigationController?.pushViewController(compInfoVC, animated: true)
         }
         
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -165,6 +188,8 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UpcomingCompCell", for: indexPath) as! UpcomingCompCell
         let comp = upcomingComps[indexPath.item]
         cell.compName.text = comp.name
+        let location = (comp.city.isEmpty && comp.state.isEmpty) ? "Location not available" : "\(comp.city), \(comp.state)"
+        cell.location.text = location
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         cell.date.text = dateFormatter.string(from: comp.date)
@@ -173,12 +198,16 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
         if let logoURL = URL(string: comp.imageURL) {
             loadImage(from: logoURL, into: cell.imageView)
         }
+        
+        cell.layer.cornerRadius = 5
+        cell.clipsToBounds = true
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                             sizeForItemAt indexPath: IndexPath) -> CGSize {
-            return CGSize(width: 120, height: 160)
+            return CGSize(width: 185, height: 170)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

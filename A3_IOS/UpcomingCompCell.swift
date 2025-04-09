@@ -14,6 +14,7 @@ class UpcomingCompCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var compName: UILabel!
+    @IBOutlet weak var location: UILabel!
     @IBOutlet weak var date: UILabel!
     
     

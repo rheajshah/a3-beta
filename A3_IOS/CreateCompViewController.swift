@@ -152,6 +152,7 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
         let feedbackSheetRef = ""
         let videosLink = ""
         let photosLink = ""
+
         
         uploadImage(compImage.image, path: "comps/comp_banners/\(compID).jpg") { bannerURL in
             self.uploadImage(self.compLogo.image, path: "comps/comp_logos/\(compID).jpg") { logoURL in
@@ -172,6 +173,7 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
                     "feedbackSheetRef": feedbackSheetRef,
                     "videosLink": videosLink,
                     "photosLink": photosLink,
+                    "mediaLink": "comps/media/\(compID)"
                 ]
                 
                 Firestore.firestore().collection("comps").document(compID).setData(compData) { error in
