@@ -56,6 +56,7 @@ class ELOViewController: UIViewController, UITableViewDataSource, UITableViewDel
 
                 let team = TeamElo(id: id, name: name, eloScore: eloScore, eloRank: 0, logoURL: logoURL)
                 fetchedTeams.append(team)
+
             }
 
             // Sort by eloScore descending
@@ -87,7 +88,7 @@ class ELOViewController: UIViewController, UITableViewDataSource, UITableViewDel
         cell.teamRankLabel.text = String(team.eloRank)
         cell.teamNameLabel.text = team.name
         cell.teamEloLabel.text = String(team.eloScore)
-        cell.teamImageView = nil
+        cell.teamImageView.image = nil
         
         if let logoURL = URL(string: team.logoURL) {
             loadImage(from: logoURL, into: cell.teamImageView)
@@ -107,6 +108,16 @@ class ELOViewController: UIViewController, UITableViewDataSource, UITableViewDel
         }.resume()
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedTeam = data[indexPath.section]
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let teamInfoVC = storyboard.instantiateViewController(withIdentifier: "teamInfoViewController") as? TeamInfoViewController {
+            teamInfoVC.teamId = selectedTeam.id  
+            self.navigationController?.pushViewController(teamInfoVC, animated: true)
+        }
+        
+    }
     
     
 

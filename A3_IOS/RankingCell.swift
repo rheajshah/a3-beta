@@ -15,5 +15,10 @@ class RankingCell: UITableViewCell {
     @IBOutlet weak var teamNameLabel: UILabel!
     @IBOutlet weak var teamEloLabel: UILabel!
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        teamImageView.image = nil
+    }
+    
     
 }
