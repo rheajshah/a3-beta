@@ -15,7 +15,7 @@ class TeamInfoViewController: UIViewController, UICollectionViewDataSource, UICo
     @IBOutlet weak var teamName: UILabel!
     @IBOutlet weak var university: UILabel!
     @IBOutlet weak var location: UILabel!
-    @IBOutlet weak var instagram: UILabel!
+    @IBOutlet weak var instaIcon: UIImageView!
     @IBOutlet weak var eloRank: UILabel!
     @IBOutlet weak var eloScore: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -23,6 +23,8 @@ class TeamInfoViewController: UIViewController, UICollectionViewDataSource, UICo
     //a variable to hold the team ID passed from TeamsViewController
     var teamId: String?
     var comps: [CompCollectionViewCell] = []
+    var instagramHandle: String?
+    
     private let db = Firestore.firestore()
     
     override func viewDidLoad() {
@@ -35,6 +37,10 @@ class TeamInfoViewController: UIViewController, UICollectionViewDataSource, UICo
         if let teamId = teamId {
             fetchTeamDetails(teamId: teamId)
         }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openInstagram))
+        instaIcon.isUserInteractionEnabled = true
+        instaIcon.addGestureRecognizer(tapGesture)
     }
     
     func fetchTeamDetails(teamId: String) {
@@ -55,7 +61,8 @@ class TeamInfoViewController: UIViewController, UICollectionViewDataSource, UICo
                 let state = data?["state"] as? String ?? ""
                 let location = (city.isEmpty || state.isEmpty) ? "Location not available" : "\(city), \(state)"
                 
-                let instagram = data?["instagram"] as? String ?? "Instagram not available"
+                self.instagramHandle = data?["instagram"] as? String
+                
                 let teamPictureURL = data?["teamPictureURL"] as? String ?? ""
                 let eloRank = data?["eloRank"] as? Int ?? -1
                 let eloScore = data?["eloScore"] as? Double ?? 0.0
@@ -66,7 +73,6 @@ class TeamInfoViewController: UIViewController, UICollectionViewDataSource, UICo
                     self.teamName.text = name
                     self.university.text = university
                     self.location.text = location
-                    self.instagram.text = "@ \(instagram)"
                     self.eloRank.text = "# \(eloRank)"
                     self.eloScore.text = String(format: "%.2f", eloScore)  //format eloScore as a string with two decimal places
                                     
@@ -83,6 +89,17 @@ class TeamInfoViewController: UIViewController, UICollectionViewDataSource, UICo
         }
     }
     
+    @objc func openInstagram() {
+        guard let handle = instagramHandle, !handle.isEmpty else {
+            print("No Instagram handle available")
+            return
+        }
+        
+        let urlString = "https://instagram.com/\(handle)"
+        if let url = URL(string: urlString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
     func fetchCompetitions(for compIds: [String]) {
         guard !compIds.isEmpty else {
             self.comps = []

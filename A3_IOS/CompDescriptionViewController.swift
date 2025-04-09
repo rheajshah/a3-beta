@@ -8,8 +8,10 @@
 import UIKit
 import FirebaseFirestore
 import FirebaseStorage
+import EventKit
+import EventKitUI
 
-class CompDescriptionViewController: UIViewController {
+class CompDescriptionViewController: UIViewController, EKEventEditViewDelegate {
 
     @IBOutlet weak var compBannerImage: UIImageView!
     @IBOutlet weak var compName: UILabel!
@@ -32,9 +34,14 @@ class CompDescriptionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCompDetails()
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openInstagram))
         instaIcon.isUserInteractionEnabled = true
         instaIcon.addGestureRecognizer(tapGesture)
+
+        let dateTapGesture = UITapGestureRecognizer(target: self, action: #selector(addToCalendar))
+        dateIcon.isUserInteractionEnabled = true
+        dateIcon.addGestureRecognizer(dateTapGesture)
 
         showSubview(index: compDescSegCtrl.selectedSegmentIndex)
     }
@@ -98,6 +105,56 @@ class CompDescriptionViewController: UIViewController {
         let urlString = "https://instagram.com/\(handle)"
         if let url = URL(string: urlString) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    func eventEditViewController(_ controller: EKEventEditViewController, didCompleteWith action: EKEventEditViewAction) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func addToCalendar() {
+        let eventStore = EKEventStore()
+        
+        if #available(iOS 17.0, *) {
+            eventStore.requestFullAccessToEvents { granted, error in
+                self.handleCalendarPermission(granted: granted, error: error, eventStore: eventStore)
+            }
+        } else {
+            eventStore.requestAccess(to: .event) { granted, error in
+                self.handleCalendarPermission(granted: granted, error: error, eventStore: eventStore)
+            }
+        }
+    }
+    
+    func handleCalendarPermission(granted: Bool, error: Error?, eventStore: EKEventStore) {
+        if granted {
+            let event = EKEvent(eventStore: eventStore)
+            event.title = self.compName.text ?? "Competition"
+            event.location = self.compLocation.text ?? ""
+            
+            let formatter = DateFormatter()
+            formatter.dateStyle = .long
+            formatter.timeStyle = .none
+            
+            guard let dateString = self.compDate.text,
+                  let eventDate = formatter.date(from: dateString) else {
+                print("Date formatting failed.")
+                return
+            }
+
+            event.startDate = eventDate
+            event.endDate = Calendar.current.date(byAdding: .hour, value: 3, to: eventDate)
+            event.calendar = eventStore.defaultCalendarForNewEvents
+
+            DispatchQueue.main.async {
+                let eventVC = EKEventEditViewController()
+                eventVC.event = event
+                eventVC.eventStore = eventStore
+                eventVC.editViewDelegate = self
+                self.present(eventVC, animated: true, completion: nil)
+            }
+        } else {
+            print("Permission denied: \(error?.localizedDescription ?? "Unknown error")")
         }
     }
 
