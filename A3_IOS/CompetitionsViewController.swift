@@ -182,6 +182,35 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
         
     }
     
+    // Swipe action for deleting previous competitions
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let comp = previousComps[indexPath.section]
+
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completionHandler) in
+            self.deleteCompetition(compId: comp.id, indexPath: indexPath)
+            completionHandler(true)
+        }
+        deleteAction.backgroundColor = .systemRed
+
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+
+    // Delete competition from Firestore and update tableView
+    func deleteCompetition(compId: String, indexPath: IndexPath) {
+        let db = Firestore.firestore()
+        db.collection("comps").document(compId).delete { error in
+            if let error = error {
+                print("Error deleting competition: \(error)")
+            } else {
+                print("Competition deleted successfully.")
+                self.previousComps.remove(at: indexPath.section)
+                DispatchQueue.main.async {
+                    self.previousCompTableView.deleteSections(IndexSet(integer: indexPath.section), with: .automatic)
+                }
+            }
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return filteredUpcomingComps.count
     }
