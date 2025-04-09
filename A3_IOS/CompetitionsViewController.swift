@@ -1,4 +1,3 @@
-//
 //  CompetitionsViewController.swift
 //  A3_IOS
 //
@@ -245,17 +244,23 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
         collectionView.reloadData()
     }
     
+    // Edit button tapped in UpcomingCompCell
+    func editUpcomingComp(at indexPath: IndexPath) {
+        let compToEdit = filteredUpcomingComps[indexPath.item]
+        print("Edit button tapped for: \(compToEdit.name)")
+        
+        // Handle edit functionality here: show a new screen, update details, etc.
+        let storyboard = UIStoryboard(name: "Main", bundle: nil) // Assuming it's in the Main storyboard
+        if let editCompVC = storyboard.instantiateViewController(withIdentifier: "CreateCompViewController") as? CreateCompViewController {
+            editCompVC.compID = compToEdit.id // Pass the compID of the comp you're editing
+            navigationController?.pushViewController(editCompVC, animated: true)
+        }
+    }
+    
+    // Action for edit button in collection view cell
+    @IBAction func editButtonTapped(_ sender: UIButton) {
+        if let cell = sender.superview?.superview as? UpcomingCompCell, let indexPath = collectionView.indexPath(for: cell) {
+            editUpcomingComp(at: indexPath)
+        }
+    }
 }
-//class BoxCell: UICollectionViewCell {
-//
-//    @IBOutlet weak var compImage: UIImageView!
-//
-//    @IBOutlet weak var compName: UILabel!
-//
-//
-//}
-//
-//struct Comp {
-//    let title: String
-//    let imageName: String
-//}

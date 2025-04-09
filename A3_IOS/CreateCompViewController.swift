@@ -9,6 +9,18 @@ import UIKit
 import FirebaseStorage
 import FirebaseFirestore
 
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async {
+            if let data = try? Data(contentsOf: url) {
+                DispatchQueue.main.async {
+                    self.image = UIImage(data: data)
+                }
+            }
+        }
+    }
+}
+
 class CreateCompViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,
                                 UIPickerViewDelegate, UIPickerViewDataSource{
 
@@ -32,6 +44,8 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
         "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
     ]
     
+    
+    var compID: String? // Store the competition ID for editing
     var selectedState: String?
     var isSelectingBanner = false
     var imagePicker = UIImagePickerController()
@@ -68,8 +82,36 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
         let defaultIndex = states.firstIndex(of: "Alabama") ?? 0
         statePickerView.selectRow(defaultIndex, inComponent: 0, animated: false)
         selectedState = states[defaultIndex]
+        
+        // Check if we're editing an existing comp
+        if let compID = compID {
+            loadCompData(compID: compID) // Load existing comp data for editing
+        }
     }
     
+    func loadCompData(compID: String) {
+        let compRef = Firestore.firestore().collection("comps").document(compID)
+        compRef.getDocument { document, error in
+            if let document = document, document.exists {
+                let data = document.data()
+                self.nameField.text = data?["name"] as? String
+                self.cityField.text = data?["city"] as? String
+                self.selectedState = data?["state"] as? String
+                self.dateField.text = data?["date"] as? String
+                self.instagramField.text = data?["instagram"] as? String
+                
+                // Load images and other data
+                if let bannerURL = data?["bannerURL"] as? String, let url = URL(string: bannerURL) {
+                    self.compImage.load(url: url) // Add extension to load image from URL
+                }
+                
+                if let logoURL = data?["logoURL"] as? String, let url = URL(string: logoURL) {
+                    self.compLogo.load(url: url) // Add extension to load image from URL
+                }
+            }
+        }
+    }
+
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -139,10 +181,9 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
             showAlert(title: "Missing Info", message: "Please fill in all required fields.")
             return
         }
-
-        let compID = UUID().uuidString
         let instagram = instagramField.text ?? ""
-        
+       
+        let compID = self.compID ?? UUID().uuidString // If editing, use the existing ID
 
         //default values will be added via edit function NOT at time of creation
         let competingTeams: [String] = []
@@ -215,4 +256,3 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
         present(alert, animated: true)
     }
 }
-
