@@ -57,13 +57,8 @@ class CompDescriptionViewController: UIViewController {
             
             // Only load banner image if the path exists
             if !bannerPath.isEmpty {
-                let storageRef = Storage.storage().reference(withPath: bannerPath)
-                storageRef.downloadURL { url, error in
-                    if let url = url {
-                        self.loadImage(from: url, into: self.compBannerImage)
-                    } else {
-                        print("Error fetching download URL: \(error?.localizedDescription ?? "Unknown error")")
-                    }
+                if let bannerURL = URL(string: bannerPath) {
+                    self.loadImage(from: bannerURL, into: self.compBannerImage)
                 }
             } else {
                 print("No banner path found.")
