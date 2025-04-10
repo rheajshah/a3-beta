@@ -502,9 +502,11 @@
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Jane Doe" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Qdq-Fz-wMn">
                                 <rect key="frame" x="67" y="391" width="220" height="34"/>
+                                <color key="backgroundColor" red="0.75406885150000003" green="0.75408679249999999" blue="0.75407713649999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="GbI-eE-m8Z"/>
                                 </constraints>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -963,7 +965,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="mappin" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="nRR-5j-fcp">
-                                <rect key="frame" x="32" y="371.66666666666663" width="17" height="21"/>
+                                <rect key="frame" x="32" y="368.66666666666663" width="17" height="21"/>
                                 <color key="tintColor" red="0.1137254902" green="0.035294117649999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="17" id="Jw4-aQ-nSW"/>
@@ -1038,12 +1040,12 @@
                             <constraint firstItem="Mbc-JJ-xQ1" firstAttribute="top" secondItem="ROV-ju-NP0" secondAttribute="bottom" constant="7" id="USr-3a-iF4"/>
                             <constraint firstItem="one-0y-Gom" firstAttribute="trailing" secondItem="q02-dk-JYb" secondAttribute="trailing" id="VJc-kf-cPU"/>
                             <constraint firstItem="q02-dk-JYb" firstAttribute="trailing" secondItem="ZMb-c0-sZn" secondAttribute="trailing" constant="20" id="WSU-nt-Kei"/>
+                            <constraint firstItem="ROV-ju-NP0" firstAttribute="top" secondItem="one-0y-Gom" secondAttribute="bottom" constant="30" id="Xhf-jo-3oC"/>
                             <constraint firstItem="Lek-Ms-WdI" firstAttribute="leading" secondItem="q02-dk-JYb" secondAttribute="leading" constant="32" id="arI-TD-VSu"/>
                             <constraint firstItem="nRR-5j-fcp" firstAttribute="leading" secondItem="q02-dk-JYb" secondAttribute="leading" constant="32" id="e7G-Li-LlD"/>
                             <constraint firstItem="Lek-Ms-WdI" firstAttribute="top" secondItem="one-0y-Gom" secondAttribute="bottom" constant="248.66666666666663" id="emL-DC-oRS"/>
                             <constraint firstItem="CJN-Lf-kaE" firstAttribute="top" secondItem="one-0y-Gom" secondAttribute="bottom" constant="108" id="fhk-rd-n47"/>
                             <constraint firstItem="5dl-TE-YCX" firstAttribute="leading" secondItem="q02-dk-JYb" secondAttribute="leading" constant="32" id="mLb-ig-wSc"/>
-                            <constraint firstItem="ROV-ju-NP0" firstAttribute="top" secondItem="one-0y-Gom" secondAttribute="bottom" constant="33" id="rOy-5v-HtV"/>
                             <constraint firstItem="q02-dk-JYb" firstAttribute="trailing" secondItem="5dl-TE-YCX" secondAttribute="trailing" constant="32" id="uGv-ys-smd"/>
                             <constraint firstItem="one-0y-Gom" firstAttribute="top" secondItem="q02-dk-JYb" secondAttribute="top" id="xhx-UQ-0wf"/>
                             <constraint firstItem="5dl-TE-YCX" firstAttribute="top" secondItem="Lek-Ms-WdI" secondAttribute="bottom" constant="20" id="y21-Bw-kDZ"/>
