@@ -164,13 +164,15 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     // Code to dismiss the keyboard:
     // Called when 'return' key pressed
-    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
+    // (does not dismiss due to using a search bar)
+    // TODO: for final phase
+    private func searchBarSearchButtonClicked(_ searchBar: UISearchBar) -> Bool {
+            searchBar.resignFirstResponder()
+            return true
+        }
     
     // Called when the user clicks on the view outside of the UITextField
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
+            self.view.endEditing(true)
+        }
 }
