@@ -34,14 +34,23 @@ class TeamInfoViewController: UIViewController, UICollectionViewDataSource, UICo
         collectionView.delegate = self
         
         // Check if the teamId is available, then fetch the team details
-        if let teamId = teamId {
-            fetchTeamDetails(teamId: teamId)
-        }
+//        if let teamId = teamId {
+//            fetchTeamDetails(teamId: teamId)
+//        }
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openInstagram))
         instaIcon.isUserInteractionEnabled = true
         instaIcon.addGestureRecognizer(tapGesture)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if let teamId = teamId {
+            fetchTeamDetails(teamId: teamId)
+        }
+    }
+
     
     func fetchTeamDetails(teamId: String) {
         db.collection("teams").document(teamId).getDocument { (document, error) in
@@ -100,6 +109,7 @@ class TeamInfoViewController: UIViewController, UICollectionViewDataSource, UICo
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
+    
     func fetchCompetitions(for compIds: [String]) {
         guard !compIds.isEmpty else {
             self.comps = []
@@ -113,26 +123,28 @@ class TeamInfoViewController: UIViewController, UICollectionViewDataSource, UICo
         for compId in compIds {
             group.enter()
             db.collection("comps").document(compId).getDocument { (doc, err) in
-                defer { group.leave() }
-
                 if let err = err {
                     print("Error fetching comp \(compId): \(err)")
+                    group.leave()
                     return
                 }
 
                 if let compData = doc?.data() {
-                    let id = compData["id"] as! String
+                    let id = compData["id"] as? String ?? compId
                     let name = compData["name"] as? String ?? "N/A"
                     let date = compData["date"] as? String ?? ""
                     let logoURL = compData["logoURL"] as? String ?? ""
+
                     let newComp = CompCollectionViewCell(id: id, dateOrRank: date, name: name, imageURL: logoURL)
                     tempComps.append(newComp)
                 }
+
+                group.leave()
             }
         }
 
         group.notify(queue: .main) {
-            self.comps = tempComps.sorted { $0.dateOrRank < $1.dateOrRank } // optional: sort by date
+            self.comps = tempComps.sorted { $0.dateOrRank < $1.dateOrRank }
             self.collectionView.reloadData()
         }
     }
