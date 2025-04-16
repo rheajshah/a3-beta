@@ -61,8 +61,8 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
                         if self.isAdmin {
                             print("User is admin — showing addCompButton") // DEBUG
                             self.addCompButton.isEnabled = true
-                            self.addCompButton.isHidden = true
-                            self.addCompButton.isUserInteractionEnabled = false
+                            self.addCompButton.isHidden = false
+                            self.addCompButton.isUserInteractionEnabled = true
                         } else {
                             print("User is NOT admin — addCompButton remains hidden") // DEBUG
                         }
