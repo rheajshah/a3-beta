@@ -222,7 +222,7 @@
                             <color key="tintColor" name="AdaptivePurpleTheme"/>
                             <connections>
                                 <action selector="profileButtonPressed:" destination="BYZ-38-t0r" id="3N8-p9-mbu"/>
-                                <segue destination="eHw-PA-Nfr" kind="show" id="VCh-aQ-4cV"/>
+                                <segue destination="eHw-PA-Nfr" kind="show" identifier="ProfileVCSegue" id="VCh-aQ-4cV"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -2594,7 +2594,7 @@
         <image name="square.and.pencil" catalog="system" width="128" height="121"/>
         <image name="trash.fill" catalog="system" width="117" height="128"/>
         <namedColor name="AdaptivePurpleTheme">
-            <color red="0.11372549830000001" green="0.035294115539999997" blue="0.42352938649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.11400000005960464" green="0.035000000149011612" blue="0.42399999499320984" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="AdaptiveTabBarTheme">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
