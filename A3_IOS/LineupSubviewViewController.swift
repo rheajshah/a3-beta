@@ -11,7 +11,9 @@ import FirebaseFirestore
 class LineupSubviewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var selectCompetingTeamsButton: UIButton!
     
+    var isAdmin: Bool!
     var competitionID: String!
     var attendingTeams: [LineupTeam] = []
     let db = Firestore.firestore()
@@ -21,6 +23,9 @@ class LineupSubviewViewController: UIViewController, UITableViewDelegate, UITabl
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        // Show button only if user is admin
+        selectCompetingTeamsButton.isHidden = !(isAdmin ?? false)
         
         // Fetch the list of teams attending the competition
         fetchAttendingTeams()

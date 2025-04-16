@@ -16,17 +16,18 @@ class MediaSubviewViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var officialCompVideosButton: UIButton!
     @IBOutlet weak var uploadPhotoVideoButton: UIButton!
     @IBOutlet weak var mediaCollectionView: UICollectionView!
-    
+
+    var isAdmin: Bool!
+    var competitionID: String!
     var currentPhotosLink: String = ""
     var currentVideosLink: String = ""
-    var competitionID: String!
     var uploadedMediaURLs: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadMediaLinks()
         fetchUploadedMedia()
-        
+        editLinkButton.isHidden = !(isAdmin ?? false)
         mediaCollectionView.delegate = self
         mediaCollectionView.dataSource = self
         

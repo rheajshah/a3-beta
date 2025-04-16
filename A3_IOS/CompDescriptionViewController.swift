@@ -24,6 +24,7 @@ class CompDescriptionViewController: UIViewController, EKEventEditViewDelegate {
     @IBOutlet weak var compDescSegCtrl: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
     
+    var isAdmin: Bool!
     var competitionID: String!
     
     // Keep track of current child VC (embedded in the container)
@@ -172,14 +173,17 @@ class CompDescriptionViewController: UIViewController, EKEventEditViewDelegate {
         case 0:
             let vc = storyboard?.instantiateViewController(withIdentifier: "LineupSubviewViewController") as! LineupSubviewViewController
             vc.competitionID = self.competitionID
+            vc.isAdmin = self.isAdmin
             newVC = vc
         case 1:
             let vc = storyboard?.instantiateViewController(withIdentifier: "JudgingSubviewViewController") as! JudgingSubviewViewController
             vc.competitionID = self.competitionID
+            vc.isAdmin = self.isAdmin
             newVC = vc
         case 2:
             let vc = storyboard?.instantiateViewController(withIdentifier: "MediaSubviewViewController") as! MediaSubviewViewController
             vc.competitionID = self.competitionID
+            vc.isAdmin = self.isAdmin
             newVC = vc
         default:
             return

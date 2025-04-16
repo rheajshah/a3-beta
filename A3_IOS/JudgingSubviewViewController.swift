@@ -20,10 +20,13 @@ class JudgingSubviewViewController: UIViewController {
     
     @IBOutlet weak var editButton: UIButton!
     
+    var isAdmin: Bool!
     var competitionID: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //show button only if user is admin
+        editButton.isHidden = !(isAdmin ?? false)
         loadJudgingData()
         NotificationCenter.default.addObserver(self, selector: #selector(reloadJudgingData), name: Notification.Name("JudgingInfoUpdated"), object: nil)
     }

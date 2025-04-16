@@ -211,9 +211,9 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let compInfoVC = storyboard.instantiateViewController(withIdentifier: "CompDescriptionViewController") as? CompDescriptionViewController {
             compInfoVC.competitionID = selectedComp.id  //pass the comp ID to CompDescriptionViewController
+            compInfoVC.isAdmin = isAdmin //pass isAdmin to compInfoVC
             self.navigationController?.pushViewController(compInfoVC, animated: true)
         }
-        
     }
     
     // Swipe action for deleting previous competitions
@@ -291,6 +291,7 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let compInfoVC = storyboard.instantiateViewController(withIdentifier: "CompDescriptionViewController") as? CompDescriptionViewController {
             compInfoVC.competitionID = selectedComp.id  //pass the comp ID to CompDescriptionViewController
+            compInfoVC.isAdmin = isAdmin //pass isAdmin to compInfoVC
             self.navigationController?.pushViewController(compInfoVC, animated: true)
         }
         
