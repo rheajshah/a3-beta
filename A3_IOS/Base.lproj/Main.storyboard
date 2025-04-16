@@ -148,7 +148,7 @@
                                                     <color key="backgroundColor" name="AdaptivePurpleTheme"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="square.and.pencil" catalog="system">
-                                                        <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="baseForegroundColor" name="AdaptiveTabBarTheme"/>
                                                     </buttonConfiguration>
                                                     <connections>
                                                         <action selector="editButtonTapped:" destination="ep0-Wi-rbm" eventType="touchUpInside" id="ePP-4P-nPn"/>
@@ -612,7 +612,6 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="tJr-G4-UDx"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="adminYesNoLabel" destination="XYf-hH-tz3" id="GlT-rL-Lft"/>
@@ -983,7 +982,7 @@
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="mappin" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="nRR-5j-fcp">
                                 <rect key="frame" x="32" y="368.66666666666663" width="17" height="21"/>
-                                <color key="tintColor" red="0.1137254902" green="0.035294117649999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="17" id="Jw4-aQ-nSW"/>
                                     <constraint firstAttribute="height" constant="21.670000000000002" id="tqa-ky-tTd"/>
@@ -997,7 +996,7 @@
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="insta-icon" translatesAutoresizingMaskIntoConstraints="NO" id="xVn-V7-47s">
                                 <rect key="frame" x="29" y="417" width="22" height="22"/>
-                                <color key="tintColor" red="0.1137254902" green="0.035294117649999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="E0y-Al-a4K"/>
                                     <constraint firstAttribute="width" constant="22" id="OiX-vc-Ubw"/>
@@ -2007,7 +2006,7 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" name="AdaptiveTabBarTheme"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="TET-to-tMM" secondAttribute="trailing" constant="31" id="0YB-GV-0UP"/>
                                             <constraint firstItem="356-Dc-aeh" firstAttribute="leading" secondItem="DYp-YQ-xyR" secondAttribute="leading" constant="10" id="13M-pe-yRC"/>
@@ -2413,7 +2412,7 @@
                                                 <buttonConfiguration key="configuration" style="gray" title="Scoring"/>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" name="AdaptiveTabBarTheme"/>
                                         <constraints>
                                             <constraint firstItem="9hy-w9-Ttn" firstAttribute="top" secondItem="gND-bB-Yjr" secondAttribute="bottom" constant="24" id="F9D-9k-y7c"/>
                                             <constraint firstAttribute="trailing" secondItem="gND-bB-Yjr" secondAttribute="trailing" constant="10" id="NsK-Fg-bmg"/>
@@ -2492,7 +2491,7 @@
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Wzp-2o-ELz">
                                 <rect key="frame" x="10" y="87" width="420" height="161"/>
-                                <color key="backgroundColor" red="0.11372549830000001" green="0.035294115539999997" blue="0.42352938649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" name="AdaptivePurpleTheme"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1cU-fh-iBI">
                                     <size key="itemSize" width="150" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -2541,7 +2540,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="EdL-Dk-G7r"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" name="AdaptiveTabBarTheme"/>
                         <constraints>
                             <constraint firstItem="bWA-BO-R54" firstAttribute="centerX" secondItem="Iwx-jh-Sp0" secondAttribute="centerX" id="0Ob-nw-m4S"/>
                             <constraint firstItem="Wzp-2o-ELz" firstAttribute="top" secondItem="EdL-Dk-G7r" secondAttribute="top" constant="25" id="15s-rN-fJX"/>

@@ -43,8 +43,9 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
         super.viewDidLoad()
         
         addCompButton.isEnabled = false
-        addCompButton.tintColor = .clear
-        
+        addCompButton.isHidden = true
+        addCompButton.isUserInteractionEnabled = false
+
         if let currentUser = Auth.auth().currentUser {
             let userId = currentUser.uid
             updateProfileButtonImage(userId: userId)
@@ -60,7 +61,8 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
                         if self.isAdmin {
                             print("User is admin — showing addCompButton") // DEBUG
                             self.addCompButton.isEnabled = true
-                            self.addCompButton.tintColor = nil
+                            self.addCompButton.isHidden = true
+                            self.addCompButton.isUserInteractionEnabled = false
                         } else {
                             print("User is NOT admin — addCompButton remains hidden") // DEBUG
                         }
