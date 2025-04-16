@@ -70,6 +70,44 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
     
+    @IBAction func notificationsSwitchToggled(_ sender: UISwitch) {
+        if sender.isOn {
+           // Request permission from Apple
+           UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+               DispatchQueue.main.async {
+                   if granted {
+                       print("Notification permission granted.")
+                       self.updateNotificationStatusInFirestore(enabled: true)
+                   } else {
+                       print("Notification permission denied.")
+                       sender.setOn(false, animated: true) // Revert toggle if denied
+                       self.updateNotificationStatusInFirestore(enabled: false)
+                   }
+               }
+           }
+       } else {
+           print("Notifications turned off by user.")
+           updateNotificationStatusInFirestore(enabled: false)
+       }
+    }
+    
+    func updateNotificationStatusInFirestore(enabled: Bool) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            print("User not logged in.")
+            return
+        }
+        
+        let db = Firestore.firestore()
+        db.collection("users").document(userId).updateData(["notifications": enabled]) {error in
+            if let error = error {
+                print("Error updating notification status")
+            } else {
+                print("Notification status updated")
+            }
+        }
+    }
+    
+    
     //Team Dropdown
     func setupTeamDropdown(selectedTeam: String?) {
         db.collection("teams").getDocuments { snapshot, error in

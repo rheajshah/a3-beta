@@ -453,6 +453,9 @@
                             </navigationBar>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LQ0-kT-cpb">
                                 <rect key="frame" x="307" y="557" width="51" height="31"/>
+                                <connections>
+                                    <action selector="notificationsSwitchToggled:" destination="eHw-PA-Nfr" eventType="valueChanged" id="nwK-Gf-KXw"/>
+                                </connections>
                             </switch>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7eX-sn-RPa">
                                 <rect key="frame" x="307" y="603" width="51" height="31"/>
