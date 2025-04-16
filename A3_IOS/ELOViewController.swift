@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseFirestore
 import FirebaseStorage
+import FirebaseAuth
 
 struct TeamElo {
     var id: String
@@ -27,6 +28,12 @@ class ELOViewController: UIViewController, UITableViewDataSource, UITableViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let currentUser = Auth.auth().currentUser {
+            let userId = currentUser.uid
+            updateProfileButtonImage(userId: userId)
+        }
+            
 
         tableView.dataSource = self
         tableView.delegate = self
@@ -76,6 +83,58 @@ class ELOViewController: UIViewController, UITableViewDataSource, UITableViewDel
             }
         })
     }
+        
+    func updateProfileButtonImage(userId: String) {
+        let buttonSize: CGFloat = 36
+
+        let imageButton = UIButton(type: .custom)
+        imageButton.layer.cornerRadius = buttonSize / 2
+        imageButton.clipsToBounds = true
+        imageButton.contentMode = .scaleAspectFill
+        imageButton.setImage(UIImage(systemName: "person.circle"), for: .normal)
+
+        imageButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          imageButton.widthAnchor.constraint(equalToConstant: buttonSize),
+          imageButton.heightAnchor.constraint(equalToConstant: buttonSize)
+        ])
+
+        Firestore.firestore()
+          .collection("users")
+          .document(userId)
+          .getDocument { snapshot, error in
+            if let error = error {
+              print("Error fetching user data: \(error)")
+              return
+            }
+            guard
+              let data = snapshot?.data(),
+              let urlString = data["profileImage"] as? String,
+              let url = URL(string: urlString)
+            else {
+              print("Invalid or missing image URL")
+              return
+            }
+
+            URLSession.shared.dataTask(with: url) { data, _, error in
+              guard let data = data, let image = UIImage(data: data) else {
+                print("Failed to load image data:", error?.localizedDescription ?? "")
+                return
+              }
+              DispatchQueue.main.async {
+                imageButton.setImage(image, for: .normal)
+              }
+            }.resume()
+          }
+
+        imageButton.addTarget(self, action: #selector(profileButtonTapped), for: .touchUpInside)
+
+        profileButton.customView = imageButton
+    }
+
+    @objc func profileButtonTapped() {
+        performSegue(withIdentifier: "EloProfileVCSegue", sender: self)
+    }
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -113,7 +172,7 @@ class ELOViewController: UIViewController, UITableViewDataSource, UITableViewDel
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let teamInfoVC = storyboard.instantiateViewController(withIdentifier: "teamInfoViewController") as? TeamInfoViewController {
-            teamInfoVC.teamId = selectedTeam.id  
+            teamInfoVC.teamId = selectedTeam.id
             self.navigationController?.pushViewController(teamInfoVC, animated: true)
         }
         
