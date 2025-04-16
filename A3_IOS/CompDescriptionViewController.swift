@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MapKit
 import FirebaseFirestore
 import FirebaseStorage
 import EventKit
@@ -43,6 +44,10 @@ class CompDescriptionViewController: UIViewController, EKEventEditViewDelegate {
         let dateTapGesture = UITapGestureRecognizer(target: self, action: #selector(addToCalendar))
         dateIcon.isUserInteractionEnabled = true
         dateIcon.addGestureRecognizer(dateTapGesture)
+        
+        let locationTapGesture = UITapGestureRecognizer(target: self, action: #selector(openMapForPlace))
+        locationIcon.isUserInteractionEnabled = true
+        locationIcon.addGestureRecognizer(locationTapGesture)
 
         showSubview(index: compDescSegCtrl.selectedSegmentIndex)
     }
@@ -95,6 +100,32 @@ class CompDescriptionViewController: UIViewController, EKEventEditViewDelegate {
                 }
             }
         }.resume()
+    }
+    
+    
+    
+    @objc func openMapForPlace() {
+        let address = self.compLocation.text
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(address!) { placemarks, error in
+            if let error = error {
+                print("Geocoding error: \(error.localizedDescription)")
+                return
+            }
+
+            guard let placemark = placemarks?.first,
+                  let location = placemark.location else {
+                print("No location found")
+                return
+            }
+
+            let coordinate = location.coordinate
+            let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
+            mapItem.name = address
+            mapItem.openInMaps(launchOptions: [
+                MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
+            ])
+        }
     }
 
     @objc func openInstagram() {
