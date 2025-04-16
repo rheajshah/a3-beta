@@ -287,14 +287,13 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedComp = filteredUpcomingComps[indexPath.row]
-        
+ 
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let compInfoVC = storyboard.instantiateViewController(withIdentifier: "CompDescriptionViewController") as? CompDescriptionViewController {
             compInfoVC.competitionID = selectedComp.id  //pass the comp ID to CompDescriptionViewController
             compInfoVC.isAdmin = isAdmin //pass isAdmin to compInfoVC
             self.navigationController?.pushViewController(compInfoVC, animated: true)
         }
-        
     }
     
     
