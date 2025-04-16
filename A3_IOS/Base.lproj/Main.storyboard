@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
@@ -91,6 +92,7 @@
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nxD-ZP-YnL">
                                 <rect key="frame" x="240.66666666666663" y="67" width="47" height="35"/>
+                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system" title=""/>
                                 <connections>
@@ -143,7 +145,7 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QzY-xn-4t2">
                                                     <rect key="frame" x="119" y="0.0" width="51" height="35"/>
-                                                    <color key="backgroundColor" red="0.1137254902" green="0.035294117649999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <color key="backgroundColor" name="AdaptivePurpleTheme"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="square.and.pencil" catalog="system">
                                                         <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -217,7 +219,7 @@
                     <navigationItem key="navigationItem" title="Competitions" id="dE9-CF-iO2">
                         <barButtonItem key="rightBarButtonItem" title="Profile" id="TtI-9S-oRH">
                             <imageReference key="image" image="person.crop.circle" catalog="system" symbolScale="large"/>
-                            <color key="tintColor" red="0.11372549830000001" green="0.035294115539999997" blue="0.42352938649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <color key="tintColor" name="AdaptivePurpleTheme"/>
                             <connections>
                                 <action selector="profileButtonPressed:" destination="BYZ-38-t0r" id="3N8-p9-mbu"/>
                                 <segue destination="eHw-PA-Nfr" kind="show" id="VCh-aQ-4cV"/>
@@ -315,7 +317,7 @@
                     <navigationItem key="navigationItem" title="ELO" id="WZq-4f-qrf">
                         <barButtonItem key="rightBarButtonItem" title="Item" id="ZAO-wd-8h3">
                             <imageReference key="image" image="person.crop.circle" catalog="system" symbolScale="large"/>
-                            <color key="tintColor" red="0.11372549830000001" green="0.035294115539999997" blue="0.42352938649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <color key="tintColor" name="AdaptivePurpleTheme"/>
                             <connections>
                                 <segue destination="eHw-PA-Nfr" kind="show" id="T6k-Ra-2WX"/>
                             </connections>
@@ -409,13 +411,14 @@
                     </view>
                     <navigationItem key="navigationItem" title="Teams" id="B0G-KB-iyT">
                         <barButtonItem key="leftBarButtonItem" systemItem="add" id="ZYE-mF-dkz">
+                            <color key="tintColor" name="AdaptivePurpleTheme"/>
                             <connections>
                                 <segue destination="a9c-S2-r5k" kind="show" id="jeV-Y1-z7c"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Profile" id="wjZ-6i-a3Y">
                             <imageReference key="image" image="person.crop.circle" catalog="system" symbolScale="large"/>
-                            <color key="tintColor" red="0.11372549830000001" green="0.035294115539999997" blue="0.42352938649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <color key="tintColor" name="AdaptivePurpleTheme"/>
                             <connections>
                                 <segue destination="eHw-PA-Nfr" kind="show" id="BEA-Al-Xoh"/>
                             </connections>
@@ -451,9 +454,13 @@
                             </switch>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7eX-sn-RPa">
                                 <rect key="frame" x="307" y="603" width="51" height="31"/>
+                                <connections>
+                                    <action selector="darkModeToggled:" destination="eHw-PA-Nfr" eventType="valueChanged" id="IKS-rY-19w"/>
+                                </connections>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T6P-Fj-Xq4">
                                 <rect key="frame" x="181" y="697" width="78" height="35"/>
+                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Logout"/>
                                 <connections>
@@ -462,6 +469,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9e4-GE-zrd">
                                 <rect key="frame" x="153.66666666666666" y="654" width="132.99999999999997" height="35"/>
+                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Save Changes"/>
                                 <connections>
@@ -471,7 +479,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yUX-m0-k16">
                                 <rect key="frame" x="168.66666666666666" y="242" width="102.99999999999997" height="35"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Edit Photo"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Edit Photo">
+                                    <color key="baseForegroundColor" name="AdaptivePurpleTheme"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="editPhotoButtonPressed:" destination="eHw-PA-Nfr" eventType="touchUpInside" id="eWH-rC-QhE"/>
                                 </connections>
@@ -549,7 +559,9 @@
                                         <command title="Rutgers Raz" id="dI4-Kn-XCf"/>
                                     </children>
                                 </menu>
-                                <state key="normal" title="Select Team"/>
+                                <state key="normal" title="Select Team">
+                                    <color key="titleColor" name="AdaptivePurpleTheme"/>
+                                </state>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Admin or not" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XYf-hH-tz3">
                                 <rect key="frame" x="158" y="523" width="98" height="21"/>
@@ -685,6 +697,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="236" id="pDM-uv-yOn"/>
                                 </constraints>
+                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Upload Competition Banner"/>
                                 <connections>
@@ -726,6 +739,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="C82-gf-Tu6">
                                 <rect key="frame" x="256" y="803" width="121" height="34.333333333333371"/>
+                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Upload Logo" titleAlignment="center"/>
                                 <connections>
@@ -789,6 +803,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="New Competition" id="bCc-D1-LFJ">
                         <barButtonItem key="rightBarButtonItem" title="Save" id="ff0-jX-fzE">
+                            <color key="tintColor" name="AdaptivePurpleTheme"/>
                             <connections>
                                 <action selector="onSaveCompPressed:" destination="JN9-ps-1Td" id="WCI-Lo-8Tw"/>
                             </connections>
@@ -1131,7 +1146,10 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vEU-Bg-BB6">
                                 <rect key="frame" x="105" y="286" width="230" height="35"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="tinted" title="Upload Team Picture"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Upload Team Picture">
+                                    <color key="baseForegroundColor" name="AdaptivePurpleTheme"/>
+                                    <color key="baseBackgroundColor" name="AdaptivePurpleTheme"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="onSelectTeamPictureTapped:" destination="a9c-S2-r5k" eventType="touchUpInside" id="xXN-rA-Ncx"/>
                                 </connections>
@@ -1172,7 +1190,10 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xng-SQ-Ngc">
                                 <rect key="frame" x="20" y="680" width="166.66666666666666" height="35"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="tinted" title="Upload Team Logo"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Upload Team Logo">
+                                    <color key="baseForegroundColor" name="AdaptivePurpleTheme"/>
+                                    <color key="baseBackgroundColor" name="AdaptivePurpleTheme"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="onSelectTeamLogoTapped:" destination="a9c-S2-r5k" eventType="touchUpInside" id="VQ7-gf-O0K"/>
                                 </connections>
@@ -1215,6 +1236,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="New Team" id="OJY-7F-Cx7">
                         <barButtonItem key="rightBarButtonItem" title="Save" id="5y4-aS-vRJ">
+                            <color key="tintColor" name="AdaptivePurpleTheme"/>
                             <connections>
                                 <action selector="onSaveTeamButtonPressed:" destination="a9c-S2-r5k" id="Npn-EJ-OyD"/>
                             </connections>
@@ -1812,15 +1834,15 @@
                             </containerView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="location" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="SWm-5i-doQ">
                                 <rect key="frame" x="30" y="344" width="20" height="18.666666666666686"/>
-                                <color key="tintColor" red="0.1137254902" green="0.035294117649999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="calendar.badge.plus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="0vo-Oz-H5O">
                                 <rect key="frame" x="30.000000000000004" y="372.66666666666669" width="23.333333333333339" height="20"/>
-                                <color key="tintColor" red="0.1137254902" green="0.035294117649999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="message.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="1nN-Ms-p11">
                                 <rect key="frame" x="388" y="305.66666666666669" width="22" height="19.333333333333314"/>
-                                <color key="tintColor" red="0.1137254902" green="0.035294117649999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dUO-Os-SdC">
                                 <rect key="frame" x="20" y="98" width="393" height="182"/>
@@ -1831,7 +1853,7 @@
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="insta-icon" translatesAutoresizingMaskIntoConstraints="NO" id="kur-mG-YTp">
                                 <rect key="frame" x="358.66666666666669" y="305" width="22" height="22"/>
-                                <color key="tintColor" red="0.1137254902" green="0.035294117649999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="deW-xn-i4Z"/>
                                     <constraint firstAttribute="width" constant="22" id="obj-BC-6TK"/>
@@ -1973,7 +1995,9 @@
                                                     <constraint firstAttribute="height" constant="34" id="wut-Xw-y6r"/>
                                                 </constraints>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="gray" title="Select Competing Teams"/>
+                                                <buttonConfiguration key="configuration" style="gray" title="Select Competing Teams">
+                                                    <color key="baseForegroundColor" name="AdaptivePurpleTheme"/>
+                                                </buttonConfiguration>
                                                 <connections>
                                                     <segue destination="rgo-ng-6l9" kind="popoverPresentation" identifier="showSelectTeamsView" popoverAnchorView="TET-to-tMM" id="vZZ-js-XQZ">
                                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
@@ -2058,9 +2082,8 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QuH-aE-aNN">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="selectedImageTintColor" red="0.11372549830000001" green="0.035294115539999997" blue="0.42352938649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" name="AdaptiveTabBarTheme"/>
+                        <color key="selectedImageTintColor" name="AdaptivePurpleTheme"/>
                     </tabBar>
                     <connections>
                         <segue destination="ZZB-Dp-rdk" kind="relationship" relationship="viewControllers" id="hQ8-r0-FUf"/>
@@ -2079,6 +2102,7 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Competitons" id="ayF-0a-dAD">
                         <imageReference key="image" image="calendar" catalog="system" symbolScale="large"/>
+                        <color key="badgeColor" name="AdaptivePurpleTheme"/>
                         <imageReference key="selectedImage" image="calendar" catalog="system" symbolScale="large" variableValue="1"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -2101,6 +2125,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yWa-nB-qoA" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="ELO" id="WHl-ft-mZA">
                         <imageReference key="image" image="chart.bar" catalog="system" symbolScale="large"/>
+                        <color key="badgeColor" name="AdaptivePurpleTheme"/>
                         <imageReference key="selectedImage" image="chart.bar" catalog="system" symbolScale="large"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -2126,6 +2151,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WAc-az-U4n" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Teams" id="tSF-Zn-nPr">
                         <imageReference key="image" image="person.3" catalog="system" symbolScale="large"/>
+                        <color key="badgeColor" name="AdaptivePurpleTheme"/>
                         <imageReference key="selectedImage" image="person.3" catalog="system" symbolScale="large"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -2220,7 +2246,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IYa-eu-P27">
                                 <rect key="frame" x="189.66666666666666" y="572.66666666666663" width="61" height="35"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Save"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Save">
+                                    <color key="baseForegroundColor" name="AdaptivePurpleTheme"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="onSavePressed:" destination="LaH-DC-TLM" eventType="touchUpInside" id="go1-ky-EdQ"/>
                                 </connections>
@@ -2442,6 +2470,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nQ8-Qe-3Ml">
                                 <rect key="frame" x="25" y="301" width="155" height="31"/>
+                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Official Comp Photos">
                                     <fontDescription key="titleFontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="14"/>
@@ -2449,6 +2478,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bWA-BO-R54">
                                 <rect key="frame" x="134" y="258" width="172" height="30.333333333333314"/>
+                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Upload Photos &amp; Videos">
                                     <fontDescription key="titleFontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="14"/>
@@ -2491,6 +2521,7 @@
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kxS-Ta-b6W">
                                 <rect key="frame" x="260" y="301" width="155" height="31"/>
+                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Official Comp Videos">
                                     <fontDescription key="titleFontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="14"/>
@@ -2498,6 +2529,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="waX-MI-5Sl">
                                 <rect key="frame" x="343" y="56" width="97" height="35"/>
+                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Edit Links"/>
                                 <connections>
@@ -2558,6 +2590,12 @@
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="square.and.pencil" catalog="system" width="128" height="121"/>
         <image name="trash.fill" catalog="system" width="117" height="128"/>
+        <namedColor name="AdaptivePurpleTheme">
+            <color red="0.11372549830000001" green="0.035294115539999997" blue="0.42352938649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="AdaptiveTabBarTheme">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

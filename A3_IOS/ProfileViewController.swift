@@ -188,4 +188,19 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
+    
+    @IBAction func darkModeToggled(_ sender: UISwitch) {
+        let newStyle: UIUserInterfaceStyle = sender.isOn ? .dark : .light
+
+        // Apply to all windows
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            for window in windowScene.windows {
+                window.overrideUserInterfaceStyle = newStyle
+            }
+        }
+        UserDefaults.standard.set(sender.isOn, forKey: "darkModeEnabled")
+
+
+    }
 }
