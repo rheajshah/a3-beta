@@ -227,6 +227,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addCompButton" destination="nxD-ZP-YnL" id="Ti1-ik-cRA"/>
                         <outlet property="collectionView" destination="ndD-4H-0Ld" id="knC-Xp-5iP"/>
                         <outlet property="previousCompTableView" destination="vPw-EP-SSy" id="1jy-xg-bjW"/>
                         <outlet property="profileButton" destination="TtI-9S-oRH" id="Fi3-8w-Abs"/>
@@ -425,6 +426,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addTeamButton" destination="ZYE-mF-dkz" id="tgT-rH-9J6"/>
                         <outlet property="profileButton" destination="wjZ-6i-a3Y" id="B4s-kx-Djp"/>
                         <outlet property="tableView" destination="smX-ek-GKO" id="aMb-UQ-6DY"/>
                         <outlet property="teamSearchBar" destination="foB-jk-K1o" id="fkO-jh-bMV"/>
@@ -2573,7 +2575,7 @@
         <segue reference="ZNC-MG-vzL"/>
         <segue reference="pnQ-Eg-VKD"/>
         <segue reference="PMq-wL-6HX"/>
-        <segue reference="T6k-Ra-2WX"/>
+        <segue reference="VCh-aQ-4cV"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="IMG_0162" width="1123" height="794"/>

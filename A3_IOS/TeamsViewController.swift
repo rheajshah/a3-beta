@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 
@@ -20,14 +21,36 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var profileButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var teamSearchBar: UISearchBar!
+    @IBOutlet weak var addTeamButton: UIBarButtonItem! //only visible if user is admin
     
     let db = Firestore.firestore()
     var teams: [TeamSummary] = []
     var filteredTeams: [TeamSummary] = []
     var isSearching = false
+    var isAdmin: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addTeamButton.isEnabled = false
+        addTeamButton.tintColor = .clear  // Makes it invisible
+
+        if let currentUser = Auth.auth().currentUser {
+            let userId = currentUser.uid
+            db.collection("users").document(userId).getDocument { (document, error) in
+                if let document = document, document.exists {
+                    self.isAdmin = document.data()?["admin"] as? Bool ?? false
+                    DispatchQueue.main.async {
+                        if self.isAdmin {
+                            self.addTeamButton.isEnabled = true
+                            self.addTeamButton.tintColor = nil // Resets to default color
+                        }
+                    }
+                } else {
+                    print("User document not found or error: \(error?.localizedDescription ?? "Unknown error")")
+                }
+            }
+        }
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -93,27 +116,25 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
-    // Swipe actions for Delete and Edit for teams
+    // Swipe actions for Delete and Edit for teams (only enabled if user is admin)
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard isAdmin else { return nil }
+
         let team = teams[indexPath.row]
 
-        // DELETE action
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completionHandler) in
             self.deleteTeam(teamId: team.id, indexPath: indexPath)
             completionHandler(true)
         }
-        deleteAction.backgroundColor = .systemRed
 
-        // EDIT action
         let editAction = UIContextualAction(style: .normal, title: "Edit") { (_, _, completionHandler) in
             self.editTeam(team: team)
             completionHandler(true)
         }
-        editAction.backgroundColor = .systemBlue
 
         return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
     }
-    
+
     // delete team from databasse
     func deleteTeam(teamId: String, indexPath: IndexPath) {
         db.collection("teams").document(teamId).delete { error in

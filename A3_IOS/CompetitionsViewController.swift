@@ -5,6 +5,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 
@@ -26,16 +27,50 @@ struct UpcomingComp {
 
 class CompetitionsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource{
     
+    @IBOutlet weak var addCompButton: UIButton!
     @IBOutlet var previousCompTableView: UITableView!
     @IBOutlet weak var profileButton: UIBarButtonItem!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    let db = Firestore.firestore()
     var upcomingComps: [UpcomingComp] = []
     var filteredUpcomingComps: [UpcomingComp] = []
     var previousComps: [PreviousComp] = []
     
+    var isAdmin: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addCompButton.isEnabled = false
+        addCompButton.tintColor = .clear
+        
+        if let currentUser = Auth.auth().currentUser {
+            let userId = currentUser.uid
+            print("Current User UID: \(userId)") // DEBUG
+
+            db.collection("users").document(userId).getDocument { (document, error) in
+                if let document = document, document.exists {
+                    let adminField = document.data()?["admin"]
+                    print("Fetched isAdmin from Firestore: \(String(describing: adminField))") // DEBUG
+                    self.isAdmin = adminField as? Bool ?? false
+                    print("Parsed isAdmin as Bool: \(self.isAdmin)") // DEBUG
+                    DispatchQueue.main.async {
+                        if self.isAdmin {
+                            print("User is admin — showing addCompButton") // DEBUG
+                            self.addCompButton.isEnabled = true
+                            self.addCompButton.tintColor = nil
+                        } else {
+                            print("User is NOT admin — addCompButton remains hidden") // DEBUG
+                        }
+                    }
+                } else {
+                    print("User doc not found or error: \(error?.localizedDescription ?? "Unknown error")") // DEBUG
+                }
+            }
+        }
+
+        
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -49,7 +84,6 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
     }
     
     func populateComps() {
-        let db = Firestore.firestore()
         let dateFormatter = DateFormatter()
         
         dateFormatter.dateFormat = "MMMM dd yyyy"
@@ -184,6 +218,8 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
     
     // Swipe action for deleting previous competitions
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard isAdmin else { return nil }
+        
         let comp = previousComps[indexPath.section]
 
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completionHandler) in
@@ -197,7 +233,6 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
 
     // Delete competition from Firestore and update tableView
     func deleteCompetition(compId: String, indexPath: IndexPath) {
-        let db = Firestore.firestore()
         db.collection("comps").document(compId).delete { error in
             if let error = error {
                 print("Error deleting competition: \(error)")
@@ -232,6 +267,9 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
         
         cell.layer.cornerRadius = 5
         cell.clipsToBounds = true
+        
+        //hide the edit button unless the user is an admin
+        cell.editButton.isHidden = !isAdmin
         
         return cell
     }
