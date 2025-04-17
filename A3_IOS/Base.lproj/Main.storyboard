@@ -343,19 +343,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="smX-ek-GKO">
-                                <rect key="frame" x="0.0" y="54" width="440" height="853"/>
+                                <rect key="frame" x="0.0" y="100" width="440" height="807"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <searchBar key="tableHeaderView" contentMode="redraw" id="eeC-6d-aga">
-                                    <rect key="frame" x="0.0" y="0.0" width="440" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                    <connections>
-                                        <outlet property="delegate" destination="RTG-u8-F9H" id="8Nx-3m-RgW"/>
-                                    </connections>
-                                </searchBar>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomTeamSummaryCell" rowHeight="89" id="WQE-IT-PzV" customClass="CustomTeamSummaryCell" customModule="A3_IOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="94" width="440" height="89"/>
+                                        <rect key="frame" x="0.0" y="50" width="440" height="89"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WQE-IT-PzV" id="5nU-t2-N6H">
                                             <rect key="frame" x="0.0" y="0.0" width="440" height="89"/>
@@ -396,15 +388,25 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="0cc-tv-yWa">
+                                <rect key="frame" x="0.0" y="44" width="440" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="RTG-u8-F9H" id="0Hw-6D-Ayz"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kLY-SM-l4w"/>
                         <color key="backgroundColor" name="AdaptiveTabBarTheme"/>
                         <constraints>
                             <constraint firstItem="smX-ek-GKO" firstAttribute="trailing" secondItem="kLY-SM-l4w" secondAttribute="trailing" id="EFD-zB-Gxr"/>
                             <constraint firstItem="kLY-SM-l4w" firstAttribute="trailing" secondItem="smX-ek-GKO" secondAttribute="trailing" id="LkB-bR-MXk"/>
+                            <constraint firstItem="kLY-SM-l4w" firstAttribute="trailing" secondItem="0cc-tv-yWa" secondAttribute="trailing" id="SBe-re-03W"/>
                             <constraint firstItem="smX-ek-GKO" firstAttribute="leading" secondItem="kLY-SM-l4w" secondAttribute="leading" id="Vjo-rl-u0R"/>
+                            <constraint firstItem="0cc-tv-yWa" firstAttribute="leading" secondItem="kLY-SM-l4w" secondAttribute="leading" id="Xoi-Oz-Huw"/>
                             <constraint firstItem="kLY-SM-l4w" firstAttribute="bottom" secondItem="smX-ek-GKO" secondAttribute="bottom" id="lMd-Cf-rjo"/>
-                            <constraint firstItem="smX-ek-GKO" firstAttribute="top" secondItem="kLY-SM-l4w" secondAttribute="top" constant="10" id="nRG-SZ-zcP"/>
+                            <constraint firstItem="0cc-tv-yWa" firstAttribute="top" secondItem="kLY-SM-l4w" secondAttribute="top" id="moW-cb-n7q"/>
+                            <constraint firstItem="smX-ek-GKO" firstAttribute="top" secondItem="0cc-tv-yWa" secondAttribute="bottom" id="pJ0-ca-G5r"/>
                             <constraint firstItem="smX-ek-GKO" firstAttribute="leading" secondItem="kLY-SM-l4w" secondAttribute="leading" id="r6E-eT-gUe"/>
                             <constraint firstItem="kLY-SM-l4w" firstAttribute="bottom" secondItem="smX-ek-GKO" secondAttribute="bottom" id="znV-y7-XWq"/>
                         </constraints>
@@ -428,12 +430,12 @@
                         <outlet property="addTeamButton" destination="ZYE-mF-dkz" id="tgT-rH-9J6"/>
                         <outlet property="profileButton" destination="wjZ-6i-a3Y" id="B4s-kx-Djp"/>
                         <outlet property="tableView" destination="smX-ek-GKO" id="aMb-UQ-6DY"/>
-                        <outlet property="teamSearchBar" destination="eeC-6d-aga" id="Ubb-ff-Eba"/>
+                        <outlet property="teamSearchBar" destination="0cc-tv-yWa" id="dO1-RK-foP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qXy-57-Qo0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9516.7938931297704" y="1645.7746478873241"/>
+            <point key="canvasLocation" x="9515.454545454546" y="1645.6066945606694"/>
         </scene>
         <!--Profile-->
         <scene sceneID="2cf-yV-dOf">
@@ -1349,12 +1351,14 @@
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a1p-lw-jZs">
                                         <rect key="frame" x="50" y="504.33333333333337" width="280" height="34"/>
                                         <color key="backgroundColor" red="0.86666667460000002" green="0.82745099070000006" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="78z-vN-ofd">
                                         <rect key="frame" x="50" y="599.33333333333337" width="280" height="34"/>
                                         <color key="backgroundColor" red="0.86666667460000002" green="0.82745099070000006" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
@@ -1539,6 +1543,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" verticalHuggingPriority="252" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CbF-HL-Xzy">
                                         <rect key="frame" x="50" y="301" width="233" height="34"/>
                                         <color key="backgroundColor" red="0.86666667460000002" green="0.82745099070000006" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -1548,6 +1553,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="34" id="n2x-Tv-54U"/>
                                         </constraints>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -1619,6 +1625,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="34" id="l9G-Ir-wkj"/>
                                         </constraints>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
@@ -1718,6 +1725,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="260" id="rcL-YU-B8P"/>
                                         </constraints>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -2568,10 +2576,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ZNC-MG-vzL"/>
+        <segue reference="EkW-hD-0jz"/>
         <segue reference="pnQ-Eg-VKD"/>
         <segue reference="PMq-wL-6HX"/>
-        <segue reference="BEA-Al-Xoh"/>
+        <segue reference="pUI-Lz-dQy"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="IMG_0162" width="1123" height="794"/>
