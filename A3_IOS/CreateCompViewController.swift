@@ -225,12 +225,26 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
                     "mediaLink": "comps/media/\(compID)"
                 ]
                 
-                Firestore.firestore().collection("comps").document(compID).setData(compData) { error in
+                let compRef = Firestore.firestore().collection("comps").document(compID)
+
+                compRef.getDocument { (document, error) in
                     if let error = error {
-                        print("Error saving comp: \(error)")
-                        self.showAlert(title: "Error", message: "Failed to save competition.")
-                    } else {
-                        self.showAlert(title: "Success", message: "Competition created successfully!")
+                        print("Error checking comp existence: \(error)")
+                        self.showAlert(title: "Error", message: "Could not check if competition exists.")
+                        return
+                    }
+
+                    let isUpdate = document?.exists == true
+
+                    compRef.setData(compData) { error in
+                        if let error = error {
+                            print("Error saving comp: \(error)")
+                            self.showAlert(title: "Error", message: "Failed to save competition.")
+                        } else {
+                            let title = isUpdate ? "Updated" : "Created"
+                            let message = isUpdate ? "Competition updated successfully!" : "Competition created successfully!"
+                            self.showAlert(title: title, message: message)
+                        }
                     }
                 }
             }

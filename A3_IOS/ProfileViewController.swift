@@ -55,8 +55,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 let data = document.data()
                 self.fullNameTextField.text = data?["fullName"] as? String
                 self.emailTextField.text = data?["email"] as? String
-                self.adminYesNoLabel.text = (data?["isAdmin"] as? Bool ?? false) ? "Admin" : "Not Admin"
-                self.allowNotifsToggle.isOn = data?["allowNotifications"] as? Bool ?? false
+                self.adminYesNoLabel.text = (data?["admin"] as? Bool ?? false) ? "Admin" : "Not Admin"
+                self.allowNotifsToggle.isOn = data?["notifications"] as? Bool ?? false
                 self.darkModeToggle.isOn = data?["darkMode"] as? Bool ?? false
                 
                 let selectedTeam = data?["team"] as? String ?? "Select Team"
@@ -96,7 +96,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     // gathering data from database to create notifications
     func fetchCompetitionsAndScheduleNotifications() {
         let db = Firestore.firestore()
-        db.collection("competitions").getDocuments { (snapshot, error) in
+        db.collection("comps").getDocuments { (snapshot, error) in
             if let error = error {
                 print("Error fetching competitions: \(error)")
                 return
@@ -123,7 +123,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                     var notificationDate = Calendar.current.date(byAdding: .day, value: -1, to: competitionDate)!
 
                     // Set time to 9 AM
-                    notificationDate = Calendar.current.date(bySettingHour: 19, minute: 2, second: 0, of: notificationDate)!
+                    notificationDate = Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: notificationDate)!
 
                     if notificationDate > Date() {
                         self.scheduleCompetitionNotification(name: name, date: notificationDate)
@@ -136,14 +136,21 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     // actualy scheduring the competition
     func scheduleCompetitionNotification(name: String, date: Date) {
         let content = UNMutableNotificationContent()
-        content.title = "UPCOMING COMPETITION"
-        content.subtitle = "\(name) is in 1 day!"
+        content.title = "Upcoming Competition"
+        content.subtitle = "\(name) is in 24 hours"
         content.sound = .default
 
         let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
 
         let request = UNNotificationRequest(identifier: "comp_\(name)_\(date)", content: content, trigger: trigger)
+        
+        if let url = Bundle.main.url(forResource: "A3", withExtension: "jpg") {
+            let attachment = try? UNNotificationAttachment(identifier: "icon", url: url, options: nil)
+            if let attachment = attachment {
+                content.attachments = [attachment]
+            }
+        }
 
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
