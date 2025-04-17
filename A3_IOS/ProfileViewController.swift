@@ -77,6 +77,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                DispatchQueue.main.async {
                    if granted {
                        print("Notification permission granted.")
+                       self.fetchCompetitionsAndScheduleNotifications()
                        self.updateNotificationStatusInFirestore(enabled: true)
                    } else {
                        print("Notification permission denied.")
@@ -87,9 +88,72 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
            }
        } else {
            print("Notifications turned off by user.")
+           UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
            updateNotificationStatusInFirestore(enabled: false)
        }
     }
+    
+    // gathering data from database to create notifications
+    func fetchCompetitionsAndScheduleNotifications() {
+        let db = Firestore.firestore()
+        db.collection("competitions").getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error fetching competitions: \(error)")
+                return
+            }
+
+            guard let documents = snapshot?.documents else {
+                print("No competitions found")
+                return
+            }
+
+            for doc in documents {
+                let data = doc.data()
+                guard let name = data["name"] as? String,
+                      let dateString = data["date"] as? String else {
+                    continue
+                }
+
+                // Expecting date string in "yyyy-MM-dd" format
+                let formatter = DateFormatter()
+                formatter.dateFormat = "MMMM dd yyyy"
+                formatter.timeZone = TimeZone(identifier: "America/Chicago") // adjust as needed
+
+                if let competitionDate = formatter.date(from: dateString) {
+                    var notificationDate = Calendar.current.date(byAdding: .day, value: -1, to: competitionDate)!
+
+                    // Set time to 9 AM
+                    notificationDate = Calendar.current.date(bySettingHour: 19, minute: 2, second: 0, of: notificationDate)!
+
+                    if notificationDate > Date() {
+                        self.scheduleCompetitionNotification(name: name, date: notificationDate)
+                    }
+                }
+            }
+        }
+    }
+    
+    // actualy scheduring the competition
+    func scheduleCompetitionNotification(name: String, date: Date) {
+        let content = UNMutableNotificationContent()
+        content.title = "UPCOMING COMPETITION"
+        content.subtitle = "\(name) is in 1 day!"
+        content.sound = .default
+
+        let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
+
+        let request = UNNotificationRequest(identifier: "comp_\(name)_\(date)", content: content, trigger: trigger)
+
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Error scheduling notif for \(name): \(error)")
+            } else {
+                print("Notification scheduled for \(name) at \(date)")
+            }
+        }
+    }
+
     
     func updateNotificationStatusInFirestore(enabled: Bool) {
         guard let userId = Auth.auth().currentUser?.uid else {
