@@ -177,7 +177,4 @@ class ELOViewController: UIViewController, UITableViewDataSource, UITableViewDel
         }
         
     }
-    
-
-
 }

@@ -15,9 +15,15 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var fullNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var createAccountButton: UIButton!
+    @IBOutlet weak var togglePasswordVisibilityBtn: UIButton!
+    
+    private var isPasswordVisible = false
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        passwordTextField.isSecureTextEntry = true
+        togglePasswordVisibilityBtn.setImage(UIImage(systemName: "eye"), for: .normal)
     }
     
     
@@ -108,5 +114,14 @@ class SignupViewController: UIViewController {
     // Called when the user clicks on the view outside of the UITextField
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    
+    @IBAction func togglePasswordBtnVisibility(_ sender: Any) {
+        isPasswordVisible.toggle()
+        passwordTextField.isSecureTextEntry = !isPasswordVisible
+
+        let iconName = isPasswordVisible ? "eye.slash" : "eye"
+        togglePasswordVisibilityBtn.setImage(UIImage(systemName: iconName), for: .normal)
     }
 }

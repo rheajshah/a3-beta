@@ -15,6 +15,14 @@ class RankingCell: UITableViewCell {
     @IBOutlet weak var teamNameLabel: UILabel!
     @IBOutlet weak var teamEloLabel: UILabel!
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        teamImageView.layer.cornerRadius = teamImageView.frame.width / 2
+        teamImageView.clipsToBounds = true
+        teamImageView.contentMode = .scaleAspectFill
+    }
+
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         teamImageView.image = nil

@@ -244,4 +244,14 @@ class MediaSubviewViewController: UIViewController, UICollectionViewDelegate, UI
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let pageVC = ImagePreviewPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+        pageVC.modalPresentationStyle = .fullScreen
+        pageVC.imageURLs = uploadedMediaURLs
+        pageVC.currentIndex = indexPath.row
+        present(pageVC, animated: true)
+    }
+
+
 }

@@ -14,9 +14,15 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var togglePasswordVisibilityBtn: UIButton!
     
+    private var isPasswordVisible = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        passwordTextField.isSecureTextEntry = true
+        togglePasswordVisibilityBtn.setImage(UIImage(systemName: "eye"), for: .normal)
+
         // Add tap gesture recognizer to dismiss keyboard
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
@@ -55,7 +61,6 @@ class LoginViewController: UIViewController {
                 db.collection("users").document(user.uid).getDocument { document, error in
                     if let document = document, document.exists {
                         let data = document.data()
-                        print("Data: \(data)")
                         let isDarkModeEnabled = data?["darkMode"] as? Bool ?? false
 
                         // Save to UserDefaults
@@ -112,5 +117,13 @@ class LoginViewController: UIViewController {
     // Called when the user clicks on the view outside of the UITextField
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    @IBAction func togglePasswordBtnVisibility(_ sender: Any) {
+        isPasswordVisible.toggle()
+        passwordTextField.isSecureTextEntry = !isPasswordVisible
+
+        let iconName = isPasswordVisible ? "eye.slash" : "eye"
+        togglePasswordVisibilityBtn.setImage(UIImage(systemName: iconName), for: .normal)
     }
 }
