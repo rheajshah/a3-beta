@@ -8,10 +8,16 @@
 import UIKit
 import FirebaseFirestore
 
+protocol SelectTeamsDelegate: AnyObject {
+    func didUpdateCompetingTeams()
+}
+
 class SelectTeamsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
 
     @IBOutlet weak var tableView: UITableView!
+    weak var delegate: SelectTeamsDelegate?
+
     
     var teams: [OptionItem] = []
    let db = Firestore.firestore()
@@ -108,6 +114,7 @@ class SelectTeamsViewController: UIViewController, UITableViewDelegate, UITableV
         
         tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
         saveSelectedTeamsToCompetition(compID: competitionID)
+        
     }
     
     // MARK: - Firestore Update Methods
@@ -124,6 +131,8 @@ class SelectTeamsViewController: UIViewController, UITableViewDelegate, UITableV
                 print("Competition updated with selected teams!")
             }
         }
+        
+        
     }
     
     func updateTeamDocument(teamID: String, add: Bool) {

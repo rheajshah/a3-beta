@@ -30,6 +30,11 @@ class LineupSubviewViewController: UIViewController, UITableViewDelegate, UITabl
         // Fetch the list of teams attending the competition
         fetchAttendingTeams()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchAttendingTeams()  // Fetch teams again when the view appears (after adding a new team)
+    }
 
     // Fetch the teams attending the competition based on the competitionID
     func fetchAttendingTeams() {
@@ -65,7 +70,7 @@ class LineupSubviewViewController: UIViewController, UITableViewDelegate, UITabl
             self.attendingTeams = snapshot?.documents.compactMap { doc in
                 let data = doc.data()
                 let teamName = data["name"] as? String ?? "Unknown"
-                let logoURL = data["logoURL"] as? String ?? ""
+                let logoURL = data["teamLogoURL"] as? String ?? ""
                 let eloScore = data["elo"] as? Int ?? 0
                 
                 return LineupTeam(id: doc.documentID, name: teamName, logoURL: logoURL, elo: eloScore)
@@ -128,7 +133,7 @@ class LineupSubviewViewController: UIViewController, UITableViewDelegate, UITabl
                 selectTeamsVC.competitionID = self.competitionID
             }
         }
-    }
+    }		
 }
 
 class LineupTeam {

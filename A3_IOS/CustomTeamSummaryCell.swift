@@ -30,6 +30,11 @@ class CustomTeamSummaryCell: UITableViewCell {
         }
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        teamLogoImageView.image = nil
+    }
+    
     func loadImage(from url: URL, into imageView: UIImageView?) {
         URLSession.shared.dataTask(with: url) { data, _, _ in
             if let data = data {

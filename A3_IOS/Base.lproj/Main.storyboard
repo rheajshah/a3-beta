@@ -885,6 +885,7 @@
                             <constraint firstItem="dYY-CF-9y7" firstAttribute="leading" secondItem="50h-wK-kfX" secondAttribute="leading" id="SvG-uC-qUS"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Shi-kz-oPQ"/>
                     <connections>
                         <outlet property="tableView" destination="dYY-CF-9y7" id="stB-vg-8hu"/>
                     </connections>
@@ -2049,9 +2050,7 @@
                                                     <color key="baseForegroundColor" name="AdaptivePurpleTheme"/>
                                                 </buttonConfiguration>
                                                 <connections>
-                                                    <segue destination="rgo-ng-6l9" kind="popoverPresentation" identifier="showSelectTeamsView" popoverAnchorView="TET-to-tMM" id="vZZ-js-XQZ">
-                                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                                    </segue>
+                                                    <segue destination="rgo-ng-6l9" kind="show" identifier="showSelectTeamsView" id="vZZ-js-XQZ"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -2680,7 +2679,7 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="CompLabelTheme">
-            <color red="0.33300000429153442" green="0.33300000429153442" blue="0.33700001239776611" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.33333334329999997" green="0.33333334329999997" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

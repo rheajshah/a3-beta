@@ -86,6 +86,11 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
         collectionView.reloadData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        populateComps()  // Fetch teams again when the view appears (after adding a new team)
+    }
+    
     func updateProfileButtonImage(userId: String) {
         let buttonSize: CGFloat = 36
 
