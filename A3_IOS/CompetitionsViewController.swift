@@ -38,6 +38,7 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
     var previousComps: [PreviousComp] = []
     
     var isAdmin: Bool = false
+    var id: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +51,7 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
             let userId = currentUser.uid
             updateProfileButtonImage(userId: userId)
             print("Current User UID: \(userId)") // DEBUG
-
+            id = userId
             db.collection("users").document(userId).getDocument { (document, error) in
                 if let document = document, document.exists {
                     let adminField = document.data()?["admin"]
@@ -89,6 +90,7 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         populateComps()  // Fetch teams again when the view appears (after adding a new team)
+        updateProfileButtonImage(userId: id!)
     }
     
     func updateProfileButtonImage(userId: String) {
@@ -148,8 +150,8 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
         let dateFormatter = DateFormatter()
         
         dateFormatter.dateFormat = "MMMM dd yyyy"
-        let todayDate = Date()
-        
+        let todayDate = Calendar.current.startOfDay(for: Date())
+
         db.collection("comps").getDocuments() {
             snapshot, error in
             if let error = error {
@@ -179,7 +181,10 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
                 print("Date String: \(dateString)")
                 print("Date: \(date)")
                 
-                if date < todayDate {
+                let compDate = Calendar.current.startOfDay(for: date)
+
+                
+                if compDate < todayDate {
                     let comp = PreviousComp (
                         id: document.documentID,
                         name: name,
@@ -188,7 +193,7 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
                     )
                     tempPrevComps.append(comp)
                 } else {
-                    let comp = UpcomingComp (
+                    let comp = UpcomingComp (		
                         id: document.documentID,
                         name: name,
                         date: date,
@@ -200,7 +205,7 @@ class CompetitionsViewController: UIViewController, UICollectionViewDataSource, 
                 }
             }
             self.previousComps = tempPrevComps.sorted(by: { $0.date > $1.date})
-            self.upcomingComps = tempUpcomingComps.sorted(by: { $0.date < $1.date})
+            self.upcomingComps = tempUpcomingComps.sorted(by: { $0.date <= $1.date})
             self.filteredUpcomingComps = self.upcomingComps
             print(self.upcomingComps)
             DispatchQueue.main.async {

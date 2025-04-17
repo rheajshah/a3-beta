@@ -28,6 +28,7 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var filteredTeams: [TeamSummary] = []
     var isSearching = false
     var isAdmin: Bool = false
+    var id: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +38,7 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         if let currentUser = Auth.auth().currentUser {
             let userId = currentUser.uid
+            id = userId
             updateProfileButtonImage(userId: userId)
             db.collection("users").document(userId).getDocument { (document, error) in
                 if let document = document, document.exists {
@@ -115,6 +117,7 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchTeamsFromFirestore()  // Fetch teams again when the view appears (after adding a new team)
+        updateProfileButtonImage(userId: id!)
     }
     
     func fetchTeamsFromFirestore() {

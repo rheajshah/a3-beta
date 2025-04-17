@@ -2378,25 +2378,34 @@
                                                 <rect key="frame" x="10" y="5" width="420" height="161"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Judge 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vok-JK-mvV">
-                                                        <rect key="frame" x="46" y="68" width="60" height="21"/>
+                                                        <rect key="frame" x="46" y="68" width="152" height="21"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Judge 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Px8-ID-1kY">
-                                                        <rect key="frame" x="46" y="97" width="62" height="21"/>
+                                                        <rect key="frame" x="46" y="97" width="149" height="21"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="149" id="bDg-Uh-Sfy"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Judge 3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dee-yM-Ui5">
-                                                        <rect key="frame" x="203" y="71" width="62" height="21"/>
+                                                        <rect key="frame" x="203" y="71" width="184" height="21"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="184" id="Vhq-Tc-RDj"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Judge 4" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ivk-CE-YsH">
-                                                        <rect key="frame" x="203" y="96" width="63" height="21"/>
+                                                        <rect key="frame" x="203" y="96" width="184" height="21"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="184" id="g6R-bL-onq"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -2419,7 +2428,7 @@
                                                     <constraint firstItem="30e-UT-wLo" firstAttribute="top" secondItem="gND-bB-Yjr" secondAttribute="top" constant="25" id="hxg-UM-Dtw"/>
                                                     <constraint firstItem="Dee-yM-Ui5" firstAttribute="top" secondItem="gND-bB-Yjr" secondAttribute="top" constant="71" id="kQ9-l6-AhH"/>
                                                     <constraint firstItem="30e-UT-wLo" firstAttribute="leading" secondItem="gND-bB-Yjr" secondAttribute="leading" constant="46" id="oJM-VH-UXh"/>
-                                                    <constraint firstItem="Dee-yM-Ui5" firstAttribute="leading" secondItem="Vok-JK-mvV" secondAttribute="trailing" constant="97" id="q9l-ZY-qx2"/>
+                                                    <constraint firstItem="Dee-yM-Ui5" firstAttribute="leading" secondItem="Vok-JK-mvV" secondAttribute="trailing" constant="5" id="q9l-ZY-qx2"/>
                                                     <constraint firstItem="Vok-JK-mvV" firstAttribute="leading" secondItem="gND-bB-Yjr" secondAttribute="leading" constant="46" id="yKK-uU-zxn"/>
                                                     <constraint firstItem="Ivk-CE-YsH" firstAttribute="leading" secondItem="gND-bB-Yjr" secondAttribute="leading" constant="203" id="zAq-hi-czV"/>
                                                     <constraint firstItem="Dee-yM-Ui5" firstAttribute="leading" secondItem="Ivk-CE-YsH" secondAttribute="leading" id="zeF-H8-fug"/>
@@ -2431,9 +2440,9 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="123.67" id="AiA-9f-yVq"/>
                                                 </constraints>
-                                                <color key="tintColor" red="0.11372549830000001" green="0.035294115539999997" blue="0.42352938649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="gray" title="Feedback"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="Feedback"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AjQ-IW-2dy">
                                                 <rect key="frame" x="176.66666666666663" y="240" width="86.666666666666686" height="35"/>
@@ -2441,9 +2450,9 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="86.670000000000002" id="729-Cb-7vg"/>
                                                 </constraints>
-                                                <color key="tintColor" red="0.11372549830000001" green="0.035294115539999997" blue="0.42352938649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="gray" title="Edit Info"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="Edit Info"/>
                                                 <connections>
                                                     <action selector="onEditButtonPressed:" destination="Lvq-2l-qBI" eventType="touchUpInside" id="Qh9-FT-igL"/>
                                                     <segue destination="LaH-DC-TLM" kind="presentation" id="Hxd-eh-nlx"/>
@@ -2455,9 +2464,9 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="102" id="Upk-XJ-o58"/>
                                                 </constraints>
-                                                <color key="tintColor" red="0.11372549830000001" green="0.035294115539999997" blue="0.42352938649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="tintColor" name="AdaptivePurpleTheme"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="gray" title="Scoring"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="Scoring"/>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" name="AdaptiveTabBarTheme"/>
@@ -2653,7 +2662,7 @@
         <segue reference="EkW-hD-0jz"/>
         <segue reference="pnQ-Eg-VKD"/>
         <segue reference="PMq-wL-6HX"/>
-        <segue reference="T6k-Ra-2WX"/>
+        <segue reference="BEA-Al-Xoh"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="IMG_0162" width="1123" height="794"/>

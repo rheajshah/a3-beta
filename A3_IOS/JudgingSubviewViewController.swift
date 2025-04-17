@@ -75,7 +75,7 @@ class JudgingSubviewViewController: UIViewController {
 
     private func configureButton(_ button: UIButton, with link: String?, title: String) {
         if let link = link, !link.isEmpty {
-            button.setTitle("Open \(title)", for: .normal)
+            button.setTitle("\(title)", for: .normal)
             button.isEnabled = true
             button.addAction(UIAction { _ in
                 if let url = URL(string: link) {

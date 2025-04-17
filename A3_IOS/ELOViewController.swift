@@ -25,12 +25,14 @@ class ELOViewController: UIViewController, UITableViewDataSource, UITableViewDel
     @IBOutlet weak var tableView: UITableView!
     
     var data: [TeamElo] = []
+    var id: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let currentUser = Auth.auth().currentUser {
             let userId = currentUser.uid
+            id = userId
             updateProfileButtonImage(userId: userId)
         }
             
@@ -39,6 +41,12 @@ class ELOViewController: UIViewController, UITableViewDataSource, UITableViewDel
         tableView.delegate = self
         self.tableView.rowHeight = 100
         fetchAndSortTeams()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchAndSortTeams()  // Fetch teams again when the view appears (after adding a new team)
+        updateProfileButtonImage(userId: id!)
     }
     
     func fetchAndSortTeams() {
