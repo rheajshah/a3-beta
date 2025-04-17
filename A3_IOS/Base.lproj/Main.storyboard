@@ -2688,7 +2688,7 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="CompLabelTheme">
-            <color red="0.33333334329999997" green="0.33333334329999997" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.33300000429153442" green="0.33300000429153442" blue="0.33700001239776611" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
