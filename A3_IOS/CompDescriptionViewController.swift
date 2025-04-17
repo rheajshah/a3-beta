@@ -21,6 +21,7 @@ class CompDescriptionViewController: UIViewController, EKEventEditViewDelegate {
     @IBOutlet weak var dateIcon: UIImageView!
     @IBOutlet weak var compDate: UILabel!
     @IBOutlet weak var instaIcon: UIImageView!
+    @IBOutlet weak var messageIcon: UIImageView!
     
     @IBOutlet weak var compDescSegCtrl: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
@@ -48,6 +49,11 @@ class CompDescriptionViewController: UIViewController, EKEventEditViewDelegate {
         let locationTapGesture = UITapGestureRecognizer(target: self, action: #selector(openMapForPlace))
         locationIcon.isUserInteractionEnabled = true
         locationIcon.addGestureRecognizer(locationTapGesture)
+        
+        let messageTapGesture = UITapGestureRecognizer(target: self, action: #selector(openMessages))
+        messageIcon.isUserInteractionEnabled = true
+        messageIcon.addGestureRecognizer(messageTapGesture)
+
 
         showSubview(index: compDescSegCtrl.selectedSegmentIndex)
     }
@@ -137,6 +143,36 @@ class CompDescriptionViewController: UIViewController, EKEventEditViewDelegate {
         let urlString = "https://instagram.com/\(handle)"
         if let url = URL(string: urlString) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    @objc func openMessages() {
+        let db = Firestore.firestore()
+        db.collection("comps").document(competitionID).getDocument { snapshot, error in
+            if let error = error {
+                print("Error fetching phone number: \(error.localizedDescription)")
+                return
+            }
+
+            guard let data = snapshot?.data(),
+                  let phoneNumber = data["compDirectorPhoneNumber"] as? String,
+                  !phoneNumber.isEmpty else {
+                print("Phone number not available")
+                return
+            }
+
+            // Remove non-numeric characters (like ()- )
+            let cleanedNumber = phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+            
+            print(cleanedNumber)
+            
+            // Open iMessage
+            if let smsURL = URL(string: "sms:\(cleanedNumber)"),
+               UIApplication.shared.canOpenURL(smsURL) {
+                UIApplication.shared.open(smsURL, options: [:], completionHandler: nil)
+            } else {
+                print("Unable to open Messages.")
+            }
         }
     }
     

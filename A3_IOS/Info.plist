@@ -6,6 +6,10 @@
 	<string></string>
 	<key>NSCalendarsFullAccessUsageDescription</key>
 	<string>We need access to your calendar to add competition events.</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>sms</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

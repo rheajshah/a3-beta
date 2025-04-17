@@ -726,6 +726,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="753" text="Director's Phone Number" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNU-9V-rFW">
+                                <rect key="frame" x="9" y="727" width="193" height="20.333333333333371"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="C82-gf-Tu6">
                                 <rect key="frame" x="256" y="803" width="121" height="34.333333333333371"/>
                                 <color key="tintColor" name="AdaptivePurpleTheme"/>
@@ -746,6 +752,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" verticalHuggingPriority="253" verticalCompressionResistancePriority="752" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nkl-Nn-LoL">
+                                <rect key="frame" x="9" y="754.33333333333337" width="185" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="185" id="Fpq-DM-DYb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="VwY-pI-WXh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -763,8 +777,10 @@
                             <constraint firstItem="mUE-DX-qnK" firstAttribute="top" secondItem="VwY-pI-WXh" secondAttribute="top" constant="27" id="FPP-Ii-MhC"/>
                             <constraint firstItem="Dvd-Xh-BM9" firstAttribute="top" secondItem="AWe-gs-ej4" secondAttribute="bottom" constant="8" id="FjJ-Yz-131"/>
                             <constraint firstItem="AWe-gs-ej4" firstAttribute="top" secondItem="LT2-bD-Sud" secondAttribute="bottom" constant="40.666666666666629" id="GWr-Jx-b6U"/>
+                            <constraint firstItem="MNU-9V-rFW" firstAttribute="top" secondItem="Vlf-m4-eRq" secondAttribute="bottom" constant="8" symbolic="YES" id="IjZ-WW-LHQ"/>
                             <constraint firstItem="8hc-h3-IIV" firstAttribute="leading" secondItem="Dvd-Xh-BM9" secondAttribute="trailing" constant="29" id="Iqs-vs-KEm"/>
                             <constraint firstItem="VwY-pI-WXh" firstAttribute="bottom" secondItem="8hc-h3-IIV" secondAttribute="bottom" constant="244" id="Ljf-bd-Vmf"/>
+                            <constraint firstItem="nkl-Nn-LoL" firstAttribute="leading" secondItem="VwY-pI-WXh" secondAttribute="leading" constant="9" id="NNn-54-7SW"/>
                             <constraint firstItem="LT2-bD-Sud" firstAttribute="leading" secondItem="VwY-pI-WXh" secondAttribute="leading" constant="10" id="OJK-Ky-Jhi"/>
                             <constraint firstItem="8hc-h3-IIV" firstAttribute="top" secondItem="Oho-Io-BJV" secondAttribute="bottom" id="PeC-zm-gO4"/>
                             <constraint firstItem="VwY-pI-WXh" firstAttribute="trailing" secondItem="C3c-h5-LgA" secondAttribute="trailing" constant="61" id="Q4U-PI-6zc"/>
@@ -782,8 +798,10 @@
                             <constraint firstItem="C3c-h5-LgA" firstAttribute="top" secondItem="8hc-h3-IIV" secondAttribute="bottom" constant="8" symbolic="YES" id="ji3-EK-ciI"/>
                             <constraint firstItem="Mm6-vf-xFy" firstAttribute="leading" secondItem="VwY-pI-WXh" secondAttribute="leading" constant="9.9999999999999964" id="pTH-KI-gtM"/>
                             <constraint firstItem="VwY-pI-WXh" firstAttribute="bottom" secondItem="C82-gf-Tu6" secondAttribute="bottom" constant="69.666666666666629" id="pg1-cp-eCH"/>
+                            <constraint firstItem="MNU-9V-rFW" firstAttribute="leading" secondItem="VwY-pI-WXh" secondAttribute="leading" constant="9" id="qRI-e8-Pfl"/>
                             <constraint firstItem="ATm-M3-Zok" firstAttribute="leading" secondItem="VwY-pI-WXh" secondAttribute="leading" constant="10" id="qbd-9p-OOX"/>
                             <constraint firstItem="Eyq-er-mKE" firstAttribute="top" secondItem="mUE-DX-qnK" secondAttribute="bottom" constant="18" id="qy3-MW-S4E"/>
+                            <constraint firstItem="nkl-Nn-LoL" firstAttribute="top" secondItem="MNU-9V-rFW" secondAttribute="bottom" constant="7" id="rH2-yl-yZa"/>
                             <constraint firstItem="LT2-bD-Sud" firstAttribute="top" secondItem="Mm6-vf-xFy" secondAttribute="bottom" constant="30.333333333333314" id="sFh-OR-wY8"/>
                             <constraint firstItem="VwY-pI-WXh" firstAttribute="trailing" secondItem="STC-QZ-ZFP" secondAttribute="trailing" constant="20" id="vQZ-WH-T8A"/>
                             <constraint firstItem="Vlf-m4-eRq" firstAttribute="top" secondItem="ATm-M3-Zok" secondAttribute="bottom" constant="7.6666666666666288" id="vTT-HP-C6n"/>
@@ -806,6 +824,7 @@
                         <outlet property="deleteCompButton" destination="nNN-VC-NVb" id="lWQ-mm-ClO"/>
                         <outlet property="instagramField" destination="Vlf-m4-eRq" id="IdG-Tg-99w"/>
                         <outlet property="nameField" destination="KOV-YL-EXF" id="3tV-nU-Nz9"/>
+                        <outlet property="phoneNumField" destination="nkl-Nn-LoL" id="P2y-wj-8UV"/>
                         <outlet property="statePickerView" destination="8hc-h3-IIV" id="n5o-Xa-Ncg"/>
                     </connections>
                 </viewController>
@@ -1911,6 +1930,7 @@
                         <outlet property="dateIcon" destination="0vo-Oz-H5O" id="ipZ-H7-rLZ"/>
                         <outlet property="instaIcon" destination="kur-mG-YTp" id="a2l-aJ-5Kc"/>
                         <outlet property="locationIcon" destination="SWm-5i-doQ" id="pfc-Gy-6Fu"/>
+                        <outlet property="messageIcon" destination="1nN-Ms-p11" id="i7b-az-Oaq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flT-es-9ia" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2593,7 +2613,7 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="CompLabelTheme">
-            <color red="0.33333334329999997" green="0.33333334329999997" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.33300000429153442" green="0.33300000429153442" blue="0.33700001239776611" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

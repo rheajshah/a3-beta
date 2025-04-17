@@ -31,6 +31,7 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var cityField: UITextField!
     @IBOutlet weak var instagramField: UITextField!
+    @IBOutlet weak var phoneNumField: UITextField!
     @IBOutlet weak var deleteCompButton: UIButton! //only show up if comp alr exists
     
     let states = [
@@ -103,7 +104,8 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
                 self.selectedState = data?["state"] as? String
                 self.dateField.text = data?["date"] as? String
                 self.instagramField.text = data?["instagram"] as? String
-                
+                self.phoneNumField.text = data?["compDirectorPhoneNumber"] as? String
+            
                 // Load images and other data
                 if let bannerURL = data?["bannerURL"] as? String, let url = URL(string: bannerURL) {
                     self.compImage.load(url: url) // Add extension to load image from URL
@@ -183,7 +185,10 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
             showAlert(title: "Missing Info", message: "Please fill in all required fields.")
             return
         }
+        
         let instagram = instagramField.text ?? ""
+        let phoneNumber = phoneNumField.text ?? ""
+
        
         let compID = self.compID ?? UUID().uuidString // If editing, use the existing ID
 
@@ -207,6 +212,7 @@ class CreateCompViewController: UIViewController, UIImagePickerControllerDelegat
                     "state": state,
                     "date": date,
                     "instagram": instagram,
+                    "compDirectorPhoneNumber": phoneNumber,
                     "bannerURL": bannerURL ?? "",
                     "logoURL": logoURL ?? "",
                     "teams": competingTeams, //this is filled in lineup subscreen
