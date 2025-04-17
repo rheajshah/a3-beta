@@ -60,7 +60,7 @@
                                                         <constraint firstAttribute="width" constant="176" id="IuE-hn-gcN"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" name="CompLabelTheme"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UBz-bm-96N">
@@ -128,7 +128,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nqo-RK-6Mc">
                                                     <rect key="frame" x="65.333333333333329" y="149" width="35.333333333333329" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" name="CompLabelTheme"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0nA-Rs-vpc">
@@ -140,7 +140,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AJ4-qZ-UuL">
                                                     <rect key="frame" x="65.333333333333329" y="127" width="35.333333333333329" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" name="CompLabelTheme"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QzY-xn-4t2">
@@ -237,7 +237,7 @@
             </objects>
             <point key="canvasLocation" x="8556.4885496183197" y="945.77464788732402"/>
         </scene>
-        <!--ELO-->
+        <!--ELO Standings-->
         <scene sceneID="Li4-5F-5sS">
             <objects>
                 <viewController id="uSB-VB-Y1o" customClass="ELOViewController" customModule="A3_IOS" customModuleProvider="target" sceneMemberID="viewController">
@@ -246,7 +246,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="esc-do-rE2">
-                                <rect key="frame" x="0.0" y="120" width="440" height="808"/>
+                                <rect key="frame" x="0.0" y="44" width="440" height="884"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RankingCell" rowHeight="100" id="y9p-bO-TBA" customClass="RankingCell" customModule="A3_IOS" customModuleProvider="target">
@@ -293,29 +293,19 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="v1o-il-twc">
-                                <rect key="frame" x="110.66666666666669" y="67" width="219" height="32"/>
-                                <segments>
-                                    <segment title="ELO Standings"/>
-                                    <segment title="Simulation"/>
-                                </segments>
-                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Kic-X4-i30"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="esc-do-rE2" firstAttribute="top" secondItem="Kic-X4-i30" secondAttribute="top" id="6n4-K0-e7M"/>
                             <constraint firstItem="esc-do-rE2" firstAttribute="leading" secondItem="Kic-X4-i30" secondAttribute="leading" id="BOR-Gj-FsU"/>
-                            <constraint firstItem="Kic-X4-i30" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="v1o-il-twc" secondAttribute="trailing" id="JJA-xM-SDe"/>
-                            <constraint firstItem="v1o-il-twc" firstAttribute="centerX" secondItem="lAS-6d-VbK" secondAttribute="centerX" id="ND8-Yg-kCG"/>
-                            <constraint firstItem="v1o-il-twc" firstAttribute="top" secondItem="Kic-X4-i30" secondAttribute="top" constant="23" id="OI7-Zr-Fft"/>
                             <constraint firstItem="Kic-X4-i30" firstAttribute="trailing" secondItem="esc-do-rE2" secondAttribute="trailing" id="Ot2-72-XFN"/>
                             <constraint firstItem="esc-do-rE2" firstAttribute="centerX" secondItem="lAS-6d-VbK" secondAttribute="centerX" id="Ryc-Ec-Uak"/>
-                            <constraint firstItem="esc-do-rE2" firstAttribute="top" secondItem="v1o-il-twc" secondAttribute="bottom" constant="22" id="Xy1-p1-mmy"/>
                             <constraint firstItem="esc-do-rE2" firstAttribute="bottom" secondItem="Kic-X4-i30" secondAttribute="bottom" constant="70" id="i4a-ma-LBx"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="ELO" id="WZq-4f-qrf">
+                    <navigationItem key="navigationItem" title="ELO Standings" id="WZq-4f-qrf">
                         <barButtonItem key="rightBarButtonItem" title="Item" id="ZAO-wd-8h3">
                             <imageReference key="image" image="person.crop.circle" catalog="system" symbolScale="large"/>
                             <color key="tintColor" name="AdaptivePurpleTheme"/>
@@ -2579,7 +2569,7 @@
         <segue reference="EkW-hD-0jz"/>
         <segue reference="pnQ-Eg-VKD"/>
         <segue reference="PMq-wL-6HX"/>
-        <segue reference="pUI-Lz-dQy"/>
+        <segue reference="T6k-Ra-2WX"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="IMG_0162" width="1123" height="794"/>
@@ -2601,6 +2591,9 @@
         </namedColor>
         <namedColor name="AdaptiveTabBarTheme">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="CompLabelTheme">
+            <color red="0.33333334329999997" green="0.33333334329999997" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

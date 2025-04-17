@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class LoginViewController: UIViewController {
     
@@ -48,9 +49,34 @@ class LoginViewController: UIViewController {
             // Ensure Firebase returns a valid user
             if let user = authResult?.user {
                 print("User logged in: \(user.email ?? "Unknown Email")")
-                self.showAlert(title: "Success", message: "Welcome back, \(user.email ?? "user")!") {
-                    self.navigateToHome()
+
+                // Now fetch dark mode setting from Firestore
+                let db = Firestore.firestore()
+                db.collection("users").document(user.uid).getDocument { document, error in
+                    if let document = document, document.exists {
+                        let data = document.data()
+                        print("Data: \(data)")
+                        let isDarkModeEnabled = data?["darkMode"] as? Bool ?? false
+
+                        // Save to UserDefaults
+                        UserDefaults.standard.set(isDarkModeEnabled, forKey: "darkMode")
+
+                        // Apply dark mode immediately
+                        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                            for window in windowScene.windows {
+                                window.overrideUserInterfaceStyle = isDarkModeEnabled ? .dark : .light
+                            }
+                        }
+                    } else {
+                        print("No user settings found or error fetching document: \(error?.localizedDescription ?? "unknown error")")
+                    }
+
+                    // After fetching settings (whether successful or not), navigate home
+                    self.showAlert(title: "Success", message: "Welcome back, \(user.email ?? "user")!") {
+                        self.navigateToHome()
+                    }
                 }
+
             } else {
                 self.showAlert(title: "Error", message: "Authentication failed. Please try again.")
             }

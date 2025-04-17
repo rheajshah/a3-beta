@@ -302,7 +302,20 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             }
         }
         UserDefaults.standard.set(sender.isOn, forKey: "darkModeEnabled")
-
-
+        saveDarkModeToFirebase(isEnabled: sender.isOn)
     }
+
+    
+    private func saveDarkModeToFirebase(isEnabled: Bool) {
+        guard let userID = userID else { return }
+        
+        db.collection("users").document(userID).updateData(["darkMode": isEnabled]) { error in
+            if let error = error {
+                print("Error updating dark mode setting: \(error.localizedDescription)")
+            } else {
+                print("Dark mode setting updated successfully in Firebase.")
+            }
+        }
+    }
+
 }
